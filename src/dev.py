@@ -5,12 +5,30 @@ Created on Tue Jan 19 15:09:30 2021
 @author: KugelBlitZZZ
 """
 import filemanager as fm
+import numpy as np
 
 file = fm.FileManager("../data/test_seq.txt")
 seq = file.read()
 
-new_seq = (seq + '$') *2
-[new_seq[i : i+len(seq)] for i in range(len(seq))]
+rot = seq *2
+yo = sorted(rot[i:i+len(seq)] for i in range(len(seq)))
+
+seq 
+''.join([y[-1] for y in yo])
+
+
+t = sorted([(seq[i:], i) for i in range(len(seq))])
+t
+
+bw = []
+for si in map(lambda x: x[1], t):
+    if si == 0:
+        bw.append('$')
+    else:
+        bw.append(seq[si-1])
+        
+''.join(bw)
+
 
 """
 def suffixArray(s):
