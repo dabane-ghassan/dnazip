@@ -10,7 +10,7 @@ A Python implementation of The Burros-Wheeler Transform (BWT) alongside Huffman 
 - **GUI** : After finishing the two de/compression main steps.
 
 ## TODO 
-- Implement a O(nlogn) for the array (maybe).
+- Implement a O(nlogn) algorithm for the SA (maybe).
 - Finishing reverse BWT.
 - Factorizing BWT.
 - Doing Huffman.
