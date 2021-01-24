@@ -13,12 +13,16 @@ seq = file.read()
 """second"""
 
 def suffix_array(sequence: str) -> List[Tuple[str, int]]:
-    
+    """O(n^2log(n)) sort nlogn and finding is n,
+    maybe multikey quicksort to get that O(n^2) or try something better x(
+    """
+
     sequence += '$'
+    
     return sorted([(sequence[c:], c) for c in range(len(sequence))])
 
 def bwt_transform(sequence: str) -> str:
-   
+
     bwt = []
     for suff in suffix_array(sequence):
         i = suff[1] # The suffix's index is the 2nd element in the tuple
