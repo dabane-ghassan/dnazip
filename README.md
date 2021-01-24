@@ -25,4 +25,4 @@ A Python implementation of The Burros-Wheeler Transform (BWT) alongside Huffman 
 - Adding a CLI.
 - Would be nice to use Cython.
 - sphinx RTD.
-
+- Maybe some benchmarking...
