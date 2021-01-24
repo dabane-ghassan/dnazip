@@ -10,19 +10,19 @@ A Python implementation of The Burros-Wheeler Transform (BWT) alongside Huffman 
 - **GUI** : After finishing the two de/compression main steps.
 
 ## TODO 
-- Implement a O(nlogn) for the array (maybe)
+- Implement a O(nlogn) for the array (maybe).
 - Finishing reverse BWT.
 - Factorizing BWT.
 - Doing Huffman.
 - Factorizing BWT and huffman.
 - Thinking about filemanager methods.
-- Creating a tkinter interface (or maybe another GUI framework in Python)
+- Creating a tkinter interface (or maybe another GUI framework in Python).
 - Interfacing FileManager with the GUI.
-- Linting and Doc on the go
+- Linting and Doc on the go.
 
 ## Would be nice to implement
 - Adding references to the README.
 - Adding a CLI.
 - Would be nice to use Cython.
-
+- sphinx RTD.
 
