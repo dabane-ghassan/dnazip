@@ -15,17 +15,17 @@ class BurrosWheeler:
     ----------
 
     """
-    def __init__(self, file_path):
+    def __init__(self: object, file_path: str) -> None:
 
         self.sequence_path = file_path
         self.sequence = fm.FileManager(self.sequence_path).read()
         self.bw_transform = None
 
-    def __str__(self):
+    def __str__(self: object) -> None:
 
         return "Hello! I'm a BurrosWheeler class instance"
 
-    def __repr__(self):
+    def __repr__(self: object) -> None:
 
         return "BurrosWheeler('%s', '%s')" %(self.sequence_path,
                                              self.bw_transform)
@@ -86,10 +86,8 @@ class BurrosWheeler:
     
     @staticmethod
     def suffix_array(sequence: str) -> List[Tuple[str, int]]:
-        '''O(n^2log(n)) sort nlogn and finding is n,
-        maybe multikey quicksort to get that O(n^2) or try something better x(
-        '''
-    
+        """O(n^2log(n)) sort nlogn and finding is n"""
+ 
         sequence += '$'
         suff_arr = []
         for c in range(0, len(sequence), 1):
@@ -127,13 +125,10 @@ deseq == seq
 
 ######### testing advanced bwt
 seq
-BurrosWheeler.bwt_advanced(seq)
+BurrosWheeler.bwt_advanced(seq) == t
 
 """
-
-################## suffix array to construct BWT
-
-####################################################
+TODO: ADVANCED REVERSE BWT
 
 ############################# Reverse BWT using b ranks and lf mapping
 def rankBwt(bw):
