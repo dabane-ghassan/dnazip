@@ -31,6 +31,25 @@ class BurrosWheeler:
                                              self.bw_transform)
 
     @staticmethod
+    def pprint(mat: List[str]) -> None:
+        """Pretty print, this method prints a burros wheeler matrix 
+        beautifully (without lists and strings).
+
+        Parameters
+        ----------
+        mat : List[str]
+            The Burros-Wheeler matrix, i.e; a list of strings.
+
+        Returns
+        -------
+        None
+            Prints the matrix.
+        """
+        for line in mat:
+            print(*line, sep="") # scatter operator to print all elements
+                                 # of a line
+
+    @staticmethod
     def string_rotations(seq: str) -> List[str]:
 
         seq += '$'
@@ -115,7 +134,9 @@ seq
 all_rots = BurrosWheeler.string_rotations(seq)
 all_rots
 mat = BurrosWheeler.construct_bwm(all_rots)
-mat
+BurrosWheeler.pprint(mat)
+for r in mat:
+    print(*r, sep="")
 t = BurrosWheeler.encode_bwt(mat)
 t
 remat = BurrosWheeler.reconstruct_bwm(t)

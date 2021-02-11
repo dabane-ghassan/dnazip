@@ -16,12 +16,18 @@ class HeapNode:
         self.freq = freq
         self.right_child = None
         self.left_child = None
+        
+    
+    def __repr__(self: object) -> str:
+        return "HeapNode(%s, freq=%d, right=%s, left=%s)" %(self.char, 
+                                                            self.freq, 
+                                                            self.right_child,
+                                                            self.left_child)
 
 class Huffman:
 
     def __init__(self: object) -> None:
         pass
-
 
     @staticmethod
     def freq_dict(sequence: str) -> Dict[str, int]:
