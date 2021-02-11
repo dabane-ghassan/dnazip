@@ -10,6 +10,23 @@ from typing import Dict
 import filemanager as fm
 
 class HeapNode:
+    """A class to represent heap nodes of a huffman coding tree.
+    
+    Attributes
+    ----------
+    char: str
+        The character to be saved as a node value.
+
+    freq: int
+        The frequency of the char.
+
+    right_child: HeapNode
+        The right child of the heap node.
+
+    left_child: HeapNode
+        The left child of the heap node.
+
+    """
     
     def __init__(self: object, char: str, freq: int) -> None:
         self.char = char

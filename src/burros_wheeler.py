@@ -86,8 +86,8 @@ class BurrosWheeler:
         for l in range(0, len(bwt), 1): 
             bwm.append('')
     
-        for n in range(len(bwt)):
-            for i in range(len(bwt)):
+        for n in range(0, len(bwt), 1):
+            for i in range(0, len(bwt), 1):
                 bwm[i] = bwt[i] + bwm[i]
             bwm.sort()
 
