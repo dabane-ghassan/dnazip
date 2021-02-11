@@ -6,7 +6,7 @@ Created on Tue Jan 19 15:09:30 2021
 """
 import os
 import filemanager as fm
-from typing import List
+from typing import List, Tuple
 
 class BurrosWheeler:
     """A class to represent a Burros-Wheeler transform.
@@ -83,6 +83,32 @@ class BurrosWheeler:
                 seq += l
 
         return seq[:-1] # return the sequence without the '$' sign
+    
+    @staticmethod
+    def suffix_array(sequence: str) -> List[Tuple[str, int]]:
+        '''O(n^2log(n)) sort nlogn and finding is n,
+        maybe multikey quicksort to get that O(n^2) or try something better x(
+        '''
+    
+        sequence += '$'
+        suff_arr = []
+        for c in range(0, len(sequence), 1):
+            suff_arr.append((sequence[c:], c))
+
+        return sorted(suff_arr)
+    
+    @staticmethod
+    def bwt_advanced(sequence: str) -> str:
+    
+        bwt = []
+        for suff in BurrosWheeler.suffix_array(sequence):
+            i = suff[1] # The suffix's index is the 2nd element in the tuple
+            if i == 0:
+                bwt.append('$')
+            else:
+                bwt.append(sequence[i - 1])
+
+        return ''.join(bwt)
 
 os.chdir("C:/Users/33750/Documents/GitHub/dnazip/src")
 file = fm.FileManager("../data/test_seq.txt")
@@ -99,28 +125,14 @@ remat
 deseq = BurrosWheeler.decode_bwt(remat)
 deseq == seq
 
+######### testing advanced bwt
+seq
+BurrosWheeler.bwt_advanced(seq)
+
 """
 
 ################## suffix array to construct BWT
-def suffix_array(sequence: str) -> List[Tuple[str, int]]:
-    '''O(n^2log(n)) sort nlogn and finding is n,
-    maybe multikey quicksort to get that O(n^2) or try something better x(
-    '''
 
-    sequence += '$'
-    
-    return sorted([(sequence[c:], c) for c in range(len(sequence))])
-
-def bwt_transform(sequence: str) -> str:
-
-    bwt = []
-    for suff in suffix_array(sequence):
-        i = suff[1] # The suffix's index is the 2nd element in the tuple
-        if i == 0:
-            bwt.append('$')
-        else:
-            bwt.append(sequence[i - 1])
-    return ''.join(bwt)
 ####################################################
 
 ############################# Reverse BWT using b ranks and lf mapping
