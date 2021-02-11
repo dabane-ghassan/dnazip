@@ -22,18 +22,17 @@ class BurrosWheeler:
         self.bw_transform = None
 
     def __str__(self):
-        
+
         return "Hello! I'm a BurrosWheeler class instance"
 
     def __repr__(self):
-        
+
         return "BurrosWheeler('%s', '%s')" %(self.sequence_path,
                                              self.bw_transform)
 
-
     @staticmethod
     def string_rotations(seq: str) -> List[str]:
-      
+
         seq += '$'
         double_seq = seq * 2
         all_rotations = []
@@ -45,13 +44,13 @@ class BurrosWheeler:
 
     @staticmethod
     def construct_bwm(rotations: List[str]) -> List[str]:
-    
+
         sorted_rotations = sorted(rotations)
         return sorted_rotations
 
     @staticmethod
     def encode_bwt(matrix: List[str]) -> str:
-        
+
         last_column = []
         for l in matrix:
             last_char = l[-1]
@@ -62,7 +61,7 @@ class BurrosWheeler:
 
     @staticmethod
     def reconstruct_bwm(bwt: str) -> List[str]:
-        
+
         bwm = []
         # first loop to create seeds for lines O(n)
         for l in range(0, len(bwt), 1): 
@@ -72,17 +71,18 @@ class BurrosWheeler:
             for i in range(len(bwt)):
                 bwm[i] = bwt[i] + bwm[i]
             bwm.sort()
+
         return bwm
 
     @staticmethod    
     def decode_bwt(matrix: List[str]) -> str:
-        
+
         seq = ""
-        for l in matrix:
+        for l in matrix: # search for the line that ends with '$'
             if l[-1] == "$":
                 seq += l
-        
-        return seq[:-1]
+
+        return seq[:-1] # return the sequence without the '$' sign
 
 os.chdir("C:/Users/33750/Documents/GitHub/dnazip/src")
 file = fm.FileManager("../data/test_seq.txt")
