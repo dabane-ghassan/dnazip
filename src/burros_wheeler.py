@@ -127,20 +127,18 @@ class BurrosWheeler:
 
         return ''.join(bwt)
 
-os.chdir("C:/Users/33750/Documents/GitHub/dnazip/src")
+os.chdir("/home/ghassan/M1/dnazip/src")
 file = fm.FileManager("../data/test_seq.txt")
 seq = file.read()
 seq
 all_rots = BurrosWheeler.string_rotations(seq)
-all_rots
+BurrosWheeler.pprint(all_rots)
 mat = BurrosWheeler.construct_bwm(all_rots)
 BurrosWheeler.pprint(mat)
-for r in mat:
-    print(*r, sep="")
 t = BurrosWheeler.encode_bwt(mat)
 t
 remat = BurrosWheeler.reconstruct_bwm(t)
-remat  
+BurrosWheeler.pprint(remat)  
 deseq = BurrosWheeler.decode_bwt(remat)
 deseq == seq
 
