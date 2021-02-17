@@ -51,6 +51,19 @@ class BurrosWheeler:
 
     @staticmethod
     def string_rotations(seq: str) -> List[str]:
+        """Returns all string rotations of a sequence.
+
+        Parameters
+        ----------
+        seq : str
+            he sequence to be rotated.
+
+        Returns
+        -------
+        List[str]
+            Returns a list of strings, i.e; a BW matrix like object.
+
+        """
 
         seq += '$'
         double_seq = seq * 2
@@ -63,12 +76,42 @@ class BurrosWheeler:
 
     @staticmethod
     def construct_bwm(rotations: List[str]) -> List[str]:
+        """This method constructs the Burros-Wheeler Matrix from a list of
+        string rotations.
+        
+
+        Parameters
+        ----------
+        rotations : List[str]
+            A list of strings, i.e; a BW matrix like object.
+
+        Returns
+        -------
+        List[str]
+            A list of strings or a Burros-Wheeler Matrix.
+
+        """
 
         sorted_rotations = sorted(rotations)
         return sorted_rotations
 
     @staticmethod
     def encode_bwt(matrix: List[str]) -> str:
+        """Returns the Burros-Wheeler Transform from a given Burros-Wheeler
+        Matrix. the Burros-Wheeler Transform corresponds to the last column
+        of the matrix.
+
+        Parameters
+        ----------
+        matrix : List[str]
+            A Burros-Wheeler Matrix.
+
+        Returns
+        -------
+        str
+            The Burros-Wheeler Transform.
+
+        """
 
         last_column = []
         for l in matrix:
@@ -80,6 +123,23 @@ class BurrosWheeler:
 
     @staticmethod
     def reconstruct_bwm(bwt: str) -> List[str]:
+        """This method reconstructs the Burros-Wheeler Matrix given the
+        corresponding Burros-Wheeler Transform. The naive algortihm for 
+        constructing the matrix given the transform is going to iteratively 
+        add the transform as a left column, then sorts lexicographically
+        the columns.
+
+        Parameters
+        ----------
+        bwt : str
+            The Burros-Wheeler Transform.
+
+        Returns
+        -------
+        List[str]
+            A Burros-Wheeler Matrix.
+
+        """
 
         bwm = []
         # first loop to create seeds for lines O(n)
@@ -95,6 +155,21 @@ class BurrosWheeler:
 
     @staticmethod    
     def decode_bwt(matrix: List[str]) -> str:
+        """This method returns the original sequence from a given
+        Burros-Wheeler Matrix, the original sequence is the line that ends 
+        with the character '$'.
+
+        Parameters
+        ----------
+        matrix : List[str]
+            A Burros-Wheeler Matrix.
+
+        Returns
+        -------
+        str
+            The original sequence.
+
+        """
 
         seq = ""
         for l in matrix: # search for the line that ends with '$'
@@ -105,7 +180,21 @@ class BurrosWheeler:
     
     @staticmethod
     def suffix_array(sequence: str) -> List[Tuple[str, int]]:
-        """O(n^2log(n)) sort nlogn and finding is n"""
+        """Builds a suffix-array from a given sequence of characters.
+        - Complexity of the algorithm O(n^2log(n))
+        - Sorting is O(nlogn) and Finding is O(n)
+
+        Parameters
+        ----------
+        sequence : str
+            The given sequence of characters.
+
+        Returns
+        -------
+        List[Tuple[str, int]]
+            The suffix array of the sequence; a list of tuples.
+
+        """
  
         sequence += '$'
         suff_arr = []
@@ -116,6 +205,20 @@ class BurrosWheeler:
     
     @staticmethod
     def bwt_advanced(sequence: str) -> str:
+        """Generates a Burros-Wheeler Transfrom from a suffix array, advanced
+        construction of BWT. Better algorithmic complexity.
+
+        Parameters
+        ----------
+        sequence : str
+            The sequence to ve transformed.
+
+        Returns
+        -------
+        str
+            The Burros-Wheeler Transform.
+
+        """
     
         bwt = []
         for suff in BurrosWheeler.suffix_array(sequence):
@@ -127,6 +230,7 @@ class BurrosWheeler:
 
         return ''.join(bwt)
 
+################################## example of use; naive and advanced
 os.chdir("/home/ghassan/M1/dnazip/src")
 file = fm.FileManager("../data/test_seq.txt")
 seq = file.read()
