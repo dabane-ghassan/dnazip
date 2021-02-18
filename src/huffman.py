@@ -11,7 +11,7 @@ import filemanager as fm
 
 class HuffmanNode:
     """A class to represent heap nodes of a huffman coding tree.
-    
+
     Attributes
     ----------
     char: str
@@ -59,7 +59,7 @@ class HuffmanNode:
 
         """
         return self.__right_child
-    
+
     @right_child.setter
     def right_child(self: object, right_child: object) -> None:
         """The setter of the right child.
@@ -75,7 +75,7 @@ class HuffmanNode:
 
         """
         self.__right_child = right_child
-    
+
     @property
     def left_child(self: object) -> object:
         """The getter of the left child.
@@ -86,7 +86,7 @@ class HuffmanNode:
 
         """
         return self.__left_child
-    
+
     @left_child.setter
     def left_child(self: object, left_child: object) -> None:
         """The setter of the left child.
@@ -208,9 +208,13 @@ class HuffmanNode:
 
 class HuffmanTree:
 
-    def __init__(self: object) -> None:
-        self.heap = []
-        pass
+    def __init__(self: object, sequence: str) -> None:
+        
+        self.sequence = sequence
+        self.frequency = HuffmanTree.freq_dict(self.sequence)
+        self.root = self.create_tree()
+        self.codes = {}
+        self.reverse_map = {}
 
     @staticmethod
     def freq_dict(sequence: str) -> Dict[str, int]:
@@ -222,41 +226,57 @@ class HuffmanTree:
             else:
                 f_dict[c] = 1
         return f_dict
+    
+    def create_tree(self: object) -> None:
+        
+        leafs = []
+        for char, freq in self.frequency.items():
+            leafs.append(HuffmanNode(char, freq))
+
+        while len(leafs) > 1:
+            leafs = sorted(leafs, key=lambda x: x.freq)
+            
+            left = leafs.pop(0)
+            right = leafs.pop(0)
+            
+            new_char = left.char + right.char
+            new_freq = left.freq + right.freq
+            
+            left.dir = "0"
+            right.dir = "1"
+
+            new_node = HuffmanNode(new_char, new_freq, left, right)
+            leafs.append(new_node)  
+            
+        return leafs[0]
+        
+    def get_codings(self: object, node: HuffmanNode, val: str='') -> None:
+
+        curr_path = val + node.dir
+
+        if node.left_child:
+            self.get_codings(node.left_child, curr_path)
+        if node.right_child:
+            self.get_codings(node.right_child, curr_path)
+
+        if not node.left_child and not node.right_child:
+            self.codes[node.char] = curr_path
+            
+    def seq_to_bin_str(self: object) -> None:
+        
+        bin_str = ""
+        for char in self.sequence:
+            bin_str += self.codes[char]
+        return bin_str
 
 file = fm.FileManager("../data/test_seq_bwt.txt")
 seq = file.read()
-seq
 
-yo = HuffmanTree.freq_dict(seq)
-
-yo
-
+pfft = HuffmanTree(seq)
+pfft.root
+pfft.get_codings(pfft.root)
 #bin(int(something, 2))
-
-nodes = []
-for c, f in yo.items():
-    nodes.append(HuffmanNode(c, f))
-
-nodes
-
-while len(nodes) > 1:
-    nodes = sorted(nodes, key=lambda x: x.freq)
-    left = nodes.pop(0)
-    right = nodes.pop(0)
-    new = HuffmanNode(left.char+right.char, left.freq+right.freq, left, right)
-    nodes.append(new)  
-
-nodes[0]
-
-"""
-def huffman_code_tree(node, left=True, binString=''):
-    if type(node) is str:
-        return {node: binString}
-    (l, r) = node.children()
-    d = dict()
-    d.update(huffman_code_tree(l, True, binString + '0'))
-    d.update(huffman_code_tree(r, False, binString + '1'))
-    return d    
-nodes[0]
-huffmanCode = huffman_code_tree(nodes[0][0])
-"""
+pfft.codes
+len(seq)
+8 - len(pfft.seq_to_bin_str()) % 8
+"{0:08b}".format(2)
