@@ -226,14 +226,16 @@ class HuffmanTree:
             else:
                 f_dict[c] = 1
         return f_dict
-    
+
     def create_tree(self: object) -> None:
-        
+ 
         leafs = []
         for char, freq in self.frequency.items():
+
             leafs.append(HuffmanNode(char, freq))
 
         while len(leafs) > 1:
+
             leafs = sorted(leafs, key=lambda x: x.freq)
             
             left = leafs.pop(0)
@@ -247,9 +249,9 @@ class HuffmanTree:
 
             new_node = HuffmanNode(new_char, new_freq, left, right)
             leafs.append(new_node)  
-            
+   
         return leafs[0]
-        
+ 
     def get_codings(self: object, node: HuffmanNode, val: str='') -> None:
 
         curr_path = val + node.dir
@@ -262,21 +264,43 @@ class HuffmanTree:
         if not node.left_child and not node.right_child:
             self.codes[node.char] = curr_path
             
-    def seq_to_bin_str(self: object) -> None:
+    def seq_to_bin_str(self: object) -> str:
         
         bin_str = ""
         for char in self.sequence:
             bin_str += self.codes[char]
-        return bin_str
+        
+        pad = 8 - len(bin_str) % 8
+        if pad != 0:
+            for p in range(0, pad, 1):
+                bin_str += '0'
 
+        return bin_str
+    
+    @staticmethod
+    def bin_str_to_unicode(bin_str: str) -> str:
+        
+        unicode = ""
+        for b in range(0, len(bin_str), 8):
+            eight_bits = bin_str[b:b+8]
+            code = int(eight_bits, 2)
+            unicode += chr(code)
+
+        return unicode
+        
+        
 file = fm.FileManager("../data/test_seq_bwt.txt")
 seq = file.read()
-
 pfft = HuffmanTree(seq)
 pfft.root
 pfft.get_codings(pfft.root)
 #bin(int(something, 2))
 pfft.codes
-len(seq)
-8 - len(pfft.seq_to_bin_str()) % 8
-"{0:08b}".format(2)
+seq
+uni = HuffmanTree.bin_str_to_unicode(pfft.seq_to_bin_str())
+uni
+# file.write('huffman.txt', uni)
+
+"""
+'{0:b}'.format(ord('g'))
+"""
