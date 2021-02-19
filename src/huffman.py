@@ -289,6 +289,16 @@ class HuffmanTree:
         return unicode
         
         
+    @staticmethod
+    def unicode_to_bin_str(unicode: str) -> str:
+        
+        bin_str = ""
+        for u in unicode:
+            code = ord(u)
+            bin_str += '{:08b}'.format(code)
+
+        return bin_str
+            
 file = fm.FileManager("../data/test_seq_bwt.txt")
 seq = file.read()
 pfft = HuffmanTree(seq)
@@ -298,7 +308,8 @@ pfft.get_codings(pfft.root)
 pfft.codes
 seq
 uni = HuffmanTree.bin_str_to_unicode(pfft.seq_to_bin_str())
-uni
+
+HuffmanTree.unicode_to_bin_str(uni)
 # file.write('huffman.txt', uni)
 
 """
