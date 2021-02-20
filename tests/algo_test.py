@@ -16,9 +16,9 @@ class AlgorithmsTest(unittest.TestCase):
 
     def setUp(self: object) -> None:
         """Initialize before every test"""
-        self.sequence = "AAACCCTTTTTTGGGGGNNNNAAAAAAT"
-        self.transform = "TNAA$AAAAAACCTGGGGNNNGATTTTTC"
-        self.unicode = 'g×ÿÝ\xa0\x12CUl'
+        self.sequence = "mississippi"
+        self.transform = "ipssm$pissii"
+        self.unicode = '\x8fL¾\x80'
 
     def test_bw_transform_naive(self: object) -> None:
 
@@ -52,7 +52,7 @@ class AlgorithmsTest(unittest.TestCase):
         binary_no_pad = tree.remove_padding(binary)
         decoded = tree.bin_str_to_seq(binary_no_pad)
         self.assertEqual(decoded, self.transform)
-        
+ 
 
     def tearDown(self: object) -> None:
         
