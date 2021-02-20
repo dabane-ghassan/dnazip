@@ -145,67 +145,6 @@ class HuffmanNode:
         """
         return self.freq == other_node.freq
 
-    def __lt__(self: object, other_node: object) -> bool:
-        """Checks if the node has a frequency less than a second node.
-
-        Parameters
-        ----------
-        other_node : object
-            The other node.
-
-        Returns
-        -------
-        bool
-
-        """
-        return self.freq < other_node.freq
-
-    def __le__(self: object, other_node: object) -> bool:
-        """Checks if the node has a frequency less or equal than a second node.
-
-        Parameters
-        ----------
-        other_node : object
-            The other node.
-
-        Returns
-        -------
-        bool
-
-        """
-        return self.freq <= other_node.freq
-
-    def __gt__(self: object, other_node: object) -> bool:
-        """Checks if the node has a frequency greater than a second node.
-
-        Parameters
-        ----------
-        other_node : object
-            The other node.
-
-        Returns
-        -------
-        bool
-
-        """
-        return self.freq > other_node.freq
-
-    def __ge__(self: object, other_node: object) -> bool:
-        """Checks if the node has a frequence greater or equal than a 
-        second node.
-
-        Parameters
-        ----------
-        other_node : object
-            The other node.
-
-        Returns
-        -------
-        bool
-
-        """
-        return self.freq >= other_node.freq
-
 class HuffmanTree:
 
     def __init__(self: object, sequence: str) -> None:
@@ -214,7 +153,15 @@ class HuffmanTree:
         self.frequency = HuffmanTree.freq_dict(self.sequence)
         self.root = self.create_tree()
         self.codes = {}
-        self.reverse_map = {}
+        self.__pad = None
+
+    @property
+    def pad(self: object) -> int:
+        return self.__pad
+
+    @pad.setter
+    def pad(self: object, new) -> None:
+        self.__pad = new
 
     @staticmethod
     def freq_dict(sequence: str) -> Dict[str, int]:
@@ -269,10 +216,10 @@ class HuffmanTree:
         bin_str = ""
         for char in self.sequence:
             bin_str += self.codes[char]
-        
-        pad = 8 - len(bin_str) % 8
-        if pad != 0:
-            for p in range(0, pad, 1):
+
+        self.pad = 8 - len(bin_str) % 8
+        if self.pad != 0:
+            for p in range(0, self.pad, 1):
                 bin_str += '0'
 
         return bin_str
@@ -298,20 +245,33 @@ class HuffmanTree:
             bin_str += '{:08b}'.format(code)
 
         return bin_str
+
+    def remove_padding(self: object, bin_str: str) -> str:
+
+        return bin_str[:-self.pad]
+    
+    def bin_str_to_seq(self: object, bin_str: str) -> str:
+
+        original_seq = ""
+        reading_stream = ""
+        for n in bin_str:
+            reading_stream += n
+            for char, path in self.codes.items():
+                if path == reading_stream:
+                    original_seq += char
+                    reading_stream = ""
+                    break
+
+        return original_seq
             
 file = fm.FileManager("../data/test_seq_bwt.txt")
 seq = file.read()
 pfft = HuffmanTree(seq)
 pfft.root
 pfft.get_codings(pfft.root)
-#bin(int(something, 2))
 pfft.codes
 seq
 uni = HuffmanTree.bin_str_to_unicode(pfft.seq_to_bin_str())
+pfft.bin_str_to_seq(pfft.remove_padding(HuffmanTree.unicode_to_bin_str(uni)))
 
-HuffmanTree.unicode_to_bin_str(uni)
 # file.write('huffman.txt', uni)
-
-"""
-'{0:b}'.format(ord('g'))
-"""
