@@ -4,10 +4,7 @@ Created on Thu Feb 11 15:36:09 2021
 
 @author: KugelBlitZZZ
 """
-import os
-os.chdir("/home/ghassan/M1/dnazip/src")
 from typing import Dict
-import filemanager as fm
 
 class HuffmanNode:
     """A class to represent heap nodes of a huffman coding tree.
@@ -263,15 +260,3 @@ class HuffmanTree:
                     break
 
         return original_seq
-            
-file = fm.FileManager("../data/test_seq_bwt.txt")
-seq = file.read()
-pfft = HuffmanTree(seq)
-pfft.root
-pfft.get_codings(pfft.root)
-pfft.codes
-seq
-uni = HuffmanTree.bin_str_to_unicode(pfft.seq_to_bin_str())
-pfft.bin_str_to_seq(pfft.remove_padding(HuffmanTree.unicode_to_bin_str(uni)))
-
-# file.write('huffman.txt', uni)

@@ -4,8 +4,7 @@ Created on Tue Jan 19 15:09:30 2021
 
 @author: KugelBlitZZZ
 """
-import os
-import filemanager as fm
+from __future__ import absolute_import
 from typing import List, Tuple
 
 class BurrosWheeler:
@@ -15,10 +14,9 @@ class BurrosWheeler:
     ----------
 
     """
-    def __init__(self: object, file_path: str) -> None:
+    def __init__(self: object, sequence: str) -> None:
 
-        self.sequence_path = file_path
-        self.sequence = fm.FileManager(self.sequence_path).read()
+        self.sequence = sequence
         self.bw_transform = None
 
     def __str__(self: object) -> None:
@@ -229,26 +227,6 @@ class BurrosWheeler:
                 bwt.append(sequence[i - 1])
 
         return ''.join(bwt)
-
-################################## example of use; naive and advanced
-os.chdir("/home/ghassan/M1/dnazip/src")
-file = fm.FileManager("../data/test_seq.txt")
-seq = file.read()
-seq
-all_rots = BurrosWheeler.string_rotations(seq)
-BurrosWheeler.pprint(all_rots)
-mat = BurrosWheeler.construct_bwm(all_rots)
-BurrosWheeler.pprint(mat)
-t = BurrosWheeler.encode_bwt(mat)
-t
-remat = BurrosWheeler.reconstruct_bwm(t)
-BurrosWheeler.pprint(remat)  
-deseq = BurrosWheeler.decode_bwt(remat)
-deseq == seq
-
-######### testing advanced bwt
-seq
-BurrosWheeler.bwt_advanced(seq) == t
 
 """
 TODO: ADVANCED REVERSE BWT
