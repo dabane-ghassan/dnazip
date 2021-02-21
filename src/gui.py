@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+
+
 """
 Created on Sun Feb 21 09:19:13 2021
 
 @author: ghassan
-"""
+
 from dearpygui.core import *
 from dearpygui.simple import *
 
@@ -35,9 +38,8 @@ with window("Main"):
     add_label_text("##filepath", source="file_path", color=[255, 0, 0])
     
     with window("Welcome", autosize=True):
-        add_text("""Welcome to dnazip!
-                 A Burros-Wheeler/Huffman coding visualization
-                 GUI for DNA sequences""")
+        add_text("")
 
 
 start_dearpygui(primary_window="Main")
+"""

@@ -5,16 +5,16 @@ A script to read and write DNA sequences (or a list of characters) to a file.
 @author: Ghassan DABANE
 """
 
-class FileManager:
+class Sequence:
     
     def __init__(self: object, path: str) -> None:
         self.path = path
         
     def __str__(self: object) -> str:
-        return "Hey there! my only mission is to read and write files"
+        return "Hey there! I'm a Sequence object"
     
     def __repr__(self: object) -> str:
-        return "FileManager(%s)" % self.path
+        return "Sequence(%s)" % self.path
         
     def read(self: object) -> str:
         with open(self.path, 'r') as f:

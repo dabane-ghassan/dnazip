@@ -7,26 +7,7 @@ Created on Tue Jan 19 15:09:30 2021
 from __future__ import absolute_import
 from typing import List, Tuple
 
-class BurrosWheeler:
-    """A class to represent a Burros-Wheeler transform.
-
-    Attributes
-    ----------
-
-    """
-    def __init__(self: object, sequence: str) -> None:
-
-        self.sequence = sequence
-        self.bw_transform = None
-
-    def __str__(self: object) -> None:
-
-        return "Hello! I'm a BurrosWheeler class instance"
-
-    def __repr__(self: object) -> None:
-
-        return "BurrosWheeler('%s', '%s')" %(self.sequence_path,
-                                             self.bw_transform)
+class BurrosWheeler(object):
 
     @staticmethod
     def pprint(mat: List[str]) -> None:

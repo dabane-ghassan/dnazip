@@ -6,7 +6,7 @@ Created on Thu Feb 11 15:36:09 2021
 """
 from typing import Dict
 
-class HuffmanNode:
+class HuffmanNode(object):
     """A class to represent heap nodes of a huffman coding tree.
 
     Attributes
@@ -101,9 +101,8 @@ class HuffmanNode:
         
         self.__left_child = left_child
 
-    def __str(self: object) -> str:
+    def __str__(self: object) -> str:
         """Returns a string representation using print().
-        
 
         Returns
         -------
@@ -115,7 +114,7 @@ class HuffmanNode:
 
     def __repr__(self: object) -> str:
         """A coder friendly representation of the HuffmanNode object.
-        
+
         Returns
         -------
         str
@@ -142,7 +141,7 @@ class HuffmanNode:
         """
         return self.freq == other_node.freq
 
-class HuffmanTree:
+class HuffmanTree(object):
 
     def __init__(self: object, sequence: str) -> None:
 
