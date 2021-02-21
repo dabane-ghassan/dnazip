@@ -100,7 +100,7 @@ class HuffmanNode:
         """
         
         self.__left_child = left_child
-        
+
     def __str(self: object) -> str:
         """Returns a string representation using print().
         
@@ -112,7 +112,7 @@ class HuffmanNode:
 
         """
         return "Hello! I'm a Huffman coding HeapNode class instance."
-    
+
     def __repr__(self: object) -> str:
         """A coder friendly representation of the HuffmanNode object.
         
@@ -145,7 +145,7 @@ class HuffmanNode:
 class HuffmanTree:
 
     def __init__(self: object, sequence: str) -> None:
-        
+
         self.sequence = sequence
         self.frequency = HuffmanTree.freq_dict(self.sequence)
         self.root = self.create_tree()
@@ -172,7 +172,7 @@ class HuffmanTree:
         return f_dict
 
     def create_tree(self: object) -> None:
- 
+
         leafs = []
         for char, freq in self.frequency.items():
 
@@ -181,21 +181,21 @@ class HuffmanTree:
         while len(leafs) > 1:
 
             leafs = sorted(leafs, key=lambda x: x.freq)
-            
+
             left = leafs.pop(0)
             right = leafs.pop(0)
-            
+
             new_char = left.char + right.char
             new_freq = left.freq + right.freq
-            
+
             left.dir = "0"
             right.dir = "1"
 
             new_node = HuffmanNode(new_char, new_freq, left, right)
             leafs.append(new_node)  
-   
+
         return leafs[0]
- 
+
     def get_codings(self: object, node: HuffmanNode, val: str='') -> None:
 
         curr_path = val + node.dir
@@ -207,9 +207,9 @@ class HuffmanTree:
 
         if not node.left_child and not node.right_child:
             self.codes[node.char] = curr_path
-            
-    def seq_to_bin_str(self: object) -> str:
-        
+    
+    def seq_to_binstr(self: object) -> str:
+
         bin_str = ""
         for char in self.sequence:
             bin_str += self.codes[char]
@@ -220,10 +220,10 @@ class HuffmanTree:
                 bin_str += '0'
 
         return bin_str
-    
+
     @staticmethod
-    def bin_str_to_unicode(bin_str: str) -> str:
-        
+    def binstr_to_unicode(bin_str: str) -> str:
+
         unicode = ""
         for b in range(0, len(bin_str), 8):
             eight_bits = bin_str[b:b+8]
@@ -231,11 +231,10 @@ class HuffmanTree:
             unicode += chr(code)
 
         return unicode
-        
-        
+
     @staticmethod
-    def unicode_to_bin_str(unicode: str) -> str:
-        
+    def unicode_to_binstr(unicode: str) -> str:
+
         bin_str = ""
         for u in unicode:
             code = ord(u)
@@ -247,7 +246,7 @@ class HuffmanTree:
 
         return bin_str[:-self.pad]
     
-    def bin_str_to_seq(self: object, bin_str: str) -> str:
+    def binstr_to_seq(self: object, bin_str: str) -> str:
 
         original_seq = ""
         reading_stream = ""
