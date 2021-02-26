@@ -241,17 +241,19 @@ class HuffmanTree(object):
 
         return bin_str
 
-    def remove_padding(self: object, bin_str: str) -> str:
+    @staticmethod
+    def remove_padding(bin_str: str, pad: int) -> str:
 
-        return bin_str[:-self.pad]
+        return bin_str[:-pad]
     
-    def binstr_to_seq(self: object, bin_str: str) -> str:
+    @staticmethod
+    def binstr_to_seq(bin_str: str, codes: Dict[str, str]) -> str:
 
         original_seq = ""
         reading_stream = ""
         for n in bin_str:
             reading_stream += n
-            for char, path in self.codes.items():
+            for char, path in codes.items():
                 if path == reading_stream:
                     original_seq += char
                     reading_stream = ""

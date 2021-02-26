@@ -11,7 +11,7 @@ from sequence import Sequence
 from burros_wheeler import BurrosWheeler
 from huffman import HuffmanTree
 
-class Encoder(object):
+class Encoder:
     
     def __init__(self: object, path: str) -> None:
         
@@ -43,13 +43,13 @@ class Encoder(object):
         tree.get_codings(tree.root)
         binary = tree.seq_to_binstr()
         yield binary
-        
+
         unicode = HuffmanTree.binstr_to_unicode(binary)
         yield unicode
 
         self.tree = tree
         self.encoded_seq = unicode
-        
+
         self.seq.write(self.encoded_output, unicode)
         
         with open(self.tree_output, 'wb') as ft:

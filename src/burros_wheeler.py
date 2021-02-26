@@ -7,11 +7,11 @@ Created on Tue Jan 19 15:09:30 2021
 from __future__ import absolute_import
 from typing import List, Tuple
 
-class BurrosWheeler(object):
+class BurrosWheeler:
 
     @staticmethod
     def pprint(mat: List[str]) -> None:
-        """Pretty print, this method prints a burros wheeler matrix 
+        """Pretty print, this method prints a burros wheeler matrix
         beautifully (without lists and strings).
 
         Parameters
@@ -47,17 +47,16 @@ class BurrosWheeler(object):
         seq += '$'
         double_seq = seq * 2
         all_rotations = []
-        
+
         for i in range(0, len(seq), 1):
             all_rotations.append(double_seq[i:i+len(seq)])
-            
+
         return all_rotations
 
     @staticmethod
     def construct_bwm(rotations: List[str]) -> List[str]:
         """This method constructs the Burros-Wheeler Matrix from a list of
         string rotations.
-        
 
         Parameters
         ----------
@@ -93,18 +92,18 @@ class BurrosWheeler(object):
         """
 
         last_column = []
-        for l in matrix:
-            last_char = l[-1]
+        for line in matrix:
+            last_char = line[-1]
             last_column.append(last_char)
-        
+
         transformed_seq = ''.join(last_column)
         return transformed_seq
 
     @staticmethod
     def reconstruct_bwm(bwt: str) -> List[str]:
         """This method reconstructs the Burros-Wheeler Matrix given the
-        corresponding Burros-Wheeler Transform. The naive algortihm for 
-        constructing the matrix given the transform is going to iteratively 
+        corresponding Burros-Wheeler Transform. The naive algortihm for
+        constructing the matrix given the transform is going to iteratively
         add the transform as a left column, then sorts lexicographically
         the columns.
 
@@ -122,20 +121,20 @@ class BurrosWheeler(object):
 
         bwm = []
         # first loop to create seeds for lines O(n)
-        for l in range(0, len(bwt), 1): 
+        for _ in range(0, len(bwt), 1):
             bwm.append('')
-    
-        for n in range(0, len(bwt), 1):
+
+        for _ in range(0, len(bwt), 1):
             for i in range(0, len(bwt), 1):
                 bwm[i] = bwt[i] + bwm[i]
             bwm.sort()
 
         return bwm
 
-    @staticmethod    
+    @staticmethod
     def decode_bwt(matrix: List[str]) -> str:
         """This method returns the original sequence from a given
-        Burros-Wheeler Matrix, the original sequence is the line that ends 
+        Burros-Wheeler Matrix, the original sequence is the line that ends
         with the character '$'.
 
         Parameters
@@ -151,12 +150,12 @@ class BurrosWheeler(object):
         """
 
         seq = ""
-        for l in matrix: # search for the line that ends with '$'
-            if l[-1] == "$":
-                seq += l
+        for line in matrix: # search for the line that ends with '$'
+            if line[-1] == "$":
+                seq += line
 
         return seq[:-1] # return the sequence without the '$' sign
-    
+
     @staticmethod
     def suffix_array(sequence: str) -> List[Tuple[str, int]]:
         """Builds a suffix-array from a given sequence of characters.
@@ -174,14 +173,14 @@ class BurrosWheeler(object):
             The suffix array of the sequence; a list of tuples.
 
         """
- 
+
         sequence += '$'
         suff_arr = []
-        for c in range(0, len(sequence), 1):
-            suff_arr.append((sequence[c:], c))
+        for i in range(0, len(sequence), 1):
+            suff_arr.append((sequence[i:], i))
 
         return sorted(suff_arr)
-    
+
     @staticmethod
     def bwt_advanced(sequence: str) -> str:
         """Generates a Burros-Wheeler Transfrom from a suffix array, advanced
@@ -198,7 +197,7 @@ class BurrosWheeler(object):
             The Burros-Wheeler Transform.
 
         """
-    
+
         bwt = []
         for suff in BurrosWheeler.suffix_array(sequence):
             i = suff[1] # The suffix's index is the 2nd element in the tuple
@@ -249,4 +248,3 @@ def reverseBwt(bw):
     return t
 #################################################################
 """
-

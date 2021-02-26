@@ -44,15 +44,14 @@ class AlgorithmsTest(unittest.TestCase):
     
         tree = HuffmanTree(self.transform)
         tree.get_codings(tree.root)
-        binary = tree.seq_to_bin_str()
-        unicode = HuffmanTree.bin_str_to_unicode(binary)
+        binary = tree.seq_to_binstr()
+        unicode = HuffmanTree.binstr_to_unicode(binary)
         self.assertEqual(unicode, self.unicode)
         
-        binary = HuffmanTree.unicode_to_bin_str(self.unicode)
-        binary_no_pad = tree.remove_padding(binary)
-        decoded = tree.bin_str_to_seq(binary_no_pad)
+        binary = HuffmanTree.unicode_to_binstr(self.unicode)
+        binary_no_pad = HuffmanTree.remove_padding(binary, tree.pad)
+        decoded = HuffmanTree.binstr_to_seq(binary_no_pad, tree.codes)
         self.assertEqual(decoded, self.transform)
- 
 
     def tearDown(self: object) -> None:
         
