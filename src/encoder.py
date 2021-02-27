@@ -20,11 +20,9 @@ class Encoder:
         self.bwt= None
         self.bwt_output = self.path + '_bwt.txt'
         self.tree = None
-        self.tree_output = self.path + '_tree.txt'
         self.encoded_seq = None
         self.encoded_output = self.path + '_compressed.txt'
-
-       
+   
     def encode(self: object) -> None:
         
         all_rots = BurrosWheeler.string_rotations(self.seq.read())
@@ -32,37 +30,40 @@ class Encoder:
         
         bwm = BurrosWheeler.construct_bwm(all_rots)
         yield bwm
-
+        
         tf = BurrosWheeler.encode_bwt(bwm)
         yield tf
-
+        
         self.bwt = tf
         self.seq.write(self.bwt_output, tf)
-
+        
         tree = HuffmanTree(self.bwt)
         tree.get_codings(tree.root)
         binary = tree.seq_to_binstr()
         yield binary
-
+        
         unicode = HuffmanTree.binstr_to_unicode(binary)
         yield unicode
-
+        
         self.tree = tree
         self.encoded_seq = unicode
-
-        self.seq.write(self.encoded_output, unicode)
         
-        with open(self.tree_output, 'wb') as ft:
-            pickle.dump(self.tree, ft)
+        compressed = tree.codes_to_header() + unicode
 
+        self.seq.write(self.encoded_output, compressed)
+        
 
 yo = Encoder("../data/test_seq.txt")
 
 pb = yo.encode()
-for i in pb: print(i)
+next(pb)
 
-"""
-with open(yo.tree_output, 'rb') as ft:
-    hi = pickle.load(ft)
-"""
+with open("../data/test_seq_compressed.txt") as f:
+    for line in f:
+        if line.endswith('\n'):
+            print(line)
+
+class Decoder:
+    pass
+    
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Feb 11 15:36:09 2021
+Huffman coding algorithm class, contains node and tree classes.
 
-@author: KugelBlitZZZ
+@author: Ghassan Dabane
 """
 from typing import Dict
 
@@ -13,16 +13,15 @@ class HuffmanNode(object):
     ----------
     char: str
         The character to be saved as a node value.
-
     freq: int
         The frequency of the char.
-
     right_child: HuffmanNode
         The right child of the heap node.
-
     left_child: HuffmanNode
         The left child of the heap node.
-
+    dir: str
+        The path of the current node in the Huffman tree, usually a string of
+        0s and 1s.
     """
     def __init__(self: object, char: str, freq: int, left: object=None, right: object=None) -> None:
         """Class constructor.
@@ -142,9 +141,41 @@ class HuffmanNode(object):
         return self.freq == other_node.freq
 
 class HuffmanTree(object):
+    """A class to represent a huffman tree.
+    
+    Attributes
+    ----------
+    sequence: str
+        The sequence to be encoded, i.e; the Burros-Wheeler transform of the 
+        sequence.
+    frequency: Dict[str, int]
+        A dictionary to store frequency values for each character of the
+        sequence, the character as a key and its frequency as a value.
+    root: HuffmanNode
+        The root node of the Huffman tree.
+    codes: Dict[str, str]
+        The Huffman codes for a given sequence, The character as a key and
+        its tree path as a value(a string).
+    pad: int
+        The padding of the sequence, i.e; the number of zeroes that was added
+        to the end of sequence until it was divisible by 8 (coding in 8 bits).
+
+    """
 
     def __init__(self: object, sequence: str) -> None:
+        """The class constructor.
 
+        Parameters
+        ----------
+        sequence : str
+            The sequence to be coded.
+
+        Returns
+        -------
+        None
+            A class instance.
+
+        """
         self.sequence = sequence
         self.frequency = HuffmanTree.freq_dict(self.sequence)
         self.root = self.create_tree()
@@ -153,14 +184,48 @@ class HuffmanTree(object):
 
     @property
     def pad(self: object) -> int:
+        """Pad property getter.
+
+        Returns
+        -------
+        int
+            The number of zeroes (padding).
+
+        """
         return self.__pad
 
     @pad.setter
-    def pad(self: object, new) -> None:
+    def pad(self: object, new: int) -> None:
+        """Pad property setter.
+
+        Parameters
+        ----------
+        new : int
+            The new value of padding, the number of zeroes.
+
+        Returns
+        -------
+        None
+            Resets the pad property.
+
+        """
         self.__pad = new
 
     @staticmethod
     def freq_dict(sequence: str) -> Dict[str, int]:
+        """This method returns the frequence dictionary of a given sequence.
+
+        Parameters
+        ----------
+        sequence : str
+            The sequence of interest.
+
+        Returns
+        -------
+        Dict[str, int]
+            A dictionary of character frequencies.
+
+        """
 
         f_dict = {}
         for c in sequence: 
@@ -260,3 +325,22 @@ class HuffmanTree(object):
                     break
 
         return original_seq
+
+    def codes_to_header(self: object) -> str:
+
+        header = ""
+        for c, p in self.codes.items():
+            header += c + "," + p + ";"
+            
+        return header + "\n"
+    
+    @staticmethod
+    def header_to_codes(header: str) -> Dict[str, str]:
+        
+        reconstructed_codes = {}
+        for code in header.split(";")[:-1]:
+            c, p = code.split(",")
+            reconstructed_codes[c] = p
+        return reconstructed_codes
+        
+            

@@ -18,7 +18,7 @@ class Sequence:
         
     def read(self: object) -> str:
         with open(self.path, 'r') as f:
-            return f.readline()
+            return f.readline().strip('\n')
         
     def write(self: object, out: str, content: str) -> None:
         with open(out, 'w') as f:

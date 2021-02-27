@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jan 19 15:09:30 2021
+Burros-Wheeler Algorithm Class, contains naive and advanced construction
+methods, static methods were written as explicit as possible and were
+factorized to facilitate algorithmic readability.
 
-@author: KugelBlitZZZ
+@author: Ghassan Dabane
 """
 from __future__ import absolute_import
 from typing import List, Tuple
 
 class BurrosWheeler:
+    """A class to represent the Burros-Wheeler algorithm, all methods are
+    static for ease of reading and outside usability.
+    """
 
     @staticmethod
     def pprint(mat: List[str]) -> None:
