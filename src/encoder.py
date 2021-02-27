@@ -53,17 +53,13 @@ class Encoder:
         self.seq.write(self.encoded_output, compressed)
         
 
-yo = Encoder("../data/test_seq.txt")
+yo = Encoder("../data/random.txt")
 
 pb = yo.encode()
 next(pb)
 
-with open("../data/test_seq_compressed.txt") as f:
-    for line in f:
-        if line.endswith('\n'):
-            print(line)
+Sequence("../data/random_compressed.txt").read()
 
-class Decoder:
-    pass
+
     
 
