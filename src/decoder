@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Feb 28 09:38:14 2021
+
+@author: ghassan
+"""
+
+class Decoder:
+    pass
+
+seq = Sequence("../data/random_compressed.txt").read_bytes()
+
+header = seq[:seq.index('\n')]
+uni = seq[seq.index('\n')+1:]
+re_codes = HuffmanTree.header_to_codes(header)
+binary = HuffmanTree.unicode_to_binstr(uni)
+padding = int(re_codes['pad'])
+no_pad_bin = HuffmanTree.remove_padding(binary, padding)
+
+tf = HuffmanTree.binstr_to_seq(no_pad_bin, re_codes)
+bwm = BurrosWheeler.reconstruct_bwm(tf)
+original_seq = BurrosWheeler.decode_bwt(bwm)
+
+Sequence("../data/random.txt").read()

@@ -3,7 +3,7 @@
 """
 Created on Sun Feb 21 22:19:48 2021
 
-@author: ghassan
+@author: Ghassan Dabane
 """
 from __future__ import absolute_import
 from sequence import Sequence
@@ -16,13 +16,10 @@ class Encoder:
         
         self.path = path[:-4]
         self.seq = Sequence(path)
-        self.bwt= None
         self.bwt_output = self.path + '_bwt.txt'
-        self.tree = None
-        self.encoded_seq = None
         self.encoded_output = self.path + '_compressed.txt'
    
-    def encode(self: object) -> None:
+    def encode_bw(self: object) -> None:
         
         all_rots = BurrosWheeler.string_rotations(self.seq.read())
         yield all_rots
@@ -31,25 +28,21 @@ class Encoder:
         yield bwm
         
         tf = BurrosWheeler.encode_bwt(bwm)
+        self.seq.write(self.bwt_output, tf)
         yield tf
         
-        self.bwt = tf
-        self.seq.write(self.bwt_output, tf)
-        
+    def encode_huffman(self: object) -> None:
+
         tree = HuffmanTree(self.bwt)
         tree.get_codings(tree.root)
         binary = tree.seq_to_binstr()
         yield binary
-        
-        unicode = HuffmanTree.binstr_to_unicode(binary)
-        yield unicode
-        
-        self.tree = tree
-        self.encoded_seq = unicode
-        
-        compressed = tree.codes_to_header() + unicode
 
+        unicode = HuffmanTree.binstr_to_unicode(binary)
+        header = tree.codes_to_header()
+        compressed =  header + unicode
         self.seq.write_bytes(self.encoded_output, compressed)
+        yield unicode
         
 
 pfft = Encoder("../data/random.txt")
@@ -57,25 +50,3 @@ pfft = Encoder("../data/random.txt")
 ts = pfft.encode()
 
 next(ts)
-
-############################################
-class Decoder:
-    pass
-
-seq = Sequence("../data/random_compressed.txt").read_bytes()
-
-header = seq[:seq.index('\n')]
-uni = seq[seq.index('\n')+1:]
-re_codes = HuffmanTree.header_to_codes(header)
-binary = HuffmanTree.unicode_to_binstr(uni)
-padding = int(re_codes['pad'])
-no_pad_bin = HuffmanTree.remove_padding(binary, padding)
-
-tf = HuffmanTree.binstr_to_seq(no_pad_bin, re_codes)
-bwm = BurrosWheeler.reconstruct_bwm(tf)
-original_seq = BurrosWheeler.decode_bwt(bwm)
-
-
-Sequence("../data/random.txt").read()
-
-
