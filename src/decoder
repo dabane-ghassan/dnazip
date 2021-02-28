@@ -3,23 +3,45 @@
 """
 Created on Sun Feb 28 09:38:14 2021
 
-@author: ghassan
+@author: Ghassan Dabane
 """
+from __future__ import absolute_import
+from sequence import Sequence
+from burros_wheeler import BurrosWheeler
+from huffman import HuffmanTree
 
 class Decoder:
-    pass
+    
+    def __init__(self: object, path: str) -> None:
 
-seq = Sequence("../data/random_compressed.txt").read_bytes()
+        self.path = path[:-4]
+        self.seq = Sequence(path)
+        self.huffman_decode = self.path + '_debwt.txt'
+        self.bwt_decode = self.path + '_decompressed.txt'
 
-header = seq[:seq.index('\n')]
-uni = seq[seq.index('\n')+1:]
-re_codes = HuffmanTree.header_to_codes(header)
-binary = HuffmanTree.unicode_to_binstr(uni)
-padding = int(re_codes['pad'])
-no_pad_bin = HuffmanTree.remove_padding(binary, padding)
+    def decode_huffman(self: object) -> None:
 
-tf = HuffmanTree.binstr_to_seq(no_pad_bin, re_codes)
-bwm = BurrosWheeler.reconstruct_bwm(tf)
-original_seq = BurrosWheeler.decode_bwt(bwm)
+        seq = self.seq.read_bytes()
+        header = seq[:seq.index('\n')]
+        uni = seq[seq.index('\n')+1:]
+        
+        re_codes = HuffmanTree.header_to_codes(header)
 
-Sequence("../data/random.txt").read()
+        binary = HuffmanTree.unicode_to_binstr(uni)
+        
+        padding = int(re_codes['pad'])
+        no_pad_bin = HuffmanTree.remove_padding(binary, padding)
+        
+        tf = HuffmanTree.binstr_to_seq(no_pad_bin, re_codes)
+        self.seq.write(self.huffman_decode, tf)
+
+    def decode_bwt(self: object) -> None:
+
+        seq = self.seq.read()
+        bwm = BurrosWheeler.reconstruct_bwm(seq)
+        yield bwm
+
+        original_seq = BurrosWheeler.decode_bwt(bwm)
+        self.seq.write(self.bwt_decode, original_seq)
+        yield original_seq
+
