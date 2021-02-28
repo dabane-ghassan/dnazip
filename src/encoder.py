@@ -6,7 +6,6 @@ Created on Sun Feb 21 22:19:48 2021
 @author: ghassan
 """
 from __future__ import absolute_import
-import pickle
 from sequence import Sequence
 from burros_wheeler import BurrosWheeler
 from huffman import HuffmanTree
@@ -50,16 +49,27 @@ class Encoder:
         
         compressed = tree.codes_to_header() + unicode
 
-        self.seq.write(self.encoded_output, compressed)
+        self.seq.write_bytes(self.encoded_output, compressed)
         
 
-yo = Encoder("../data/random.txt")
+pfft = Encoder("../data/random.txt")
 
-pb = yo.encode()
-next(pb)
-
-Sequence("../data/random_compressed.txt").read()
+ts = pfft.encode()
 
 
-    
+next(ts)
+
+
+seq = Sequence("../data/random_compressed.txt").read_bytes()
+
+header = seq[:seq.index('\n')]
+uni = seq[seq.index('\n')+1:]
+re_codes = HuffmanTree.header_to_codes(header)
+binary = HuffmanTree.unicode_to_binstr(uni)
+padding = int(re_codes['pad'])
+no_pad_bin = HuffmanTree.remove_padding(binary, padding)
+
+HuffmanTree.binstr_to_seq(no_pad_bin, re_codes)
+Sequence("../data/random_bwt.txt").read()
+
 

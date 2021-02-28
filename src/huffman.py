@@ -24,7 +24,7 @@ class HuffmanNode(object):
         0s and 1s.
     """
     def __init__(self: object, char: str, freq: int, left: object=None, right: object=None) -> None:
-        """Class constructor.
+        """Class constructor
 
         Parameters
         ----------
@@ -32,11 +32,15 @@ class HuffmanNode(object):
             A character (Huffman coding characters).
         freq : int
             The frequency of the character.
-            DESCRIPTION.
+        left : object, optional
+            The left child of the heap node. The default is None.
+        right : object, optional
+            The right child of the heap node. The default is None.
 
         Returns
         -------
         None
+            A class instance.
 
         """
         self.char = char
@@ -159,9 +163,7 @@ class HuffmanTree(object):
     pad: int
         The padding of the sequence, i.e; the number of zeroes that was added
         to the end of sequence until it was divisible by 8 (coding in 8 bits).
-
     """
-
     def __init__(self: object, sequence: str) -> None:
         """The class constructor.
 
@@ -180,36 +182,6 @@ class HuffmanTree(object):
         self.frequency = HuffmanTree.freq_dict(self.sequence)
         self.root = self.create_tree()
         self.codes = {}
-        self.__pad = None
-
-    @property
-    def pad(self: object) -> int:
-        """Pad property getter.
-
-        Returns
-        -------
-        int
-            The number of zeroes (padding).
-
-        """
-        return self.__pad
-
-    @pad.setter
-    def pad(self: object, new: int) -> None:
-        """Pad property setter.
-
-        Parameters
-        ----------
-        new : int
-            The new value of padding, the number of zeroes.
-
-        Returns
-        -------
-        None
-            Resets the pad property.
-
-        """
-        self.__pad = new
 
     @staticmethod
     def freq_dict(sequence: str) -> Dict[str, int]:
@@ -278,10 +250,12 @@ class HuffmanTree(object):
         for char in self.sequence:
             bin_str += self.codes[char]
 
-        self.pad = 8 - len(bin_str) % 8
-        if self.pad != 0:
-            for p in range(0, self.pad, 1):
+        pad = 8 - len(bin_str) % 8
+        if pad != 0:
+            for p in range(0, pad, 1):
                 bin_str += '0'
+                
+        self.codes['pad'] = str(pad) #Save the padding value to codes
 
         return bin_str
 
@@ -342,5 +316,3 @@ class HuffmanTree(object):
             c, p = code.split(",")
             reconstructed_codes[c] = p
         return reconstructed_codes
-        
-            

@@ -24,10 +24,21 @@ class Sequence:
             for line in f:
                 seq += line     
         return seq
+    
+    def read_bytes(self: object) -> str:
+        seq = ""
+        with open(self.path, 'rb') as f:
+            for line in f:
+                seq += line.decode("utf-8")     
+        return seq
         
     def write(self: object, out: str, content: str) -> None:
         with open(out, 'w') as f:
             f.writelines(content)
+            
+    def write_bytes(self: object, out: str, content: str) -> None:
+        with open(out, 'wb') as f:
+            f.write(content.encode("utf-8"))
 
 class RandomSequence(Sequence):
     
