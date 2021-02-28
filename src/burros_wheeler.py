@@ -107,7 +107,7 @@ class BurrosWheeler:
     @staticmethod
     def reconstruct_bwm(bwt: str) -> List[str]:
         """This method reconstructs the Burros-Wheeler Matrix given the
-        corresponding Burros-Wheeler Transform. The naive algortihm for
+        corresponding Burros-Wheeler Transform. The naive algorithm for
         constructing the matrix given the transform is going to iteratively
         add the transform as a left column, then sorts lexicographically
         the columns.

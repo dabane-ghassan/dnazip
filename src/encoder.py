@@ -56,9 +56,11 @@ pfft = Encoder("../data/random.txt")
 
 ts = pfft.encode()
 
-
 next(ts)
 
+############################################
+class Decoder:
+    pass
 
 seq = Sequence("../data/random_compressed.txt").read_bytes()
 
@@ -69,7 +71,11 @@ binary = HuffmanTree.unicode_to_binstr(uni)
 padding = int(re_codes['pad'])
 no_pad_bin = HuffmanTree.remove_padding(binary, padding)
 
-HuffmanTree.binstr_to_seq(no_pad_bin, re_codes)
-Sequence("../data/random_bwt.txt").read()
+tf = HuffmanTree.binstr_to_seq(no_pad_bin, re_codes)
+bwm = BurrosWheeler.reconstruct_bwm(tf)
+original_seq = BurrosWheeler.decode_bwt(bwm)
+
+
+Sequence("../data/random.txt").read()
 
 
