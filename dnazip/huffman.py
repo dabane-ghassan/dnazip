@@ -163,6 +163,7 @@ class HuffmanTree(object):
     pad: int
         The padding of the sequence, i.e; the number of zeroes that was added
         to the end of sequence until it was divisible by 8 (coding in 8 bits).
+
     """
     def __init__(self: object, sequence: str) -> None:
         """The class constructor.
