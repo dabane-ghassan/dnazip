@@ -207,11 +207,11 @@ class HuffmanTree(object):
                 f_dict[c] = 1
         return f_dict
 
-    def create_tree(self: object) -> None:
+    def create_tree(self: object) -> HuffmanNode:
+        
 
         leafs = []
         for char, freq in self.frequency.items():
-
             leafs.append(HuffmanNode(char, freq))
 
         while len(leafs) > 1:

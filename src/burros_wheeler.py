@@ -13,7 +13,6 @@ class BurrosWheeler:
     """A class to represent the Burros-Wheeler algorithm, all methods are
     static for ease of reading and outside usability.
     """
-
     @staticmethod
     def pprint(mat: List[str]) -> None:
         """Pretty print, this method prints a burros wheeler matrix
