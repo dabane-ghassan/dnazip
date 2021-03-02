@@ -10,58 +10,56 @@ from sequence import Sequence
 from burros_wheeler import BurrosWheeler
 from huffman import HuffmanTree
 
-class Decoder:
+class HuffDecoder:
 
     def __init__(self: object, path: str) -> None:
 
         self.path = path[:-4]
         self.seq = Sequence(path)
-        self.huffman_decode = Sequence(self.path + '_debwt.txt')
-        self.bwt_decode = Sequence(self.path + '_decompressed.txt')
+        self.dehuffman_output = self.path + '_dehuff.txt'
+        self.binary = None
+        self.decompressed = None
 
-    def decode_huffman(self: object) -> None:
+    def decode(self: object) -> None:
 
         seq = self.seq.read_bytes()
         header = seq[:seq.index('\n')]
         uni = seq[seq.index('\n')+1:]
-
-
         re_codes = HuffmanTree.header_to_codes(header)
-
-
         binary = HuffmanTree.unicode_to_binstr(uni)
-
         padding = int(re_codes['pad'])
-        no_pad_bin = HuffmanTree.remove_padding(binary, padding)
+        self.binary = HuffmanTree.remove_padding(binary, padding)
+        self.decompressed = HuffmanTree.binstr_to_seq(self.binary, re_codes)
+        Sequence(self.dehuffman_output).write(self.decompressed)
 
-
-        tf = HuffmanTree.binstr_to_seq(no_pad_bin, re_codes)
-        self.huffman_decode.write(tf)
-
-
-    def decode_bwt(self: object) -> None:
-
-        seq = self.huffman_decode.read()
-        bwm = BurrosWheeler.reconstruct_bwm(seq)
-
-
-        original_seq = BurrosWheeler.decode_bwt(bwm)
-        self.bwt_decode.write(original_seq)
+class BWDecoder:
+    
+    def __init__(self: object, path: str) -> None:
         
-    def full_protocol(self: object) -> None:
-        pass
+        self.path = path[:-4]
+        self.seq = Sequence(path)
+        self.debwt_output = self.path + '_debwt.txt'
+        self.bwm = None
+        self.original = None
+        
+    def decode(self: object) -> None:
 
-###########test
-"""
-RandomSequence('../data/randseq2kb.txt', 2000).generate()
-yo = Encoder('../data/randseq2kb.txt')
-pf = yo.encode_bw()
-next(pf)
-pft = yo.encode_huffman()
-next(pft)
-yo = Decoder('../data/randseq2kb_compressed.txt')
-pf = yo.decode_huffman()
-next(pf)
-pft = yo.decode_bwt()
-next(pft)
-"""
+        self.bwm = BurrosWheeler.reconstruct_bwm(self.seq.read())
+        self.original = BurrosWheeler.decode_bwt(self.bwm)
+        Sequence(self.debwt_output).write(self.original)
+
+class FullDecoder:
+
+    def __init__(self: object, path: str) -> None:
+        
+        self.path = path
+        self.huff_decoder = None
+        self.bw_decoder = None
+        
+    def full_unzip(self: object) -> None:
+
+        self.huff_decoder = HuffDecoder(self.path)
+        self.huff_decoder.decode()
+
+        self.bw_decoder = BWDecoder(self.huff_decoder.dehuffman_output)
+        self.bw_decoder.decode()

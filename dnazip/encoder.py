@@ -53,8 +53,9 @@ class FullEncoder:
     def __init__(self: object, path: str) -> None:
 
         self.path = path
-        
-        
+        self.bw_encoder = None
+        self.huff_encoder = None
+
     def full_zip(self: object) -> None:
 
         self.bw_encoder = BWEncoder(self.path)
@@ -62,9 +63,3 @@ class FullEncoder:
         
         self.huff_encoder = HuffEncoder(self.bw_encoder.bwt_output)
         self.huff_encoder.encode()
-
-
-yo = FullEncoder("../data/randseq2kb.txt")
-yo.full_zip()
-
-yo.huff_encoder.compressed
