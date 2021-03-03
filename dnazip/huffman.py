@@ -209,6 +209,14 @@ class HuffmanTree(object):
         return f_dict
 
     def create_tree(self: object) -> HuffmanNode:
+        """The main algorithm for creating The Huffman tree.
+
+        Returns
+        -------
+        HuffmanNode
+            The root node of the tree.
+
+        """
         
 
         leafs = []
@@ -234,6 +242,22 @@ class HuffmanTree(object):
         return leafs[0]
 
     def get_codings(self: object, node: HuffmanNode, val: str='') -> None:
+        """A depth-first search recursive algorithm to find the paths of each
+        character in the tree.
+
+        Parameters
+        ----------
+        node : HuffmanNode
+            The starting node, the root of the tree.
+        val : str, optional
+            The path of the current recursion in a tree. The default is ''.
+
+        Returns
+        -------
+        None
+            Fills the codes dictionary property of the Huffman Tree.
+
+        """
 
         curr_path = val + node.dir
 
@@ -246,6 +270,19 @@ class HuffmanTree(object):
             self.codes[node.char] = curr_path
     
     def seq_to_binstr(self: object) -> str:
+        """This method transforms the current sequence of the Huffman tree
+        to a binary sequence using the codes (paths of every character), it 
+        also adds a padding to the end of the binary sequence (a variable 
+        number of zeroes, when sequence is divisible by 8 then add 8 zeroes
+        by default). The binary sequence will be coded in 8-bits later.
+        It saves the padding in the codes property.
+
+        Returns
+        -------
+        str
+            The binary sequence.
+
+        """
 
         bin_str = ""
         for char in self.sequence:
@@ -262,6 +299,19 @@ class HuffmanTree(object):
 
     @staticmethod
     def binstr_to_unicode(bin_str: str) -> str:
+        """This method codes a binary sequence in 8-bits in UTF-8.
+
+        Parameters
+        ----------
+        bin_str : str
+            The binary sequence to be coded.
+
+        Returns
+        -------
+        str
+            The unicode string that corrsponds to the binary sequence.
+
+        """
 
         unicode = ""
         for b in range(0, len(bin_str), 8):
@@ -273,6 +323,19 @@ class HuffmanTree(object):
 
     @staticmethod
     def unicode_to_binstr(unicode: str) -> str:
+        """Transforms a unicode sequence to a binary sequence.
+
+        Parameters
+        ----------
+        unicode : str
+            The unicode sequence to be transformed.
+
+        Returns
+        -------
+        str
+            The corrsponding binary string.
+
+        """
 
         bin_str = ""
         for u in unicode:
@@ -283,11 +346,45 @@ class HuffmanTree(object):
 
     @staticmethod
     def remove_padding(bin_str: str, pad: int) -> str:
+        """This function removes the padding from a given binary sequence,
+        the padding is normally a variable number of zeroes added when coding
+        in 8-bits.
+        
+        Parameters
+        ----------
+        bin_str : str
+            The binary string to be stripped from a sequence of zeroes.
+        pad : int
+            The padding, the number of zeroes at the end of the binary 
+            sequence.
+
+        Returns
+        -------
+        str
+            The no-padded binary string.
+
+        """
 
         return bin_str[:-pad]
     
     @staticmethod
     def binstr_to_seq(bin_str: str, codes: Dict[str, str]) -> str:
+        """Transforms a binary string to a sequence given a codes dictionary
+        of paths.
+
+        Parameters
+        ----------
+        bin_str : str
+            The binary string to be transformed.
+        codes : Dict[str, str]
+            A dictionary of characters alongside their paths.
+
+        Returns
+        -------
+        str
+            The original sequence.
+
+        """
 
         original_seq = ""
         reading_stream = ""
@@ -302,15 +399,39 @@ class HuffmanTree(object):
         return original_seq
 
     def codes_to_header(self: object) -> str:
+        """This method transforms the codes of a given Huffman tree object
+        into a header to be saved in the compressed file (useful for
+        when decompressing later).
+
+        Returns
+        -------
+        str
+            The header of the compressed file.
+
+        """
 
         header = ""
         for c, p in self.codes.items():
             header += c + "," + p + ";"
             
         return header + "\n"
-    
+
     @staticmethod
     def header_to_codes(header: str) -> Dict[str, str]:
+        """This method takes the header of a compressed file and transforms
+        it into a codes dictionary that's useful when decompressing a sequence.
+
+        Parameters
+        ----------
+        header : str
+            The header of the compressed file.
+
+        Returns
+        -------
+        Dict[str, str]
+            A codes dictionary which maps from characters to thier given paths.
+
+        """
         
         reconstructed_codes = {}
         for code in header.split(";")[:-1]:

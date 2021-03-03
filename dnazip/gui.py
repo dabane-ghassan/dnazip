@@ -36,5 +36,4 @@ with window("Main"):
     with window("Welcome", autosize=True):
         add_text("")
 
-
 start_dearpygui(primary_window="Main")
