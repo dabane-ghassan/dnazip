@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Feb 28 09:38:14 2021
+"""Decoder classes, Controller architecture.
 
 @author: Ghassan Dabane
 """
