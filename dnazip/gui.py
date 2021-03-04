@@ -1,45 +1,61 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 
-from dearpygui.core import *
-from dearpygui.simple import *
+# coding: utf-8
+
 import os
-os.chdir(os.path.expanduser('~'))
+from tkinter import Button
+from tkinter import Entry
+from tkinter import filedialog 
+from tkinter import Label
+from tkinter import Menu
+from tkinter import StringVar
+from tkinter import Tk
+from tkinter import messagebox
+"""
+Class Interface of dnazip.
 
-def file_picker(sender, data):
-    open_file_dialog(callback=apply_selected_file, extensions=".*")
-
-def apply_selected_file(sender, data):
-
-    log_debug(data)  # so we can see what is inside of data
-    directory = data[0]
-    file = data[1]
-    set_value("directory", directory)
-    set_value("file", file)
-    set_value("file_path", f"{directory}/{file}")
-
-with window("Main"):
-
-    set_theme("Red")
-    add_button("Select file", callback=file_picker)
-    add_text("Chosen file: ")
-    add_same_line()
-    add_label_text("##filepath", source="file_path", color=[255, 0, 0])
-
-    with window("Welcome", autosize=True):
-        add_text("Welcome to dnazip!")
-     
-    with window("Burros-Wheeler Transform"):
-        add_button("Next")
-        
-    with window("Huffman Coding"):
-        add_button("Next")
-        
-    with window("Burros-Wheeler Detransform"):
-        add_button("Next")
-        
-    with window("Huffman Decoding"):
-        add_button("Next")
+@author : Ghassan DABANE
+"""
+class Interface(Tk):
     
+    def __init__(self):
+        
+        super().__init__()
+        self.widgets_labs = {}
+        self.widgets_entry = {}
+        self.widgets_button = {}
+        self.buttons = ["Chercher", "Inserer", "Effacer"]
+        self.modelListFields = []
+        self.fileName = None
 
-start_dearpygui(primary_window="Main")
+    def open_file(self):
+        self.fileName = filedialog.askopenfilename(initialdir= os.getcwd(),title="Select File",filetypes=(("Text Files", "*.txt"),("all files","*.*"))) 
+        #self.controller.set_model_config(self.fileName)
+
+    def create_menu(self):
+        menubar = Menu(self)
+
+        menuFile = Menu(menubar, tearoff=0)
+        menuFile.add_command(label="Open", command=self.open_file, accelerator="Ctrl+o")
+        menuFile.add_separator()
+        menuFile.add_command(label="Quit", command=self.quit, accelerator="Ctrl+q")
+        menubar.add_cascade( label="File", menu=menuFile)
+        self.bind_all("<Control-q>", self.quit)
+        self.bind_all("<Control-o>", lambda e: self.open_file())
+
+        self.config(menu=menubar)
+
+    def main(self):
+        print("[View] main")
+        self.title("dnazip")
+        self.create_menu()
+        self.mainloop()
+        
+    def quit(self):
+        self.controller.save()
+        self.destroy()
+
+yo = Interface()
+yo.main()
+    

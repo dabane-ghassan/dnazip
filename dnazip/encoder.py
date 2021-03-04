@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Feb 21 22:19:48 2021
+"""Encoder classes, Controller architecture.
 
 @author: Ghassan Dabane
 """
