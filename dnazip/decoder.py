@@ -5,6 +5,7 @@
 @author: Ghassan Dabane
 """
 from __future__ import absolute_import
+import os
 from sequence import Sequence
 from burros_wheeler import BurrosWheeler
 from huffman import HuffmanTree
@@ -13,7 +14,7 @@ class HuffDecoder:
 
     def __init__(self: object, path: str) -> None:
 
-        self.path = path[:-4]
+        self.path = os.path.splitext(path)[0]
         self.seq = Sequence(path)
         self.dehuffman_output = self.path + '_dehuff.txt'
         self.binary = None
@@ -35,7 +36,7 @@ class BWDecoder:
     
     def __init__(self: object, path: str) -> None:
         
-        self.path = path[:-4]
+        self.path = os.path.splitext(path)[0]
         self.seq = Sequence(path)
         self.debwt_output = self.path + '_debwt.txt'
         self.bwm = None

@@ -5,6 +5,7 @@
 @author: Ghassan Dabane
 """
 from __future__ import absolute_import
+import os
 from sequence import Sequence
 from burros_wheeler import BurrosWheeler
 from huffman import HuffmanTree
@@ -13,7 +14,7 @@ class BWEncoder:
 
     def __init__(self: object, path: str) -> None:
 
-        self.path = path[:-4]
+        self.path = os.path.splitext(path)[0]
         self.seq = Sequence(path)
         self.bwt_output = self.path + '_bwt.txt'
         self.rotations = None
@@ -31,7 +32,7 @@ class HuffEncoder:
     
     def __init__(self: object, path: str) -> None:
 
-        self.path = path[:-4]
+        self.path = os.path.splitext(path)[0]
         self.seq = Sequence(path)
         self.huff_output = self.path + '_compressed.txt'
         self.binary = None

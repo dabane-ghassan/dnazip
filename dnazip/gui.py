@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
-
-# coding: utf-8
-
 import os
 from tkinter import Button
 from tkinter import Entry
@@ -27,15 +24,19 @@ class Interface(Tk):
         self.widgets_button = {}
         self.buttons = ["Chercher", "Inserer", "Effacer"]
         self.modelListFields = []
-        self.fileName = None
+        self.file = None
 
     def open_file(self):
-        self.fileName = filedialog.askopenfilename(initialdir= os.getcwd(),title="Select File",filetypes=(("Text Files", "*.txt"),("all files","*.*"))) 
+
+        self.file = filedialog.askopenfilename(
+            initialdir= os.getcwd(),title="Select File",filetypes=(
+                ("Text Files", "*.txt"),("all files","*.*")))
+
         #self.controller.set_model_config(self.fileName)
 
     def create_menu(self):
+        
         menubar = Menu(self)
-
         menuFile = Menu(menubar, tearoff=0)
         menuFile.add_command(label="Open", command=self.open_file, accelerator="Ctrl+o")
         menuFile.add_separator()
