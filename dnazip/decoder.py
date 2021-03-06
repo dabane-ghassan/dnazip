@@ -33,7 +33,7 @@ class HuffDecoder:
         Sequence(self.dehuffman_output).write(self.decompressed)
 
 class BWDecoder:
-    
+
     def __init__(self: object, path: str) -> None:
         
         self.path = os.path.splitext(path)[0]

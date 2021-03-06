@@ -72,7 +72,7 @@ class Sequence:
         seq = ""
         with open(self.path, 'r') as f:
             for line in f:
-                seq += line     
+                seq += line.strip("\n")     
         return seq
 
     def read_bytes(self: object) -> str:
