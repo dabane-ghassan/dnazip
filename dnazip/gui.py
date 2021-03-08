@@ -5,7 +5,6 @@ from tkinter import Tk, Button, Toplevel, filedialog, Menu, messagebox, Label, S
 from sequence import Sequence, RandomSequence
 from decoder import HuffDecoder, BWDecoder, FullDecoder
 from encoder import HuffEncoder, BWEncoder, FullEncoder
-from burros_wheeler import BurrosWheeler
 
 """
 Class Interface of the main application.
@@ -138,10 +137,11 @@ class Interface(Tk):
 
     def Huff_output(self, controller):
 
-        controller = HuffEncoder(self.file)
         controller.encode()
         yield controller.seq.read()
+        yield controller.header
         yield controller.binary
+        yield controller.unicode
         yield controller.compressed
 
     def huffcode_window(self):
@@ -150,6 +150,26 @@ class Interface(Tk):
             huff_code_window = Toplevel(self)
             huff_code_window.title("Huffman coding")
             huff_code_window.geometry("600x600")
+            names = (step for step in ["Step 1 : Visualizing the sequence",
+                     "Step 2: Creating Huffman tree from sequence and calculating paths",
+                     "Step 3: Generating the binary sequence from paths and adding a padding",
+                     "Step 4: Coding the binary in 8-bits to unicode",
+                     "Step 5: Writing paths and unicode to an output file",
+                     "Please refer to the main menu to select another sequence"])
+
+            steps = StringVar()
+            Label(huff_code_window, textvariable=steps).pack()
+            controller = HuffEncoder(self.file)
+            protocol = self.Huff_output(controller)
+            lab_content = StringVar()
+            lab_content.set("Please press on the button below to start")
+            Label(huff_code_window, textvariable=lab_content).pack()
+            Button(huff_code_window, text="Next", 
+                   command=lambda : [lab_content.set(
+                       self.next_btn(protocol)),steps.set(
+                           self.next_btn(names))]).pack(side="bottom")
+            
+            self.program_output(huff_code_window, controller.huff_output)
         else: 
             self.no_file_error()
 

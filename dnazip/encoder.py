@@ -36,6 +36,8 @@ class HuffEncoder:
         self.seq = Sequence(path)
         self.huff_output = self.path + '_compressed.txt'
         self.binary = None
+        self.header = None
+        self.unicode = None
         self.compressed = None
 
     def encode(self: object) -> None:
@@ -43,9 +45,9 @@ class HuffEncoder:
         tree = HuffmanTree(self.seq.read())
         tree.get_codings(tree.root)
         self.binary = tree.seq_to_binstr()
-        unicode = HuffmanTree.binstr_to_unicode(self.binary)
-        header = tree.codes_to_header()
-        self.compressed =  header + unicode
+        self.unicode = HuffmanTree.binstr_to_unicode(self.binary)
+        self.header = tree.codes_to_header()
+        self.compressed =  self.header + self.unicode
         Sequence(self.huff_output).write_bytes(self.compressed)
 
 class FullEncoder:
