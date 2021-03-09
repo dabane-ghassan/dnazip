@@ -18,15 +18,17 @@ class HuffDecoder:
         self.seq = Sequence(path)
         self.dehuffman_output = self.path + '_dehuff.txt'
         self.binary = None
+        self.header = None
+        self.unicode = None
         self.decompressed = None
 
     def decode(self: object) -> None:
 
         seq = self.seq.read_bytes()
-        header = seq[:seq.index('\n')]
-        uni = seq[seq.index('\n')+1:]
-        re_codes = HuffmanTree.header_to_codes(header)
-        binary = HuffmanTree.unicode_to_binstr(uni)
+        self.header = seq[:seq.index('\n')]
+        self.unicode = seq[seq.index('\n')+1:]
+        re_codes = HuffmanTree.header_to_codes(self.header)
+        binary = HuffmanTree.unicode_to_binstr(self.unicode)
         padding = int(re_codes['pad'])
         self.binary = HuffmanTree.remove_padding(binary, padding)
         self.decompressed = HuffmanTree.binstr_to_seq(self.binary, re_codes)
