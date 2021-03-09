@@ -29,9 +29,8 @@ cd
 
 ## About
 
-
-### :scroll: License ? [![GitHub license](https://img.shields.io/github/license/Naereen/Lempel-Ziv_Complexity.svg)](https://github.com/Naereen/badges/blob/master/LICENSE)
-[MIT Licensed](https://lbesson.mit-license.org/) (file [LICENSE](LICENSE)).
+### :scroll: License 
+[MIT Licensed](https://lbesson.mit-license.org/)
 © [Ghassan Dabane](https://github.com/dabane-ghassan), 2021.
 
 [![Analytics](https://ga-beacon.appspot.com/UA-38514290-17/github.com/Naereen/Lempel-Ziv_Complexity/README.md?pixel)](https://GitHub.com/Naereen/Lempel-Ziv_Complexity/)
