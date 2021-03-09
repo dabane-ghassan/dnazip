@@ -24,8 +24,9 @@
 ### From source
 
 ```bash
-git clone 
-cd 
+git clone https://github.com/dabane-ghassan/dnazip.git
+cd dnazip
+python setup.py install
 ```
 
 ## Usage
