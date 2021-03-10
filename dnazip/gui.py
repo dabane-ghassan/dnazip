@@ -3,7 +3,7 @@
 """
 View architecture of the main application, i.e; a GUI.
 
-@author : Ghassan DABANE
+@author : Ghassan Dabane
 """
 import os
 from tkinter import Tk, Button, Toplevel, filedialog, Menu, messagebox, Label, StringVar
@@ -86,6 +86,19 @@ class Interface(Tk):
             return "The protocole is finished"
     
     def step_by_step(self: object, window: Tk, protocol: Iterator[str], names: Generator)-> None:
+        """This method creates a step by step advancing interface for a given
+        chosen protocole.
+
+        Parameters
+        ----------
+        window : Tk
+            The given window.
+        protocol : Iterator[str]
+            The output protocol to be displayed.
+        names : Generator
+            The names of the steps to be displayed.
+
+        """
         
         steps = StringVar()
         Label(window, textvariable=steps).pack()
@@ -138,23 +151,7 @@ class Interface(Tk):
             protocol = self.BW_output(controller)
             self.step_by_step(bwt_window, protocol, names)
             self.program_output(bwt_window, controller.bwt_output)
-            
-            """
-            steps = StringVar()
-            Label(bwt_window, textvariable=steps).pack()
-            controller = BWEncoder(self.file)
-            controller.encode()
-            protocol = self.BW_output(controller)
-            lab_content = StringVar()
-            lab_content.set("Please press on the button below to start")
-            Label(bwt_window, textvariable=lab_content).pack()
-            Button(bwt_window, text="Next", 
-                   command=lambda : [lab_content.set(
-                       self.next_btn(protocol)),steps.set(
-                           self.next_btn(names))]).pack(side="bottom")
-            
-            self.program_output(bwt_window, controller.bwt_output)
-            """
+
         else: 
             self.no_file_error()
 
@@ -198,22 +195,7 @@ class Interface(Tk):
             protocol = self.DeBW_output(controller)
             self.step_by_step(debwt_window, protocol, names)
             self.program_output(debwt_window, controller.debwt_output)
-            """
-            steps = StringVar()
-            Label(debwt_window, textvariable=steps).pack()
-            controller = BWDecoder(self.file)
-            controller.decode()
-            protocol = self.DeBW_output(controller)
-            lab_content = StringVar()
-            lab_content.set("Please press on the button below to start")
-            Label(debwt_window, textvariable=lab_content).pack()
-            Button(debwt_window, text="Next", 
-                   command=lambda : [lab_content.set(
-                       self.next_btn(protocol)),steps.set(
-                           self.next_btn(names))]).pack(side="bottom")
-            
-            self.program_output(debwt_window, controller.debwt_output)
-            """
+
         else: 
             self.no_file_error()
 
@@ -242,8 +224,7 @@ class Interface(Tk):
         Huffman coding protocol, The output file of the protocol will be shown
         at the beginning.
         
-        """      
-
+        """
         if self.file:
             huff_code_window = Toplevel(self)
             huff_code_window.title("Huffman coding")
@@ -259,22 +240,7 @@ class Interface(Tk):
             protocol = self.Huff_output(controller)
             self.step_by_step(huff_code_window, protocol, names)
             self.program_output(huff_code_window, controller.huff_output)
-            """
-            steps = StringVar()
-            Label(huff_code_window, textvariable=steps).pack()
-            controller = HuffEncoder(self.file)
-            controller.encode()
-            protocol = self.Huff_output(controller)
-            lab_content = StringVar()
-            lab_content.set("Please press on the button below to start")
-            Label(huff_code_window, textvariable=lab_content).pack()
-            Button(huff_code_window, text="Next", 
-                   command=lambda : [lab_content.set(
-                       self.next_btn(protocol)),steps.set(
-                           self.next_btn(names))]).pack(side="bottom")
-            
-            self.program_output(huff_code_window, controller.huff_output)
-            """
+
         else: 
             self.no_file_error()
 
@@ -303,8 +269,7 @@ class Interface(Tk):
         Huffman decoding, The output file of the protocol will be shown at the 
         beginning.
         
-        """      
-
+        """
         if self.file:
             huff_decode_window = Toplevel(self)
             huff_decode_window.title("Huffman decoding")
@@ -315,22 +280,12 @@ class Interface(Tk):
                      "Step 4: Transforming the unicode sequence to binary using huffman codes in the header and stripping padding",
                      "Step 5: The decompressed sequence : ",
                      "Please refer to the main menu to select another sequence"])
-
-            steps = StringVar()
-            Label(huff_decode_window, textvariable=steps).pack()
             controller = HuffDecoder(self.file)
             controller.decode()
             protocol = self.deHuff_output(controller)
-            lab_content = StringVar()
-            lab_content.set("Please press on the button below to start")
-            Label(huff_decode_window, textvariable=lab_content).pack()
-            Button(huff_decode_window, text="Next", 
-                   command=lambda : [lab_content.set(
-                       self.next_btn(protocol)),steps.set(
-                           self.next_btn(names))]).pack(side="bottom")
-            
+            self.step_by_step(huff_decode_window, protocol, names)
             self.program_output(huff_decode_window, controller.dehuffman_output)
-            
+
         else: 
             self.no_file_error()   
 
@@ -378,20 +333,10 @@ class Interface(Tk):
                      "Step 7: Coding the binary in 8-bits to unicode",
                      "Step 8: Writing paths and unicode to an output file",
                      "Please refer to the main menu to select another sequence"])
-
-            steps = StringVar()
-            Label(fullzip_window, textvariable=steps).pack()
             controller = FullEncoder(self.file)
             controller.full_zip()
             protocol = self.fullzip_output(controller)
-            lab_content = StringVar()
-            lab_content.set("Please press on the button below to start")
-            Label(fullzip_window, textvariable=lab_content).pack()
-            Button(fullzip_window, text="Next", 
-                   command=lambda : [lab_content.set(
-                       self.next_btn(protocol)),steps.set(
-                           self.next_btn(names))]).pack(side="bottom")
-            
+            self.step_by_step(fullzip_window, protocol, names)
             outputs = controller.bw_encoder.bwt_output + '\n' + controller.huff_encoder.huff_output
             self.program_output(fullzip_window, outputs)
 
@@ -441,23 +386,13 @@ class Interface(Tk):
                      "Step 6: Creating the Burros-Wheeler Matrix from the decompressed sequence",
                      "Step 7: The original sequence is the one that has a $ sign as a last column in the Burros-Wheeler Matrix",
                      "Please refer to the main menu to select another sequence"])
-
-            steps = StringVar()
-            Label(fullunzip_window, textvariable=steps).pack()
             controller = FullDecoder(self.file)
             controller.full_unzip()
             protocol = self.fullunzip_output(controller)
-            lab_content = StringVar()
-            lab_content.set("Please press on the button below to start")
-            Label(fullunzip_window, textvariable=lab_content).pack()
-            Button(fullunzip_window, text="Next", 
-                   command=lambda : [lab_content.set(
-                       self.next_btn(protocol)),steps.set(
-                           self.next_btn(names))]).pack(side="bottom")
-
+            self.step_by_step(fullunzip_window, protocol, names)
             outputs = controller.huff_decoder.dehuffman_output + '\n' + controller.bw_decoder.debwt_output
             self.program_output(fullunzip_window, outputs)
-            
+
         else: 
             self.no_file_error()
 
