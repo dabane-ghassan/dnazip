@@ -7,15 +7,22 @@ View architecture of the main application, i.e; a GUI.
 """
 import os
 from tkinter import Tk, Button, Toplevel, filedialog, Menu, messagebox, Label, StringVar
-from typing import Iterator
+from typing import Iterator, Generator
 from decoder import HuffDecoder, BWDecoder, FullDecoder
 from encoder import HuffEncoder, BWEncoder, FullEncoder
 
 class Interface(Tk):
     """View class of the application using a Tkinter interface."""
-    
-    def __init__(self: object) -> None:
 
+    def __init__(self: object) -> None:
+        """Class constructor
+
+        Returns
+        -------
+        None
+            An interface instance.
+
+        """
         super().__init__()
         self.title("dnazip")
         self.create_menu()
@@ -23,7 +30,7 @@ class Interface(Tk):
         self.file = None
     
     def create_buttons(self: object) -> None:
-
+        """This method creates buttons for the interface."""
         buttons = {"BWT": Button(
             self, text="BWT", command=self.bwt_window).grid(row=0,column=0),
                    "DEBWT": Button(
@@ -44,7 +51,7 @@ class Interface(Tk):
         self.buttons = buttons
 
     def open_file(self: object) -> None:
-
+        """This method is used to create a file chooser for the interface."""
         self.file = filedialog.askopenfilename(
             initialdir= os.getcwd(),title="Select File",filetypes=(
                 ("Text Files", "*.txt"),("all files","*.*")))
@@ -53,8 +60,21 @@ class Interface(Tk):
             messagebox.showinfo("Selected file", "You have selected %s"%(
                 self.file))
 
-    def next_btn(self: object, controller: Iterator[str]) -> str: 
+    def next_btn(self: object, controller: Iterator[str]) -> str:
+        """This method is used to create a universal next button for all
+        protocols of the program, it will be passed to a given label that 
+        changes its content.
 
+        Parameters
+        ----------
+        controller : Iterator[str]
+            The controller of a given protocol that contains all steps to show.
+
+        Returns
+        -------
+        str
+            Every step to be shown, one at a time.
+        """
         try:
             to_print = next(controller)
             if isinstance(to_print, list):
@@ -64,16 +84,45 @@ class Interface(Tk):
 
         except StopIteration:
             return "The protocole is finished"
+    
+    def step_by_step(self: object, window: Tk, protocol: Iterator[str], names: Generator)-> None:
+        
+        steps = StringVar()
+        Label(window, textvariable=steps).pack()
+        lab_content = StringVar()
+        lab_content.set("Please press on the button below to start")
+        Label(window, textvariable=lab_content).pack()
+        Button(window, text="Next", 
+               command=lambda : [lab_content.set(
+                   self.next_btn(protocol)),steps.set(
+                       self.next_btn(names))]).pack(side="bottom")
+
 
     def BW_output(self: object, controller: BWEncoder) -> Iterator[str]:
+        """This method is used to collect all output for the BW encoding.
 
+        Parameters
+        ----------
+        controller : BWEncoder
+            The given controller.
+
+        Yields
+        ------
+        Iterator[str]
+            The content to be shown in the interface.
+
+        """
         yield controller.seq.read()
         yield controller.rotations
         yield controller.bwm
         yield controller.bwt
 
     def bwt_window(self: object) -> None:
+        """This method creates a Tkinter Toplevel window for the step-by-step
+        BWT protocol, The output file of the protocol will be shown at the 
+        beginning.
         
+        """      
         if self.file:
             bwt_window = Toplevel(self)
             bwt_window.title("Burros-Wheeler Transform")
@@ -83,6 +132,14 @@ class Interface(Tk):
                      "Step 3: Creating the Burros-Wheeler matrix by sorting all rotations",
                      "Step 4: The Burros-Wheeler transform is the last column of the matrix",
                      "Please refer to the main menu to select another sequence"])
+
+            controller = BWEncoder(self.file)
+            controller.encode()
+            protocol = self.BW_output(controller)
+            self.step_by_step(bwt_window, protocol, names)
+            self.program_output(bwt_window, controller.bwt_output)
+            
+            """
             steps = StringVar()
             Label(bwt_window, textvariable=steps).pack()
             controller = BWEncoder(self.file)
@@ -97,17 +154,35 @@ class Interface(Tk):
                            self.next_btn(names))]).pack(side="bottom")
             
             self.program_output(bwt_window, controller.bwt_output)
-
+            """
         else: 
             self.no_file_error()
 
     def DeBW_output(self: object, controller: BWDecoder) -> Iterator[str]:
+        """This method is used to collect all output for the BW decoding.
+
+        Parameters
+        ----------
+        controller : BWDecoder
+            The given controller.
+
+        Yields
+        ------
+        Iterator[str]
+            The content to be shown in the interface.
+
+        """
 
         yield controller.seq.read()
         yield controller.bwm
         yield controller.original
 
     def debwt_window(self: object) -> None:
+        """This method creates a Tkinter Toplevel window for the step-by-step
+        inverse BWT protocol, The output file of the protocol will be shown at the 
+        beginning.
+        
+        """      
 
         if self.file:
             debwt_window = Toplevel(self)
@@ -117,6 +192,13 @@ class Interface(Tk):
                      "Step 2: Creating the Burros-Wheeler Matrix",
                      "Step 3: The original sequence is the one that has a $ sign as a last column",
                      "Please refer to the main menu to select another sequence"])
+
+            controller = BWDecoder(self.file)
+            controller.decode()
+            protocol = self.DeBW_output(controller)
+            self.step_by_step(debwt_window, protocol, names)
+            self.program_output(debwt_window, controller.debwt_output)
+            """
             steps = StringVar()
             Label(debwt_window, textvariable=steps).pack()
             controller = BWDecoder(self.file)
@@ -131,11 +213,24 @@ class Interface(Tk):
                            self.next_btn(names))]).pack(side="bottom")
             
             self.program_output(debwt_window, controller.debwt_output)
+            """
         else: 
             self.no_file_error()
 
     def Huff_output(self: object, controller: HuffEncoder) -> Iterator[str]:
+        """This method is used to collect all output for Huffman encoding.
 
+        Parameters
+        ----------
+        controller : HuffEncoder
+            The given controller.
+
+        Yields
+        ------
+        Iterator[str]
+            The content to be shown in the interface.
+
+        """
         yield controller.seq.read()
         yield controller.header
         yield controller.binary
@@ -143,6 +238,11 @@ class Interface(Tk):
         yield controller.compressed
 
     def huffcode_window(self: object) -> None:
+        """This method creates a Tkinter Toplevel window for the step-by-step
+        Huffman coding protocol, The output file of the protocol will be shown
+        at the beginning.
+        
+        """      
 
         if self.file:
             huff_code_window = Toplevel(self)
@@ -154,7 +254,12 @@ class Interface(Tk):
                      "Step 4: Coding the binary in 8-bits to unicode",
                      "Step 5: Writing paths and unicode to an output file",
                      "Please refer to the main menu to select another sequence"])
-
+            controller = HuffEncoder(self.file)
+            controller.encode()
+            protocol = self.Huff_output(controller)
+            self.step_by_step(huff_code_window, protocol, names)
+            self.program_output(huff_code_window, controller.huff_output)
+            """
             steps = StringVar()
             Label(huff_code_window, textvariable=steps).pack()
             controller = HuffEncoder(self.file)
@@ -169,11 +274,24 @@ class Interface(Tk):
                            self.next_btn(names))]).pack(side="bottom")
             
             self.program_output(huff_code_window, controller.huff_output)
+            """
         else: 
             self.no_file_error()
 
     def deHuff_output(self: object, controller: HuffDecoder) -> Iterator[str]:
+        """This method is used to collect all output for the Huff decoding.
 
+        Parameters
+        ----------
+        controller : HuffDecoder
+            The given controller.
+
+        Yields
+        ------
+        Iterator[str]
+            The content to be shown in the interface.
+
+        """
         yield controller.seq.read()
         yield controller.header
         yield controller.unicode
@@ -181,6 +299,11 @@ class Interface(Tk):
         yield controller.decompressed
 
     def huffdecode_window(self: object) -> None:
+        """This method creates a Tkinter Toplevel window for the step-by-step
+        Huffman decoding, The output file of the protocol will be shown at the 
+        beginning.
+        
+        """      
 
         if self.file:
             huff_decode_window = Toplevel(self)
@@ -213,7 +336,20 @@ class Interface(Tk):
 
 
     def fullzip_output(self: object, controller: FullEncoder) -> Iterator[str]:
+        """This method is used to collect all output for a full protocol
+        encoding (BWT + Huffman compression).
 
+        Parameters
+        ----------
+        controller : FullEncoder
+            The given controller.
+
+        Yields
+        ------
+        Iterator[str]
+            The content to be shown in the interface.
+
+        """
         yield controller.bw_encoder.seq.read()
         yield controller.bw_encoder.rotations
         yield controller.bw_encoder.bwm
@@ -224,7 +360,11 @@ class Interface(Tk):
         yield controller.huff_encoder.compressed
 
     def fullzip_window(self: object) -> None:
+        """This method creates a Tkinter Toplevel window for the step-by-step
+        Fullzip protocol (BWT+Huffman compression), The output file of the 
+        protocol will be shown at the beginning.
 
+        """
         if self.file:
             fullzip_window = Toplevel(self)
             fullzip_window.title("Burrow-Wheeler Transform + Huffman coding")
@@ -259,7 +399,20 @@ class Interface(Tk):
             self.no_file_error()
             
     def fullunzip_output(self: object, controller: FullDecoder) -> Iterator[str]:
-  
+        """This method is used to collect all output for a full decompression 
+        protocol.
+
+        Parameters
+        ----------
+        controller : FullDecoder
+            The given controller.
+
+        Yields
+        ------
+        Iterator[str]
+            The content to be shown in the interface.
+
+        """
         yield controller.huff_decoder.seq.read()
         yield controller.huff_decoder.header
         yield controller.huff_decoder.unicode
@@ -269,7 +422,11 @@ class Interface(Tk):
         yield controller.bw_decoder.original
 
     def fullunzip_window(self: object) -> None:
+        """This method creates a Tkinter Toplevel window for the step-by-step
+        Full unzipping protocol (HUffman decoding + inverse BWT), The output 
+        file of the protocol will be shown at the beginning.
 
+        """
         if self.file:
 
             fullunzip_window = Toplevel(self)
@@ -305,7 +462,7 @@ class Interface(Tk):
             self.no_file_error()
 
     def create_menu(self: object) -> None:
-        
+        """Creates the menu for the interface."""
         menubar = Menu(self)
         menuFile = Menu(menubar, tearoff=0)
         menuFile.add_command(label="Open", command=self.open_file, accelerator="Ctrl+o")
@@ -314,13 +471,25 @@ class Interface(Tk):
         self.config(menu=menubar)
 
     def no_file_error(self: object) -> None:
+        """Shows an error when no file is selected."""
         messagebox.showerror("No file selected", "Please select a file")
     
     def program_output(self: object, window: Tk,  path: str) -> None:
+        """Shows the output of a given protocol.
+
+        Parameters
+        ----------
+        window : Tk
+            The given window.
+        path : str
+            The output file path to be shown in the messagebox.
+
+        """
         messagebox.showinfo(parent=window, title="Program output", message="The output will be saved to \n %s" %(
             path))
 
     def main(self: object) -> None:
+        """Launches the mainloop of the interface."""
         print("[View] main")
         messagebox.showinfo("Welcome", "Welcome to dnazip! a graphical " + \
                             "representation of Burros-Wheeler and Huffman " + \
@@ -328,6 +497,7 @@ class Interface(Tk):
         self.mainloop()
 
     def quit(self: object) -> None:
+        """Quits the current interface."""
         self.destroy()
 
 yo = Interface()
