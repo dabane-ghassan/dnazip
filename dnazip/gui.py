@@ -28,7 +28,7 @@ class Interface(Tk):
         self.create_menu()
         self.create_buttons()
         self.file = None
-    
+
     def create_buttons(self: object) -> None:
         """This method creates buttons for the interface."""
         buttons = {"BWT": Button(
@@ -84,7 +84,7 @@ class Interface(Tk):
 
         except StopIteration:
             return "The protocole is finished"
-    
+
     def step_by_step(self: object, window: Tk, protocol: Iterator[str], names: Generator)-> None:
         """This method creates a step by step advancing interface for a given
         chosen protocole.
@@ -99,17 +99,15 @@ class Interface(Tk):
             The names of the steps to be displayed.
 
         """
-        
         steps = StringVar()
         Label(window, textvariable=steps).pack()
         lab_content = StringVar()
         lab_content.set("Please press on the button below to start")
         Label(window, textvariable=lab_content).pack()
-        Button(window, text="Next", 
+        Button(window, text="Next",
                command=lambda : [lab_content.set(
                    self.next_btn(protocol)),steps.set(
                        self.next_btn(names))]).pack(side="bottom")
-
 
     def BW_output(self: object, controller: BWEncoder) -> Iterator[str]:
         """This method is used to collect all output for the BW encoding.
@@ -135,7 +133,7 @@ class Interface(Tk):
         BWT protocol, The output file of the protocol will be shown at the 
         beginning.
         
-        """      
+        """
         if self.file:
             bwt_window = Toplevel(self)
             bwt_window.title("Burros-Wheeler Transform")
@@ -152,7 +150,7 @@ class Interface(Tk):
             self.step_by_step(bwt_window, protocol, names)
             self.program_output(bwt_window, controller.bwt_output)
 
-        else: 
+        else:
             self.no_file_error()
 
     def DeBW_output(self: object, controller: BWDecoder) -> Iterator[str]:
@@ -169,7 +167,6 @@ class Interface(Tk):
             The content to be shown in the interface.
 
         """
-
         yield controller.seq.read()
         yield controller.bwm
         yield controller.original
@@ -179,7 +176,7 @@ class Interface(Tk):
         inverse BWT protocol, The output file of the protocol will be shown at the 
         beginning.
         
-        """      
+        """
 
         if self.file:
             debwt_window = Toplevel(self)
@@ -196,7 +193,7 @@ class Interface(Tk):
             self.step_by_step(debwt_window, protocol, names)
             self.program_output(debwt_window, controller.debwt_output)
 
-        else: 
+        else:
             self.no_file_error()
 
     def Huff_output(self: object, controller: HuffEncoder) -> Iterator[str]:
@@ -223,7 +220,7 @@ class Interface(Tk):
         """This method creates a Tkinter Toplevel window for the step-by-step
         Huffman coding protocol, The output file of the protocol will be shown
         at the beginning.
-        
+
         """
         if self.file:
             huff_code_window = Toplevel(self)
@@ -241,7 +238,7 @@ class Interface(Tk):
             self.step_by_step(huff_code_window, protocol, names)
             self.program_output(huff_code_window, controller.huff_output)
 
-        else: 
+        else:
             self.no_file_error()
 
     def deHuff_output(self: object, controller: HuffDecoder) -> Iterator[str]:
@@ -286,9 +283,8 @@ class Interface(Tk):
             self.step_by_step(huff_decode_window, protocol, names)
             self.program_output(huff_decode_window, controller.dehuffman_output)
 
-        else: 
+        else:
             self.no_file_error()   
-
 
     def fullzip_output(self: object, controller: FullEncoder) -> Iterator[str]:
         """This method is used to collect all output for a full protocol
@@ -342,7 +338,7 @@ class Interface(Tk):
 
         else: 
             self.no_file_error()
-            
+
     def fullunzip_output(self: object, controller: FullDecoder) -> Iterator[str]:
         """This method is used to collect all output for a full decompression 
         protocol.
@@ -373,7 +369,6 @@ class Interface(Tk):
 
         """
         if self.file:
-
             fullunzip_window = Toplevel(self)
             fullunzip_window.title("Huffman decoding + reverse Burros-Wheeler transform")
             fullunzip_window.geometry("900x900")
@@ -408,7 +403,7 @@ class Interface(Tk):
     def no_file_error(self: object) -> None:
         """Shows an error when no file is selected."""
         messagebox.showerror("No file selected", "Please select a file")
-    
+
     def program_output(self: object, window: Tk,  path: str) -> None:
         """Shows the output of a given protocol.
 

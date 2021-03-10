@@ -4,9 +4,10 @@ Huffman coding algorithm class, contains node and tree classes.
 
 @author: Ghassan Dabane
 """
+from __future__ import absolute_import
 from typing import Dict
 
-class HuffmanNode(object):
+class HuffmanNode:
     """A class to represent heap nodes of a huffman coding tree.
 
     Attributes
@@ -101,7 +102,6 @@ class HuffmanNode(object):
         None
 
         """
-        
         self.__left_child = left_child
 
     def __str__(self: object) -> str:
@@ -125,32 +125,17 @@ class HuffmanNode(object):
 
         """
         return "Node(%s, freq=%s, right=%s, left=%s)"%(self.char,
-                                                       self.freq, 
+                                                       self.freq,
                                                        self.right_child,
                                                        self.left_child)
 
-    def __eq__(self: object, other_node: object) -> bool:
-        """Checks if two nodes has the same frequency.
-
-        Parameters
-        ----------
-        other_node : object
-            The other node.
-
-        Returns
-        -------
-        bool
-
-        """
-        return self.freq == other_node.freq
-
-class HuffmanTree(object):
+class HuffmanTree:
     """A class to represent a huffman tree.
-    
+
     Attributes
     ----------
     sequence: str
-        The sequence to be encoded, i.e; the Burros-Wheeler transform of the 
+        The sequence to be encoded, i.e; the Burros-Wheeler transform of the
         sequence.
     frequency: Dict[str, int]
         A dictionary to store frequency values for each character of the
@@ -199,13 +184,12 @@ class HuffmanTree(object):
             A dictionary of character frequencies.
 
         """
-
         f_dict = {}
-        for c in sequence: 
-            if c in f_dict.keys():
-                f_dict[c] += 1
+        for char in sequence:
+            if char in f_dict.keys():
+                f_dict[char] += 1
             else:
-                f_dict[c] = 1
+                f_dict[char] = 1
         return f_dict
 
     def create_tree(self: object) -> HuffmanNode:
@@ -217,8 +201,6 @@ class HuffmanTree(object):
             The root node of the tree.
 
         """
-        
-
         leafs = []
         for char, freq in self.frequency.items():
             leafs.append(HuffmanNode(char, freq))
@@ -237,7 +219,7 @@ class HuffmanTree(object):
             right.dir = "1"
 
             new_node = HuffmanNode(new_char, new_freq, left, right)
-            leafs.append(new_node)  
+            leafs.append(new_node)
 
         return leafs[0]
 
@@ -268,11 +250,11 @@ class HuffmanTree(object):
 
         if not node.left_child and not node.right_child:
             self.codes[node.char] = curr_path
-    
+
     def seq_to_binstr(self: object) -> str:
         """This method transforms the current sequence of the Huffman tree
-        to a binary sequence using the codes (paths of every character), it 
-        also adds a padding to the end of the binary sequence (a variable 
+        to a binary sequence using the codes (paths of every character), it
+        also adds a padding to the end of the binary sequence (a variable
         number of zeroes, when sequence is divisible by 8 then add 8 zeroes
         by default). The binary sequence will be coded in 8-bits later.
         It saves the padding in the codes property.
@@ -290,9 +272,9 @@ class HuffmanTree(object):
 
         pad = 8 - len(bin_str) % 8
         if pad != 0:
-            for p in range(0, pad, 1):
+            for _ in range(0, pad, 1):
                 bin_str += '0'
-                
+
         self.codes['pad'] = str(pad) #Save the padding value to codes
 
         return bin_str
@@ -314,8 +296,8 @@ class HuffmanTree(object):
         """
 
         unicode = ""
-        for b in range(0, len(bin_str), 8):
-            eight_bits = bin_str[b:b+8]
+        for bit in range(0, len(bin_str), 8):
+            eight_bits = bin_str[bit:bit+8]
             code = int(eight_bits, 2)
             unicode += chr(code)
 
@@ -338,8 +320,8 @@ class HuffmanTree(object):
         """
 
         bin_str = ""
-        for u in unicode:
-            code = ord(u)
+        for uni in unicode:
+            code = ord(uni)
             bin_str += '{:08b}'.format(code)
 
         return bin_str
@@ -349,13 +331,13 @@ class HuffmanTree(object):
         """This function removes the padding from a given binary sequence,
         the padding is normally a variable number of zeroes added when coding
         in 8-bits.
-        
+
         Parameters
         ----------
         bin_str : str
             The binary string to be stripped from a sequence of zeroes.
         pad : int
-            The padding, the number of zeroes at the end of the binary 
+            The padding, the number of zeroes at the end of the binary
             sequence.
 
         Returns
@@ -364,9 +346,8 @@ class HuffmanTree(object):
             The no-padded binary string.
 
         """
-
         return bin_str[:-pad]
-    
+
     @staticmethod
     def binstr_to_seq(bin_str: str, codes: Dict[str, str]) -> str:
         """Transforms a binary string to a sequence given a codes dictionary
@@ -388,8 +369,8 @@ class HuffmanTree(object):
 
         original_seq = ""
         reading_stream = ""
-        for n in bin_str:
-            reading_stream += n
+        for num in bin_str:
+            reading_stream += num
             for char, path in codes.items():
                 if path == reading_stream:
                     original_seq += char
@@ -411,9 +392,9 @@ class HuffmanTree(object):
         """
 
         header = ""
-        for c, p in self.codes.items():
-            header += c + "," + p + ";"
-            
+        for char, path in self.codes.items():
+            header += char + "," + path + ";"
+
         return header + "\n"
 
     @staticmethod
@@ -432,9 +413,8 @@ class HuffmanTree(object):
             A codes dictionary which maps from characters to thier given paths.
 
         """
-        
         reconstructed_codes = {}
         for code in header.split(";")[:-1]:
-            c, p = code.split(",")
-            reconstructed_codes[c] = p
+            char, path = code.split(",")
+            reconstructed_codes[char] = path
         return reconstructed_codes

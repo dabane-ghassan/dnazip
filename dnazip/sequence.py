@@ -11,7 +11,7 @@ import random
 class Sequence:
     """A class to represent a sequence, sequences can be read from files or
     writtes to files.
-    
+
     Attributes
     ----------
     path: str
@@ -70,14 +70,14 @@ class Sequence:
 
         """
         seq = ""
-        with open(self.path, 'r') as f:
-            for line in f:
-                seq += line.strip("\n")     
+        with open(self.path, 'r') as file:
+            for line in file:
+                seq += line.strip("\n")
         return seq
 
     def read_bytes(self: object) -> str:
         """This method is used to read a file that has been written in bytes,
-        it will be useful when reading files that has been compressed with 
+        it will be useful when reading files that has been compressed with
         Huffman coding.
 
         Returns
@@ -87,9 +87,9 @@ class Sequence:
 
         """
         seq = ""
-        with open(self.path, 'rb') as f:
-            for line in f:
-                seq += line.decode("utf-8")     
+        with open(self.path, 'rb') as file:
+            for line in file:
+                seq += line.decode("utf-8")
         return seq
 
     def write(self: object, content: str) -> None:
@@ -106,9 +106,9 @@ class Sequence:
             Writes out to a new file.
 
         """
-        with open(self.path, 'w') as f:
-            f.writelines(content)
-            
+        with open(self.path, 'w') as file:
+            file.writelines(content)
+
     def write_bytes(self: object, content: str) -> None:
         """This method is used to write out to a new file into a bytes format,
         UTF-8 encoding, useful when we want to write out the contents of the
@@ -125,13 +125,13 @@ class Sequence:
             Writes out to a new file in a bytes format.
 
         """
-        with open(self.path, 'wb') as f:
-            f.write(content.encode("utf-8"))
+        with open(self.path, 'wb') as file:
+            file.write(content.encode("utf-8"))
 
 class RandomSequence(Sequence):
     """This class is used to create a random sequence of DNA and write it out
     to a file, the alphabet is ATCGN.
-    
+
     Attributes
     ----------
     path: str
@@ -155,12 +155,11 @@ class RandomSequence(Sequence):
         -------
         None
             A class instance.
-            
+
         """
-        
         super().__init__(path)
         self.length = length
-    
+
     def generate(self: object) -> None:
         """This method is used to generate the random DNA sequence using the
         random library and then write it out to a file using the parent class
