@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
+"""
+View architecture of the main application, i.e; a GUI.
+
+@author : Ghassan DABANE
+"""
 import os
 from tkinter import Tk, Button, Toplevel, filedialog, Menu, messagebox, Label, StringVar
 from typing import Iterator
 from decoder import HuffDecoder, BWDecoder, FullDecoder
 from encoder import HuffEncoder, BWEncoder, FullEncoder
 
-"""
-Class Interface of the main application.
-
-@author : Ghassan DABANE
-"""
 class Interface(Tk):
-
+    """View class of the application using a Tkinter interface."""
+    
     def __init__(self: object) -> None:
 
         super().__init__()
