@@ -19,10 +19,12 @@
 
 ## Installation
 
+- You can install the package either from pip or from the source code hosted on github.
+
 ### With pip
 
 ```bash
-pip insstall dnazip
+pip install dnazip
 ```
 
 ### From source
