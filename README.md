@@ -35,7 +35,7 @@ cd dnazip
 python setup.py install
 ```
 
-## Usage
+## Getting started
 
 ### GUI
 
