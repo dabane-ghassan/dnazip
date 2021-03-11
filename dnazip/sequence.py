@@ -128,48 +128,15 @@ class Sequence:
         with open(self.path, 'wb') as file:
             file.write(content.encode("utf-8"))
 
-class RandomSequence(Sequence):
-    """This class is used to create a random sequence of DNA and write it out
-    to a file, the alphabet is ATCGN.
-
-    Attributes
-    ----------
-    path: str
-        The path of the file to be created.
-    length: int
-        The length of the random DNA sequence to be created.
-
-    """
-
-    def __init__(self: object, path: str, length: int) -> None:
-        """Class constructor.
-
-        Parameters
-        ----------
-        path : str
-            The name of the file for the new sequence to be created (a path).
-        length : int
-            The length of the random DNA sequence to be created.
+    @staticmethod
+    def generate(length: int) -> str:
+        """This method is used to generate a random DNA sequence using the
+        random python library.
 
         Returns
         -------
-        None
-            A class instance.
+        str
+            The random DNA sequence.
 
         """
-        super().__init__(path)
-        self.length = length
-
-    def generate(self: object) -> None:
-        """This method is used to generate the random DNA sequence using the
-        random library and then write it out to a file using the parent class
-        method.
-
-        Returns
-        -------
-        None
-            Generates the random DNA sequence.
-
-        """
-        seq = ''.join([random.choice('ATCGN') for _ in range(self.length)])
-        self.write(seq)
+        return ''.join([random.choice('ATCGN') for _ in range(0, length, 1)])

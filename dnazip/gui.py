@@ -6,8 +6,10 @@ View architecture of the main application, i.e; a GUI.
 @author : Ghassan Dabane
 """
 import os
-from tkinter import Tk, Button, Toplevel, filedialog, Menu, messagebox, Label, StringVar
+from tkinter import Tk, Toplevel, filedialog, Menu, messagebox, ttk
+from tkinter import Label, Entry, Button, StringVar
 from typing import Iterator, Generator
+from sequence import Sequence
 from decoder import HuffDecoder, BWDecoder, FullDecoder
 from encoder import HuffEncoder, BWEncoder, FullEncoder
 
@@ -25,29 +27,57 @@ class Interface(Tk):
         """
         super().__init__()
         self.title("dnazip")
+        #self.geometry('600x300')
+        self.create_main()
         self.create_menu()
         self.create_buttons()
         self.file = None
 
+    def create_main(self: object) -> None:
+        
+        welcome_msg = "Welcome to dnazip! \n A graphical " + \
+            "representation of Burros-Wheeler and Huffman " + \
+            "Coding algorithms"
+        rand = "You don't have a DNA sequence? we'll generate a small " + \
+            "random one for you"
+        Label(self, text=welcome_msg, font=("Courier", 11)).grid(row=0, columnspan=3, padx=5, pady=6)
+        Label(self, text="Compression", font=("Courier", 10)).grid(row=1, columnspan=3, padx=5, pady=6)
+        Label(self, text="Decompression", font=("Courier", 10)).grid(row=5, columnspan=3, padx=5, pady=6)
+        separator_one = ttk.Separator(self, orient='horizontal')
+        separator_one.grid(row=4, columnspan=3, ipadx=500, padx=5, pady=6) 
+        Label(self, text=rand, font=("Courier", 10)).grid(row=8, columnspan=3, padx=5, pady=6)
+        self.random = StringVar()
+        self.entry = Entry(self, textvariable=self.random, width=50)
+        self.entry.grid(row=9, columnspan=3, padx=5, pady=6)
+        separator_two = ttk.Separator(self, orient='horizontal')
+        separator_two.grid(row=7, columnspan=3, ipadx=500, padx=5, pady=6) 
+
     def create_buttons(self: object) -> None:
         """This method creates buttons for the interface."""
         buttons = {"BWT": Button(
-            self, text="BWT", command=self.bwt_window).grid(row=0,column=0),
+            self, text="BWT", command=self.bwt_window, width = 15).grid(row=3,column=0, padx=5, pady=6),
                    "DEBWT": Button(
-                       self, text="reverse BWT", command=self.debwt_window).grid(
-                           row=1,column=0),
+                       self, text="reverse BWT", command=self.debwt_window,width = 15).grid(
+                           row=6,column=0, padx=5, pady=6),
                    "Huffcode": Button(
-                       self, text="Huffman coding", command=self.huffcode_window).grid(
-                           row=0,column=1),
+                       self, text="Huffman coding", command=self.huffcode_window, width = 15).grid(
+                           row=3,column=1, padx=5, pady=6),
                    "Huffdecode": Button(
-                       self, text="Huffman decoding", command=self.huffdecode_window).grid(
-                           row=1,column=1),
+                       self, text="Huffman decoding", command=self.huffdecode_window, width = 15).grid(
+                           row=6,column=1, padx=5, pady=6),
                    "fullzip": Button(
-                       self, text="Full zip", command=self.fullzip_window).grid(
-                           row=0,column=2),
+                       self, text="Full zip", command=self.fullzip_window, width = 15).grid(
+                           row=3,column=2, padx=5, pady=6),
                    "fullunzip": Button(
-                       self, text="Full unzip", command=self.fullunzip_window).grid(
-                           row=1,column=2)}
+                       self, text="Full unzip", command=self.fullunzip_window, width = 15).grid(
+                           row=6,column=2, padx=5, pady=6),
+                    "generate": Button(
+                       self, text="Generate", command=self.generate_random, width = 15).grid(
+                           row=10,column=1, padx=5, pady=6),
+                     "save": Button(
+                       self, text="Save", command=self.save_random, width = 15).grid(
+                           row=11,column=1, padx=5, pady=6)}
+
         self.buttons = buttons
 
     def open_file(self: object) -> None:
@@ -59,6 +89,32 @@ class Interface(Tk):
         if self.file:
             messagebox.showinfo("Selected file", "You have selected %s"%(
                 self.file))
+
+    def save_random(self):
+        """This method is used to save a randomly generated DNA sequence 
+        to a file.
+        """
+        path = filedialog.asksaveasfilename(
+            initialdir= os.getcwd(),title="Select File", filetypes=(
+                ("Text Files", "*.txt"), ("all files","*.*"))) 
+        seq_to_save = self.entry.get()
+        if seq_to_save != "":
+            Sequence(path).write(seq_to_save)
+            messagebox.showinfo("Sequence saved", "The sequence was saved to %s" %(
+                path))
+        else:  
+            messagebox.showerror("No sequence entered", "The sequence box is empty")
+    
+    def about(self: object) -> None:
+        """This method is used to generate the about menu page information."""
+        msg = 'This project is developed for the "Sequence Algorithms" ' + \
+            'Course as a part of The M.Sc. in Bioinformatics degree at ' + \
+                'Aix-Marseille University, France. \n' + \
+        'Source code available at: https://github.com/dabane-ghassan/dnazip'
+        messagebox.showinfo("About dnazip", msg)
+    
+    def generate_random(self: object) -> None:
+        self.random.set(Sequence.generate(length=50))
 
     def next_btn(self: object, controller: Iterator[str]) -> str:
         """This method is used to create a universal next button for all
@@ -79,8 +135,8 @@ class Interface(Tk):
             to_print = next(controller)
             if isinstance(to_print, list):
                 return '\n'.join(to_print)
-            else: 
-                return to_print
+            else:  
+                return '\n'.join([to_print[i:i+30] for i in range(0, len(to_print), 30)])
 
         except StopIteration:
             return "The protocole is finished"
@@ -99,11 +155,12 @@ class Interface(Tk):
             The names of the steps to be displayed.
 
         """
+        Button(window, text="Final step").pack(side="bottom")
         steps = StringVar()
-        Label(window, textvariable=steps).pack()
+        Label(window, textvariable=steps, font=("Courier", 7)).pack()
         lab_content = StringVar()
         lab_content.set("Please press on the button below to start")
-        Label(window, textvariable=lab_content).pack()
+        Label(window, textvariable=lab_content, font=('Courier', 10)).pack()
         Button(window, text="Next",
                command=lambda : [lab_content.set(
                    self.next_btn(protocol)),steps.set(
@@ -137,7 +194,7 @@ class Interface(Tk):
         if self.file:
             bwt_window = Toplevel(self)
             bwt_window.title("Burros-Wheeler Transform")
-            bwt_window.geometry("900x900")
+            bwt_window.geometry("1000x1000")
             names = (step for step in ["Step 1 : Visualizing the sequence",
                      "Step 2: Generating all rotations of the sequence",
                      "Step 3: Creating the Burros-Wheeler matrix by sorting all rotations",
@@ -181,7 +238,7 @@ class Interface(Tk):
         if self.file:
             debwt_window = Toplevel(self)
             debwt_window.title("Reversing Burros-Wheeler Transform")
-            debwt_window.geometry("900x900")
+            debwt_window.geometry("1000x1000")
             names = (step for step in ["Step 1 : Visualizing the sequence",
                      "Step 2: Creating the Burros-Wheeler Matrix",
                      "Step 3: The original sequence is the one that has a $ sign as a last column",
@@ -225,7 +282,7 @@ class Interface(Tk):
         if self.file:
             huff_code_window = Toplevel(self)
             huff_code_window.title("Huffman coding")
-            huff_code_window.geometry("900x900")
+            huff_code_window.geometry("1000x1000")
             names = (step for step in ["Step 1 : Visualizing the sequence",
                      "Step 2: Creating Huffman tree from sequence and calculating paths",
                      "Step 3: Generating the binary sequence from paths and adding a padding",
@@ -265,12 +322,12 @@ class Interface(Tk):
         """This method creates a Tkinter Toplevel window for the step-by-step
         Huffman decoding, The output file of the protocol will be shown at the 
         beginning.
-        
+
         """
         if self.file:
             huff_decode_window = Toplevel(self)
             huff_decode_window.title("Huffman decoding")
-            huff_decode_window.geometry("900x900")
+            huff_decode_window.geometry("1000x1000")
             names = (step for step in ["Step 1 : Visualizing the compressed sequence",
                      "Step 2: Reading the header of the file that corresponds to Huffman codes that where created with the tree during compression",
                      "Step 3: Separating the unicode sequence",
@@ -319,7 +376,7 @@ class Interface(Tk):
         if self.file:
             fullzip_window = Toplevel(self)
             fullzip_window.title("Burrow-Wheeler Transform + Huffman coding")
-            fullzip_window.geometry("900x900")  
+            fullzip_window.geometry("1000x1000")  
             names = (step for step in ["Step 1 : Visualizing the sequence",
                      "Step 2: Generating all rotations of the sequence",
                      "Step 3: Creating the Burros-Wheeler matrix by sorting all rotations",
@@ -371,7 +428,7 @@ class Interface(Tk):
         if self.file:
             fullunzip_window = Toplevel(self)
             fullunzip_window.title("Huffman decoding + reverse Burros-Wheeler transform")
-            fullunzip_window.geometry("900x900")
+            fullunzip_window.geometry("1000x1000")
 
             names = (step for step in ["Step 1 : Visualizing the compressed sequence",
                      "Step 2: Reading the header of the file that corresponds to Huffman codes that where created with the tree during compression",
@@ -387,7 +444,6 @@ class Interface(Tk):
             self.step_by_step(fullunzip_window, protocol, names)
             outputs = controller.huff_decoder.dehuffman_output + '\n' + controller.bw_decoder.debwt_output
             self.program_output(fullunzip_window, outputs)
-
         else: 
             self.no_file_error()
 
@@ -395,8 +451,11 @@ class Interface(Tk):
         """Creates the menu for the interface."""
         menubar = Menu(self)
         menuFile = Menu(menubar, tearoff=0)
-        menuFile.add_command(label="Open", command=self.open_file, accelerator="Ctrl+o")
-        menubar.add_cascade(label="File", menu=menuFile)
+        menubar.add_cascade(label="Menu", menu=menuFile)
+        #menubar.add_cascade(label="About", menu=menuFile)
+        menuFile.add_command(label="Choose a file", command=self.open_file,
+                             accelerator="Ctrl+o")
+        menuFile.add_command(label="About", command=self.about)
         self.bind_all("<Control-o>", lambda e: self.open_file())
         self.config(menu=menubar)
 
@@ -421,14 +480,10 @@ class Interface(Tk):
     def main(self: object) -> None:
         """Launches the mainloop of the interface."""
         print("[View] main")
-        messagebox.showinfo("Welcome", "Welcome to dnazip! a graphical " + \
-                            "representation of Burros-Wheeler and Huffman " + \
-                            "Coding algorithms")
         self.mainloop()
 
     def quit(self: object) -> None:
         """Quits the current interface."""
         self.destroy()
 
-yo = Interface()
-yo.main()
+Interface().main()

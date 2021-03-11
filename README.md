@@ -54,7 +54,7 @@ randseq.generate()
 ```python
 from dnazip import encoder
 zip = encoder.FullEncoder('path/to/seq')
-zip.fullzip()
+zip.full_zip()
 ```
 
 ## Documentation
