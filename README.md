@@ -19,7 +19,11 @@
 
 ## Installation
 
-### From PyPI
+### With pip
+
+```bash
+pip insstall dnazip
+```
 
 ### From source
 
@@ -33,8 +37,23 @@ python setup.py install
 
 ### GUI
 
-### GUIless demo
+### Do you want to use just the algorithms?
 
+#### Generating a random DNA sequence
+
+```python
+from dnazip import sequence
+randseq = sequence.RandomSequence('/path/to/new/seq', legnth=5000)
+randseq.generate()
+```
+
+#### Encoding a DNA sequence with Burros-Wheeler + Huffman Coding
+
+```python
+from dnazip import encoder
+zip = encoder.FullEncoder('path/to/seq')
+zip.fullzip()
+```
 
 ## Documentation
 
