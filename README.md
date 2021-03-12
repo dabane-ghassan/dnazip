@@ -45,8 +45,8 @@ python setup.py install
 
 ```python
 from dnazip import sequence
-randseq = sequence.RandomSequence('/path/to/new/seq', legnth=5000)
-randseq.generate()
+randseq = sequence.Sequence.generate(length=5000)
+sequence.Sequence('/path/to/new/seq').write(randseq)
 ```
 
 #### Encoding a DNA sequence with Burros-Wheeler + Huffman Coding
