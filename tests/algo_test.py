@@ -1,5 +1,5 @@
 # coding: utf-8
-"""Script pour tester la classe linkedList.
+"""Unitary test for the algorithms.
 
 @author: Ghassan Dabane
 """
