@@ -35,6 +35,7 @@ class Interface(Tk):
         self.file = None
 
     def create_main(self: object) -> None:
+        """This method is used to create the main menu interface of the GUI."""
         
         welcome_msg = "Welcome to dnazip! \n A graphical " + \
             "representation of Burros-Wheeler and Huffman " + \
@@ -585,5 +586,3 @@ class Interface(Tk):
     def quit(self: object) -> None:
         """Quits the current interface."""
         self.destroy()
-
-Interface().main()
