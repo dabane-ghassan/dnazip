@@ -3,10 +3,6 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-#REQUIREMENTS = [
-#    'python3-tk==8.6',
-#]
-
 setuptools.setup(
     name='dnazip',
     version='1.0.0',

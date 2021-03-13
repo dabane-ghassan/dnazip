@@ -198,7 +198,7 @@ class Interface(Tk):
         yscrollbar.pack(side=RIGHT, fill=Y)
 
         # Text Widget
-        text = Text(window, wrap=NONE, width=100, height=60,
+        text = Text(window, wrap=NONE, width=100, height=40,
                     xscrollcommand=xscrollbar.set,
                     yscrollcommand=yscrollbar.set)
         text.place(relx = 0.5,
