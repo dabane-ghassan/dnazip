@@ -3,26 +3,26 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-# REQUIREMENTS = [
-#     'requests >= 1.0.0',
-# ]
+#REQUIREMENTS = [
+#    'python3-tk==8.6',
+#]
 
 setuptools.setup(
     name='dnazip',
     version='1.0.0',
-    description='Your project description here',  # noqa
+    description='A Python implementation of the Burros-Wheeler and Huffman coding algorithms',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='http://github.com/USERNAME/PROJECT_NAME',
-    author='USERNAME',
+    url='http://github.com/dabane-ghassan/dnazip',
+    author='dabane-ghassan',
     license='MIT',
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(include=['dnazip', 'dnazip.*']),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    # install_requires=REQUIREMENTS,
+    #install_requires=REQUIREMENTS,
     extras_require={
         'dev': [
             'pytest >= 6.0.0',
@@ -33,8 +33,8 @@ setuptools.setup(
         ]
     },
     entry_points={
-        'console_scripts': [
-            'PROJECT_NAME=python_project.my_module:main'
+        'gui_scripts': [
+            'dnazip=dnazip.main:main'
         ]
     },
     python_requires='>=3.6',

@@ -6,8 +6,12 @@ Main script to launch the GUI.
 @author: Ghassan Dabane
 """
 from __future__ import absolute_import
-from interface import Interface
+from dnazip.interface import Interface
 
-if __name__ == "__main__":
+def main() -> None:
+    """Launches the GUI."""
     GUI = Interface()
     GUI.main()
+
+if __name__ == "__main__":
+    main()

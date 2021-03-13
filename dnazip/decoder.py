@@ -6,9 +6,9 @@
 """
 from __future__ import absolute_import
 import os
-from sequence import Sequence
-from burros_wheeler import BurrosWheeler
-from huffman import HuffmanTree
+from dnazip.sequence import Sequence
+from dnazip.burros_wheeler import BurrosWheeler
+from dnazip.huffman import HuffmanTree
 
 class HuffDecoder:
     """A decoder class for Huffman decompression, it is used as a controller
