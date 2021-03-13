@@ -53,9 +53,11 @@ class BurrosWheeler:
         all_rotations = []
 
         for i in range(0, len(seq), 1):
-            all_rotations.append(double_seq[i:i+len(seq)])
 
-        return all_rotations
+            rot = double_seq[i:i+len(seq)]
+            all_rotations.append(rot)
+
+            yield [rot for rot in all_rotations]
 
     @staticmethod
     def construct_bwm(rotations: List[str]) -> List[str]:
@@ -122,18 +124,19 @@ class BurrosWheeler:
             A Burros-Wheeler Matrix.
 
         """
-
         bwm = []
         # first loop to create seeds for lines O(n)
         for _ in range(0, len(bwt), 1):
             bwm.append('')
 
         for _ in range(0, len(bwt), 1):
+
             for i in range(0, len(bwt), 1):
                 bwm[i] = bwt[i] + bwm[i]
+ 
+            yield [line for line in bwm]
             bwm.sort()
-
-        return bwm
+            yield [line for line in bwm]
 
     @staticmethod
     def decode_bwt(matrix: List[str]) -> str:

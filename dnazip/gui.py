@@ -42,15 +42,15 @@ class Interface(Tk):
             "Coding algorithms"
         rand = "You don't have a DNA sequence? we'll generate a small " + \
             "random one for you"
-        Label(self, text=welcome_msg, font=("Courier", 11)).grid(row=0, columnspan=3, padx=5, pady=6)
-        Label(self, text="Compression", font=("Courier", 10)).grid(row=1, columnspan=3, padx=5, pady=6)
-        Label(self, text="Decompression", font=("Courier", 10)).grid(row=5, columnspan=3, padx=5, pady=6)
+        Label(self, text=welcome_msg, bg='#ebebeb', font=(None, 15)).grid(row=0, columnspan=3, padx=5, pady=6)
+        Label(self, text="Compression", bg='#ebebeb', borderwidth=2, relief="groove", font=(None, 13, 'bold')).grid(row=1, columnspan=3, padx=5, pady=6)
+        Label(self, text="Decompression", bg='#ebebeb', borderwidth=2, relief="groove", font=(None, 13, 'bold')).grid(row=5, columnspan=3, padx=5, pady=6)
         separator_one = ttk.Separator(self, orient='horizontal')
         separator_one.grid(row=4, columnspan=3, ipadx=500, padx=5, pady=6) 
-        Label(self, text=rand, font=("Courier", 10)).grid(row=8, columnspan=3, padx=5, pady=6)
+        Label(self, text=rand, bg='#ebebeb', font=(None, 12, 'bold')).grid(row=8, columnspan=3, padx=5, pady=6)
         self.random = StringVar()
         self.entry = Entry(self, textvariable=self.random, width=50)
-        self.entry.grid(row=9, columnspan=3, padx=5, pady=6)
+        self.entry.grid(row=9, columnspan=3, padx=5, pady=10)
         separator_two = ttk.Separator(self, orient='horizontal')
         separator_two.grid(row=7, columnspan=3, ipadx=500, padx=5, pady=6) 
 
@@ -183,39 +183,24 @@ class Interface(Tk):
         names : Generator
             The names of the steps to be displayed.
 
-        """
-        """
+        """ 
         steps = StringVar()
-        Label(window, textvariable=steps, font=("Courier", 7)).pack()
-        lab_content = StringVar()
-        lab_content.set("Please press on the button below to start")
-        Label(window, textvariable=lab_content, font=('Courier', 10)).pack()
-        Button(window, text="Next",
-               command=lambda : [lab_content.set(
-                   self.next_btn(protocol)),steps.set(
-                       self.next_btn(names))]).pack(side="bottom")
-
-        Button(window, text="Final step",
-               command=lambda : [lab_content.set(
-                   self.final_btn(protocol)),steps.set(
-                       self.final_btn(names))]).pack(side="bottom")
-        """
-        
-        steps = StringVar()
-        Label(window, textvariable=steps, font=("Courier", 7)).pack()
+        Label(window, textvariable=steps, bg="#ebebeb", font=(None, 12)).pack()
         xscrollbar = Scrollbar(window, orient=HORIZONTAL)
         xscrollbar.pack(side=BOTTOM, fill=X)
-        
+
         # Vertical (y) Scroll Bar
         yscrollbar = Scrollbar(window)
         yscrollbar.pack(side=RIGHT, fill=Y)
-        
+
         # Text Widget
-        text = Text(window, wrap=NONE, width=100, height=20,
+        text = Text(window, wrap=NONE, width=100, height=60,
                     xscrollcommand=xscrollbar.set,
                     yscrollcommand=yscrollbar.set)
-        text.pack()
-        
+        text.place(relx = 0.5, 
+                   rely = 0.5,
+                   anchor = 'center')
+
         # Configure the scrollbars
         xscrollbar.config(command=text.xview)
         yscrollbar.config(command=text.yview)
@@ -245,7 +230,7 @@ class Interface(Tk):
         Returns
         -------
         None
-            Replaces text in the widget^.
+            Replaces text in a given Text widget.
 
         """
         widget.delete("1.0", END)   #Clear the text window so we can write.
@@ -266,7 +251,8 @@ class Interface(Tk):
 
         """
         yield controller.seq.read()
-        yield controller.rotations
+        for rot in controller.rotations:
+            yield rot
         yield controller.bwm
         yield controller.bwt
 
@@ -280,16 +266,21 @@ class Interface(Tk):
             bwt_window = Toplevel(self)
             bwt_window.title("Burros-Wheeler Transform")
             bwt_window.geometry("1000x1000")
-            names = (step for step in ["Step 1 : Visualizing the sequence",
-                     "Step 2: Generating all rotations of the sequence",
-                     "Step 3: Creating the Burros-Wheeler matrix by sorting all rotations",
-                     "Step 4: The Burros-Wheeler transform is the last column of the matrix",
-                     "Please refer to the main menu to select another sequence"])
-
+            bwt_window.configure(bg='#ebebeb')
             controller = BWEncoder(self.file)
             controller.encode()
             protocol = self.BW_output(controller)
-            self.step_by_step(bwt_window, protocol, names)
+            prot= list(protocol)
+            
+            rots = ["Step 2: Generating all rotations of the sequence" for n in range(len(prot) - 3)]
+            
+            names = (step for step in ["Step 1 : Visualizing the sequence",
+                     *rots,
+                     "Step 3: Creating the Burros-Wheeler matrix by sorting all rotations",
+                     "Step 4: The Burros-Wheeler transform is the last column of the matrix",
+                     "Please refer to the main menu to select another sequence"])
+            
+            self.step_by_step(bwt_window, iter(prot), names)
             self.program_output(bwt_window, controller.bwt_output)
 
         else:
@@ -310,7 +301,8 @@ class Interface(Tk):
 
         """
         yield controller.seq.read()
-        yield controller.bwm
+        for mat in controller.bwm:
+            yield mat
         yield controller.original
 
     def debwt_window(self: object) -> None:
@@ -324,15 +316,20 @@ class Interface(Tk):
             debwt_window = Toplevel(self)
             debwt_window.title("Reversing Burros-Wheeler Transform")
             debwt_window.geometry("1000x1000")
-            names = (step for step in ["Step 1 : Visualizing the sequence",
-                     "Step 2: Creating the Burros-Wheeler Matrix",
-                     "Step 3: The original sequence is the one that has a $ sign as a last column",
-                     "Please refer to the main menu to select another sequence"])
-
+            debwt_window.configure(bg='#ebebeb')
             controller = BWDecoder(self.file)
             controller.decode()
             protocol = self.DeBW_output(controller)
-            self.step_by_step(debwt_window, protocol, names)
+            prot= list(protocol)
+            
+            reconstructed = ["Step 2: Creating the Burros-Wheeler Matrix" for n in range(len(prot) - 2)]
+
+            names = (step for step in ["Step 1 : Visualizing the sequence",
+                     *reconstructed,
+                     "Step 3: The original sequence is the one that has a $ sign as a last column",
+                     "Please refer to the main menu to select another sequence"])
+
+            self.step_by_step(debwt_window, iter(prot), names)
             self.program_output(debwt_window, controller.debwt_output)
 
         else:
@@ -368,6 +365,7 @@ class Interface(Tk):
             huff_code_window = Toplevel(self)
             huff_code_window.title("Huffman coding")
             huff_code_window.geometry("1000x1000")
+            huff_code_window.configure(bg='#ebebeb')
             names = (step for step in ["Step 1 : Visualizing the sequence",
                      "Step 2: Creating Huffman tree from sequence and calculating paths",
                      "Step 3: Generating the binary sequence from paths and adding a padding",
@@ -413,6 +411,7 @@ class Interface(Tk):
             huff_decode_window = Toplevel(self)
             huff_decode_window.title("Huffman decoding")
             huff_decode_window.geometry("1000x1000")
+            huff_decode_window.configure(bg='#ebebeb')
             names = (step for step in ["Step 1 : Visualizing the compressed sequence",
                      "Step 2: Reading the header of the file that corresponds to Huffman codes that where created with the tree during compression",
                      "Step 3: Separating the unicode sequence",
@@ -444,7 +443,8 @@ class Interface(Tk):
 
         """
         yield controller.bw_encoder.seq.read()
-        yield controller.bw_encoder.rotations
+        for rot in controller.bw_encoder.rotations:
+            yield rot
         yield controller.bw_encoder.bwm
         yield controller.bw_encoder.bwt
         yield controller.huff_encoder.header
@@ -461,9 +461,16 @@ class Interface(Tk):
         if self.file:
             fullzip_window = Toplevel(self)
             fullzip_window.title("Burrow-Wheeler Transform + Huffman coding")
-            fullzip_window.geometry("1000x1000")  
+            fullzip_window.geometry("1000x1000")
+            fullzip_window.configure(bg='#ebebeb')
+            controller = FullEncoder(self.file)
+            controller.full_zip()
+            protocol = self.fullzip_output(controller)
+            prot= list(protocol)
+            
+            rots = ["Step 2: Generating all rotations of the sequence" for n in range(len(prot) - 7)]
             names = (step for step in ["Step 1 : Visualizing the sequence",
-                     "Step 2: Generating all rotations of the sequence",
+                     *rots,
                      "Step 3: Creating the Burros-Wheeler matrix by sorting all rotations",
                      "Step 4: The Burros-Wheeler transform is the last column of the matrix",
                      "Step 5: Creating Huffman tree from Burros-Wheeler transform and calculating paths",
@@ -471,11 +478,10 @@ class Interface(Tk):
                      "Step 7: Coding the binary in 8-bits to unicode",
                      "Step 8: Writing paths and unicode to an output file",
                      "Please refer to the main menu to select another sequence"])
-            controller = FullEncoder(self.file)
-            controller.full_zip()
-            protocol = self.fullzip_output(controller)
-            self.step_by_step(fullzip_window, protocol, names)
-            outputs = controller.bw_encoder.bwt_output + '\n' + controller.huff_encoder.huff_output
+
+            self.step_by_step(fullzip_window, iter(prot), names)
+            outputs = controller.bw_encoder.bwt_output + \
+                '\n' + controller.huff_encoder.huff_output
             self.program_output(fullzip_window, outputs)
 
         else: 
@@ -501,7 +507,8 @@ class Interface(Tk):
         yield controller.huff_decoder.unicode
         yield controller.huff_decoder.binary 
         yield controller.huff_decoder.decompressed
-        yield controller.bw_decoder.bwm
+        for line in controller.bw_decoder.bwm:
+            yield line
         yield controller.bw_decoder.original
 
     def fullunzip_window(self: object) -> None:
@@ -514,20 +521,25 @@ class Interface(Tk):
             fullunzip_window = Toplevel(self)
             fullunzip_window.title("Huffman decoding + reverse Burros-Wheeler transform")
             fullunzip_window.geometry("1000x1000")
+            fullunzip_window.configure(bg='#ebebeb')
+            controller = FullDecoder(self.file)
+            controller.full_unzip()
+            protocol = self.fullunzip_output(controller)
+            prot= list(protocol)
 
+            reconstructed = ["Step 6: Creating the Burros-Wheeler Matrix" for n in range(len(prot) - 6)]
             names = (step for step in ["Step 1 : Visualizing the compressed sequence",
                      "Step 2: Reading the header of the file that corresponds to Huffman codes that where created with the tree during compression",
                      "Step 3: Separating the unicode sequence",
                      "Step 4: Transforming the unicode sequence to binary using huffman codes in the header and stripping padding",
                      "Step 5: The decompressed sequence is the burros wheeler transform of the original sequence:",
-                     "Step 6: Creating the Burros-Wheeler Matrix from the decompressed sequence",
+                     *reconstructed,
                      "Step 7: The original sequence is the one that has a $ sign as a last column in the Burros-Wheeler Matrix",
                      "Please refer to the main menu to select another sequence"])
-            controller = FullDecoder(self.file)
-            controller.full_unzip()
-            protocol = self.fullunzip_output(controller)
-            self.step_by_step(fullunzip_window, protocol, names)
-            outputs = controller.huff_decoder.dehuffman_output + '\n' + controller.bw_decoder.debwt_output
+
+            self.step_by_step(fullunzip_window, iter(prot), names)
+            outputs = controller.huff_decoder.dehuffman_output + \
+                '\n' + controller.bw_decoder.debwt_output
             self.program_output(fullunzip_window, outputs)
         else:
             self.no_file_error()
@@ -559,8 +571,9 @@ class Interface(Tk):
             The output file path to be shown in the messagebox.
 
         """
-        messagebox.showinfo(parent=window, title="Program output", message="The output will be saved to \n %s" %(
-            path))
+        messagebox.showinfo(parent=window, title="Program output",
+                            message="The output will be saved to \n %s" %(
+                                path))
 
     def main(self: object) -> None:
         """Launches the mainloop of the interface."""

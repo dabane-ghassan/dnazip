@@ -60,8 +60,8 @@ class BWEncoder:
             transformed sequence to a file.
 
         """
-        self.rotations = BurrosWheeler.string_rotations(self.seq.read())
-        self.bwm = BurrosWheeler.construct_bwm(self.rotations)
+        self.rotations = list(BurrosWheeler.string_rotations(self.seq.read()))
+        self.bwm = BurrosWheeler.construct_bwm(self.rotations[-1])
         self.bwt = BurrosWheeler.encode_bwt(self.bwm)
         Sequence(self.bwt_output).write(self.bwt)
 

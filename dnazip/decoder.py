@@ -125,8 +125,8 @@ class BWDecoder:
             sequence to a file.
 
         """
-        self.bwm = BurrosWheeler.reconstruct_bwm(self.seq.read())
-        self.original = BurrosWheeler.decode_bwt(self.bwm)
+        self.bwm = list(BurrosWheeler.reconstruct_bwm(self.seq.read()))
+        self.original = BurrosWheeler.decode_bwt(self.bwm[-1])
         Sequence(self.debwt_output).write(self.original)
 
 class FullDecoder:
