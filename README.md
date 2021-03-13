@@ -32,7 +32,7 @@ pip install dnazip
 ```bash
 git clone https://github.com/dabane-ghassan/dnazip.git
 cd dnazip
-python setup.py install
+sudo python3 setup.py install
 ```
 
 ## Getting started
