@@ -7,7 +7,8 @@ View architecture of the main application, i.e; a GUI.
 """
 import os
 from tkinter import Tk, Toplevel, filedialog, Menu, messagebox, ttk
-from tkinter import Label, Entry, Button, StringVar
+from tkinter import Label, Entry, Button, StringVar, Text, Scrollbar
+from tkinter import RIGHT, Y, X,  HORIZONTAL, BOTTOM, NONE, END
 from typing import Iterator, Generator
 from sequence import Sequence
 from decoder import HuffDecoder, BWDecoder, FullDecoder
@@ -27,6 +28,7 @@ class Interface(Tk):
         """
         super().__init__()
         self.title("dnazip")
+        self.configure(bg='#ebebeb')
         #self.geometry('600x300')
         self.create_main()
         self.create_menu()
@@ -90,19 +92,20 @@ class Interface(Tk):
             messagebox.showinfo("Selected file", "You have selected %s"%(
                 self.file))
 
-    def save_random(self):
+    def save_random(self: object) -> None:
         """This method is used to save a randomly generated DNA sequence 
         to a file.
         """
-        path = filedialog.asksaveasfilename(
-            initialdir= os.getcwd(),title="Select File", filetypes=(
-                ("Text Files", "*.txt"), ("all files","*.*"))) 
         seq_to_save = self.entry.get()
-        if seq_to_save != "":
-            Sequence(path).write(seq_to_save)
-            messagebox.showinfo("Sequence saved", "The sequence was saved to %s" %(
-                path))
-        else:  
+        if seq_to_save:
+            path = filedialog.asksaveasfilename(
+                initialdir= os.getcwd(),title="Select File", filetypes=(
+                    ("Text Files", "*.txt"), ("all files","*.*")))
+            if path:
+                Sequence(path).write(seq_to_save)
+                messagebox.showinfo("Sequence saved", "The sequence was saved to %s" %(
+                    path))
+        else:
             messagebox.showerror("No sequence entered", "The sequence box is empty")
     
     def about(self: object) -> None:
@@ -114,12 +117,15 @@ class Interface(Tk):
         messagebox.showinfo("About dnazip", msg)
     
     def generate_random(self: object) -> None:
+        """This method is used to generate random sequences of DNA of length
+        50 and show them inside the random text box tkinter entry.
+        """
         self.random.set(Sequence.generate(length=50))
 
     def next_btn(self: object, controller: Iterator[str]) -> str:
-        """This method is used to create a universal next button for all
-        protocols of the program, it will be passed to a given label that 
-        changes its content.
+        """This method is used to create the output of a universal next button
+        for all protocols of the program, it will be passed to a given label
+        that changes its content.
 
         Parameters
         ----------
@@ -136,10 +142,33 @@ class Interface(Tk):
             if isinstance(to_print, list):
                 return '\n'.join(to_print)
             else:  
-                return '\n'.join([to_print[i:i+30] for i in range(0, len(to_print), 30)])
+                return to_print
 
         except StopIteration:
             return "The protocole is finished"
+        
+    def final_btn(self: object, controller: Iterator[str]) -> str:
+        """This method is used to create the output of a universal final step 
+        button for all protocols of the program, it will be passed to a given
+        label that changes its content.
+
+        Parameters
+        ----------
+        controller : Iterator[str]
+            The controller of a given protocol that contains all steps to show.
+
+        Returns
+        -------
+        str
+            The final step to be shown.
+        """
+        
+        try:
+            to_print = list(controller)[-1] # Getting the final result of a generator
+            return to_print
+
+        except IndexError:
+            return "The protocole is finished, please refer to the main menu."
 
     def step_by_step(self: object, window: Tk, protocol: Iterator[str], names: Generator)-> None:
         """This method creates a step by step advancing interface for a given
@@ -155,7 +184,7 @@ class Interface(Tk):
             The names of the steps to be displayed.
 
         """
-        Button(window, text="Final step").pack(side="bottom")
+        """
         steps = StringVar()
         Label(window, textvariable=steps, font=("Courier", 7)).pack()
         lab_content = StringVar()
@@ -165,6 +194,62 @@ class Interface(Tk):
                command=lambda : [lab_content.set(
                    self.next_btn(protocol)),steps.set(
                        self.next_btn(names))]).pack(side="bottom")
+
+        Button(window, text="Final step",
+               command=lambda : [lab_content.set(
+                   self.final_btn(protocol)),steps.set(
+                       self.final_btn(names))]).pack(side="bottom")
+        """
+        
+        steps = StringVar()
+        Label(window, textvariable=steps, font=("Courier", 7)).pack()
+        xscrollbar = Scrollbar(window, orient=HORIZONTAL)
+        xscrollbar.pack(side=BOTTOM, fill=X)
+        
+        # Vertical (y) Scroll Bar
+        yscrollbar = Scrollbar(window)
+        yscrollbar.pack(side=RIGHT, fill=Y)
+        
+        # Text Widget
+        text = Text(window, wrap=NONE, width=100, height=20,
+                    xscrollcommand=xscrollbar.set,
+                    yscrollcommand=yscrollbar.set)
+        text.pack()
+        
+        # Configure the scrollbars
+        xscrollbar.config(command=text.xview)
+        yscrollbar.config(command=text.yview)
+        
+        Button(window, text="Next",
+               command=lambda : [self.update_text(text,
+                   self.next_btn(protocol)),steps.set(
+                       self.next_btn(names))]).pack(side="bottom")
+
+        Button(window, text="Final step",
+        command=lambda : [self.update_text(text,
+            self.final_btn(protocol)), steps.set(
+                       self.final_btn(names))]).pack(side="bottom")
+
+    def update_text(self: object, widget: Text, new_text: str) -> None:
+        """This method updates the Text tkinter widget with every step
+        in every protocol. it deletes its contents and then replaces it with
+        new_text parameter.
+
+        Parameters
+        ----------
+        widget : Text
+            Tkinter's Text widget.
+        new_text : str
+            The new text to be shown in the widget.
+
+        Returns
+        -------
+        None
+            Replaces text in the widget^.
+
+        """
+        widget.delete("1.0", END)   #Clear the text window so we can write.
+        widget.insert(END,new_text) 
 
     def BW_output(self: object, controller: BWEncoder) -> Iterator[str]:
         """This method is used to collect all output for the BW encoding.
@@ -444,7 +529,7 @@ class Interface(Tk):
             self.step_by_step(fullunzip_window, protocol, names)
             outputs = controller.huff_decoder.dehuffman_output + '\n' + controller.bw_decoder.debwt_output
             self.program_output(fullunzip_window, outputs)
-        else: 
+        else:
             self.no_file_error()
 
     def create_menu(self: object) -> None:
