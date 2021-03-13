@@ -39,25 +39,45 @@ sudo python3 setup.py install
 
 ### GUI
 
+- After installing the package from source or using pip, the interface can be launched simply from the command line:
+```
+dnazip
+```
+- If problems occur with the installation an interface instance can be imported and launched:
+```python
+from dnazip.interface import Interface
+gui = Interface()
+gui.main()
+```
+
 ### Do you want to use just the algorithms?
 
 #### Generating a random DNA sequence
 
 ```python
-from dnazip import sequence
-randseq = sequence.Sequence.generate(length=5000)
-sequence.Sequence('/path/to/new/seq').write(randseq)
+from dnazip.sequence import Sequence
+randseq = Sequence.generate(length=5000)
+Sequence('/path/to/new/seq').write(randseq)
 ```
-
 #### Encoding a DNA sequence with Burros-Wheeler + Huffman Coding
 
 ```python
-from dnazip import encoder
-zip = encoder.FullEncoder('path/to/seq')
+from dnazip.encoder import FullEncoder
+zip = FullEncoder('path/to/seq')
 zip.full_zip()
 ```
 
+#### Decoding a DNA sequence with Huffman decoding + Reversing Burros-Wheeler transform
+
+```python
+from dnazip.decoder import FullDecoder
+unzip = FullDecoder('path/to/seq')
+unzip.full_unzip()
+```
+
 ## Documentation
+
+Detailed documentation on the architecture can be found [here](https://dabane-ghassan.github.io/dnazip)
 
 ## About
 
