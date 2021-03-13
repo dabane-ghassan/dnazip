@@ -3,8 +3,8 @@
 Burros-Wheeler Algorithm Class, contains naive and advanced construction
 methods, static methods were written as explicit as possible and were
 factorized to facilitate algorithmic readability.
-
-@author: Ghassan Dabane
+The yielding in some functions doesn't respect Space complexity, but it was done in this
+manner to facilitate the data flow into the View class (the GUI).
 """
 from __future__ import absolute_import
 from typing import List, Tuple

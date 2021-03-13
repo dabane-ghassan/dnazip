@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
-"""
-View architecture of the main application, i.e; a GUI.
-
-@author : Ghassan Dabane
-"""
+"""View architecture of the main application, i.e; a GUI."""
 from __future__ import absolute_import
 import os
 from tkinter import Tk, Toplevel, filedialog, Menu, messagebox, ttk

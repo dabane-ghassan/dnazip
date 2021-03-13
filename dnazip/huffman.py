@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Huffman coding algorithm class, contains node and tree classes.
-
-@author: Ghassan Dabane
-"""
+"""Huffman coding algorithm classes, contains node and tree separate classes."""
 from __future__ import absolute_import
 from typing import Dict
 

@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-A script to read and write DNA sequences (or a list of characters) to a file.
+A class to read and write DNA sequences (or a list of characters) to a file.
 In a MVC structure, this represents the Model of the data.
-
-@author: Ghassan DABANE
 """
 from __future__ import absolute_import
 import random

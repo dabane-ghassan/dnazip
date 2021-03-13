@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Decoder classes, Controller architecture.
-
-@author: Ghassan Dabane
-"""
+"""Decoder classes, Controller architecture in a MVC layout."""
 from __future__ import absolute_import
 import os
 from dnazip.sequence import Sequence
