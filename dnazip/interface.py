@@ -5,6 +5,7 @@ View architecture of the main application, i.e; a GUI.
 
 @author : Ghassan Dabane
 """
+from __future__ import absolute_import
 import os
 from tkinter import Tk, Toplevel, filedialog, Menu, messagebox, ttk
 from tkinter import Label, Entry, Button, StringVar, Text, Scrollbar
@@ -36,7 +37,7 @@ class Interface(Tk):
 
     def create_main(self: object) -> None:
         """This method is used to create the main menu interface of the GUI."""
-        
+
         welcome_msg = "Welcome to dnazip! \n A graphical " + \
             "representation of Burros-Wheeler and Huffman " + \
             "Coding algorithms"
@@ -107,7 +108,7 @@ class Interface(Tk):
                     path))
         else:
             messagebox.showerror("No sequence entered", "The sequence box is empty")
-    
+
     def about(self: object) -> None:
         """This method is used to generate the about menu page information."""
         msg = 'This project is developed for the "Sequence Algorithms" ' + \
@@ -115,7 +116,7 @@ class Interface(Tk):
                 'Aix-Marseille University, France. \n' + \
         'Source code available at: https://github.com/dabane-ghassan/dnazip'
         messagebox.showinfo("About dnazip", msg)
-    
+
     def generate_random(self: object) -> None:
         """This method is used to generate random sequences of DNA of length
         50 and show them inside the random text box tkinter entry.
@@ -146,7 +147,7 @@ class Interface(Tk):
 
         except StopIteration:
             return "The protocole is finished"
-        
+
     def final_btn(self: object, controller: Iterator[str]) -> str:
         """This method is used to create the output of a universal final step 
         button for all protocols of the program, it will be passed to a given
@@ -207,7 +208,7 @@ class Interface(Tk):
         # Configure the scrollbars
         xscrollbar.config(command=text.xview)
         yscrollbar.config(command=text.yview)
-        
+
         Button(window, text="Next",
                command=lambda : [self.update_text(text,
                    self.next_btn(protocol)),steps.set(
@@ -263,7 +264,7 @@ class Interface(Tk):
         """This method creates a Tkinter Toplevel window for the step-by-step
         BWT protocol, The output file of the protocol will be shown at the 
         beginning.
-        
+
         """
         if self.file:
             bwt_window = Toplevel(self)
@@ -274,7 +275,7 @@ class Interface(Tk):
             controller.encode()
             protocol = self.BW_output(controller)
             prot= list(protocol)
-            
+
             rots = ["Step 2: Generating all rotations of the sequence" for n in range(len(prot) - 3)]
             
             names = (step for step in ["Step 1 : Visualizing the sequence",
@@ -310,11 +311,10 @@ class Interface(Tk):
 
     def debwt_window(self: object) -> None:
         """This method creates a Tkinter Toplevel window for the step-by-step
-        inverse BWT protocol, The output file of the protocol will be shown at the 
-        beginning.
-        
-        """
+        inverse BWT protocol, The output file of the protocol will be shown at
+        the beginning.
 
+        """
         if self.file:
             debwt_window = Toplevel(self)
             debwt_window.title("Reversing Burros-Wheeler Transform")
@@ -470,7 +470,7 @@ class Interface(Tk):
             controller.full_zip()
             protocol = self.fullzip_output(controller)
             prot= list(protocol)
-            
+
             rots = ["Step 2: Generating all rotations of the sequence" for n in range(len(prot) - 7)]
             names = (step for step in ["Step 1 : Visualizing the sequence",
                      *rots,
@@ -487,11 +487,11 @@ class Interface(Tk):
                 '\n' + controller.huff_encoder.huff_output
             self.program_output(fullzip_window, outputs)
 
-        else: 
+        else:
             self.no_file_error()
 
     def fullunzip_output(self: object, controller: FullDecoder) -> Iterator[str]:
-        """This method is used to collect all output for a full decompression 
+        """This method is used to collect all output for a full decompression
         protocol.
 
         Parameters
