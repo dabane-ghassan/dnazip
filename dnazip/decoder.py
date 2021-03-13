@@ -67,7 +67,6 @@ class HuffDecoder:
             decompressed sequence to a file.
 
         """
-
         seq = self.seq.read_bytes()
         self.header = seq[:seq.index('\n')]
         self.unicode = seq[seq.index('\n')+1:]

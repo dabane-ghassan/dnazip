@@ -29,7 +29,6 @@ class Interface(Tk):
         super().__init__()
         self.title("dnazip")
         self.configure(bg='#ebebeb')
-        #self.geometry('600x300')
         self.create_main()
         self.create_menu()
         self.create_buttons()
@@ -171,8 +170,8 @@ class Interface(Tk):
             return "The protocole is finished, please refer to the main menu."
 
     def step_by_step(self: object, window: Tk, protocol: Iterator[str], names: Generator)-> None:
-        """This method creates a step by step advancing interface for a given
-        chosen protocole.
+        """This method creates a universal step by step advancing interface
+        for a given chosen protocole.
 
         Parameters
         ----------
@@ -185,7 +184,10 @@ class Interface(Tk):
 
         """ 
         steps = StringVar()
-        Label(window, textvariable=steps, bg="#ebebeb", font=(None, 12)).pack()
+        current_step = Label(window, textvariable=steps, bg="#ebebeb",
+                     font=(None, 9, "bold"), borderwidth=2)
+        current_step.place(relx = 0.5, 
+                   rely = 0.1, anchor="center")
         xscrollbar = Scrollbar(window, orient=HORIZONTAL)
         xscrollbar.pack(side=BOTTOM, fill=X)
 
@@ -197,7 +199,7 @@ class Interface(Tk):
         text = Text(window, wrap=NONE, width=100, height=60,
                     xscrollcommand=xscrollbar.set,
                     yscrollcommand=yscrollbar.set)
-        text.place(relx = 0.5, 
+        text.place(relx = 0.5,
                    rely = 0.5,
                    anchor = 'center')
 
