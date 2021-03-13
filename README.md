@@ -43,7 +43,7 @@ sudo python3 setup.py install
 ```
 dnazip
 ```
-- If problems occur with the installation an interface instance can be imported and launched:
+- If problems occur with the installation, an interface instance can be imported and launched:
 ```python
 from dnazip.interface import Interface
 gui = Interface()
