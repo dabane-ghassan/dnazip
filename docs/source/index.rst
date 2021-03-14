@@ -22,7 +22,7 @@ With pip
 
 ::
 
-    pip install dnazip
+    pip install dnazip-bioinfo
 
 From source
 ###########
