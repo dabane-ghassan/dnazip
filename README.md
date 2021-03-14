@@ -23,7 +23,7 @@
 ### With pip
 
 ```bash
-pip install dnazip
+pip install dnazip-bioinfo
 ```
 
 ### From source

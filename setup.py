@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='dnazip',
+    name='dnazip-bioinfo',
     version='0.1',
     description='A Python implementation of the Burros-Wheeler and Huffman coding algorithms',
     long_description=long_description,
