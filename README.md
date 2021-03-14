@@ -10,12 +10,7 @@
 
 - A Python implementation of ***The Burros-Wheeler Transform (BWT)*** alongside ***Huffman compression*** on DNA sequences.
 - Hosted on [GitHub](https://github.com/dabane-ghassan/dnazip)
-- Documentation? [**here**]()
-
-## Dependencies
-
-- Python 3.x 
-- Tkinter
+- Documentation? [**here**](https://dabane-ghassan.github.io/dnazip)
 
 ## Installation
 
