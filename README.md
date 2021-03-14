@@ -12,6 +12,10 @@
 - Hosted on [GitHub](https://github.com/dabane-ghassan/dnazip)
 - Documentation? [**here**](https://dabane-ghassan.github.io/dnazip)
 
+## Demo
+
+- A demo for installation and using the GUI can be found [**here**]()
+
 ## Installation
 
 - You can install the package either from pip or from the source code hosted on github.
