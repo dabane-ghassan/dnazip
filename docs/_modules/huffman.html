@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>huffman &mdash; dnazip 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> dnazip
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dnazip</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>huffman</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for huffman</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Huffman coding algorithm classes, contains node and tree separate classes.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+
+<div class="viewcode-block" id="HuffmanNode"><a class="viewcode-back" href="../index.html#huffman.HuffmanNode">[docs]</a><span class="k">class</span> <span class="nc">HuffmanNode</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class to represent heap nodes of a huffman coding tree.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    char: str</span>
+<span class="sd">        The character to be saved as a node value.</span>
+<span class="sd">    freq: int</span>
+<span class="sd">        The frequency of the char.</span>
+<span class="sd">    right_child: HuffmanNode</span>
+<span class="sd">        The right child of the heap node.</span>
+<span class="sd">    left_child: HuffmanNode</span>
+<span class="sd">        The left child of the heap node.</span>
+<span class="sd">    dir: str</span>
+<span class="sd">        The path of the current node in the Huffman tree, usually a string of</span>
+<span class="sd">        0s and 1s.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">char</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">freq</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="nb">object</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="nb">object</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Class constructor</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        char : str</span>
+<span class="sd">            A character (Huffman coding characters).</span>
+<span class="sd">        freq : int</span>
+<span class="sd">            The frequency of the character.</span>
+<span class="sd">        left : object, optional</span>
+<span class="sd">            The left child of the heap node. The default is None.</span>
+<span class="sd">        right : object, optional</span>
+<span class="sd">            The right child of the heap node. The default is None.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            A class instance.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char</span> <span class="o">=</span> <span class="n">char</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="n">freq</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__left_child</span> <span class="o">=</span> <span class="n">left</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__right_child</span> <span class="o">=</span> <span class="n">right</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">right_child</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The getter of the right child.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__right_child</span>
+
+    <span class="nd">@right_child</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">right_child</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">right_child</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The setter of the right child.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        right_child : object</span>
+<span class="sd">            The new child.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__right_child</span> <span class="o">=</span> <span class="n">right_child</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">left_child</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The getter of the left child.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__left_child</span>
+
+    <span class="nd">@left_child</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">left_child</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">left_child</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The setter of the left child.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        right_child : object</span>
+<span class="sd">            The new child.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__left_child</span> <span class="o">=</span> <span class="n">left_child</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns a string representation using print().</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            A string to be displayed with print().</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;Hello! I&#39;m a Huffman coding HeapNode class instance.&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;A coder friendly representation of the HuffmanNode object.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            A string.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;Node(</span><span class="si">%s</span><span class="s2">, freq=</span><span class="si">%s</span><span class="s2">, right=</span><span class="si">%s</span><span class="s2">, left=</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">char</span><span class="p">,</span>
+                                                       <span class="bp">self</span><span class="o">.</span><span class="n">freq</span><span class="p">,</span>
+                                                       <span class="bp">self</span><span class="o">.</span><span class="n">right_child</span><span class="p">,</span>
+                                                       <span class="bp">self</span><span class="o">.</span><span class="n">left_child</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HuffmanTree"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree">[docs]</a><span class="k">class</span> <span class="nc">HuffmanTree</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class to represent a huffman tree.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequence: str</span>
+<span class="sd">        The sequence to be encoded, i.e; the Burros-Wheeler transform of the</span>
+<span class="sd">        sequence.</span>
+<span class="sd">    frequency: Dict[str, int]</span>
+<span class="sd">        A dictionary to store frequency values for each character of the</span>
+<span class="sd">        sequence, the character as a key and its frequency as a value.</span>
+<span class="sd">    root: HuffmanNode</span>
+<span class="sd">        The root node of the Huffman tree.</span>
+<span class="sd">    codes: Dict[str, str]</span>
+<span class="sd">        The Huffman codes for a given sequence, The character as a key and</span>
+<span class="sd">        its tree path as a value(a string).</span>
+<span class="sd">    pad: int</span>
+<span class="sd">        The padding of the sequence, i.e; the number of zeroes that was added</span>
+<span class="sd">        to the end of sequence until it was divisible by 8 (coding in 8 bits).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The class constructor.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sequence : str</span>
+<span class="sd">            The sequence to be coded.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            A class instance.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sequence</span> <span class="o">=</span> <span class="n">sequence</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">HuffmanTree</span><span class="o">.</span><span class="n">freq_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sequence</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_tree</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">codes</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="HuffmanTree.freq_dict"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.freq_dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">freq_dict</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This method returns the frequence dictionary of a given sequence.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sequence : str</span>
+<span class="sd">            The sequence of interest.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Dict[str, int]</span>
+<span class="sd">            A dictionary of character frequencies.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">f_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">f_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">f_dict</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">f_dict</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">f_dict</span></div>
+
+<div class="viewcode-block" id="HuffmanTree.create_tree"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.create_tree">[docs]</a>    <span class="k">def</span> <span class="nf">create_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HuffmanNode</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The main algorithm for creating The Huffman tree.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HuffmanNode</span>
+<span class="sd">            The root node of the tree.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">leafs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">char</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">leafs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HuffmanNode</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">freq</span><span class="p">))</span>
+
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">leafs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+
+            <span class="n">leafs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">leafs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">freq</span><span class="p">)</span>
+
+            <span class="n">left</span> <span class="o">=</span> <span class="n">leafs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="n">leafs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">new_char</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">char</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">char</span>
+            <span class="n">new_freq</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">freq</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">freq</span>
+
+            <span class="n">left</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+            <span class="n">right</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+
+            <span class="n">new_node</span> <span class="o">=</span> <span class="n">HuffmanNode</span><span class="p">(</span><span class="n">new_char</span><span class="p">,</span> <span class="n">new_freq</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+            <span class="n">leafs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">leafs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="HuffmanTree.get_codings"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.get_codings">[docs]</a>    <span class="k">def</span> <span class="nf">get_codings</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">HuffmanNode</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;A depth-first search recursive algorithm to find the paths of each</span>
+<span class="sd">        character in the tree.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node : HuffmanNode</span>
+<span class="sd">            The starting node, the root of the tree.</span>
+<span class="sd">        val : str, optional</span>
+<span class="sd">            The path of the current recursion in a tree. The default is &#39;&#39;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            Fills the codes dictionary property of the Huffman Tree.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">curr_path</span> <span class="o">=</span> <span class="n">val</span> <span class="o">+</span> <span class="n">node</span><span class="o">.</span><span class="n">dir</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left_child</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_codings</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left_child</span><span class="p">,</span> <span class="n">curr_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">right_child</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_codings</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right_child</span><span class="p">,</span> <span class="n">curr_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">left_child</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">right_child</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">codes</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="n">curr_path</span></div>
+
+<div class="viewcode-block" id="HuffmanTree.seq_to_binstr"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.seq_to_binstr">[docs]</a>    <span class="k">def</span> <span class="nf">seq_to_binstr</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method transforms the current sequence of the Huffman tree</span>
+<span class="sd">        to a binary sequence using the codes (paths of every character), it</span>
+<span class="sd">        also adds a padding to the end of the binary sequence (a variable</span>
+<span class="sd">        number of zeroes, when sequence is divisible by 8 then add 8 zeroes</span>
+<span class="sd">        by default). The binary sequence will be coded in 8-bits later.</span>
+<span class="sd">        It saves the padding in the codes property.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The binary sequence.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">bin_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sequence</span><span class="p">:</span>
+            <span class="n">bin_str</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">codes</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
+
+        <span class="n">pad</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">bin_str</span><span class="p">)</span> <span class="o">%</span> <span class="mi">8</span>
+        <span class="k">if</span> <span class="n">pad</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">bin_str</span> <span class="o">+=</span> <span class="s1">&#39;0&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">codes</span><span class="p">[</span><span class="s1">&#39;pad&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pad</span><span class="p">)</span> <span class="c1">#Save the padding value to codes</span>
+
+        <span class="k">return</span> <span class="n">bin_str</span></div>
+
+<div class="viewcode-block" id="HuffmanTree.binstr_to_unicode"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.binstr_to_unicode">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">binstr_to_unicode</span><span class="p">(</span><span class="n">bin_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method codes a binary sequence in 8-bits in UTF-8.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bin_str : str</span>
+<span class="sd">            The binary sequence to be coded.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The unicode string that corrsponds to the binary sequence.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">unicode</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bin_str</span><span class="p">),</span> <span class="mi">8</span><span class="p">):</span>
+            <span class="n">eight_bits</span> <span class="o">=</span> <span class="n">bin_str</span><span class="p">[</span><span class="n">bit</span><span class="p">:</span><span class="n">bit</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">eight_bits</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">unicode</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">unicode</span></div>
+
+<div class="viewcode-block" id="HuffmanTree.unicode_to_binstr"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.unicode_to_binstr">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">unicode_to_binstr</span><span class="p">(</span><span class="n">unicode</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Transforms a unicode sequence to a binary sequence.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        unicode : str</span>
+<span class="sd">            The unicode sequence to be transformed.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The corrsponding binary string.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">bin_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">uni</span> <span class="ow">in</span> <span class="n">unicode</span><span class="p">:</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">uni</span><span class="p">)</span>
+            <span class="n">bin_str</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{:08b}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">bin_str</span></div>
+
+<div class="viewcode-block" id="HuffmanTree.remove_padding"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.remove_padding">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">remove_padding</span><span class="p">(</span><span class="n">bin_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pad</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This function removes the padding from a given binary sequence,</span>
+<span class="sd">        the padding is normally a variable number of zeroes added when coding</span>
+<span class="sd">        in 8-bits.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bin_str : str</span>
+<span class="sd">            The binary string to be stripped from a sequence of zeroes.</span>
+<span class="sd">        pad : int</span>
+<span class="sd">            The padding, the number of zeroes at the end of the binary</span>
+<span class="sd">            sequence.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The no-padded binary string.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">bin_str</span><span class="p">[:</span><span class="o">-</span><span class="n">pad</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="HuffmanTree.binstr_to_seq"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.binstr_to_seq">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">binstr_to_seq</span><span class="p">(</span><span class="n">bin_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">codes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Transforms a binary string to a sequence given a codes dictionary</span>
+<span class="sd">        of paths.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bin_str : str</span>
+<span class="sd">            The binary string to be transformed.</span>
+<span class="sd">        codes : Dict[str, str]</span>
+<span class="sd">            A dictionary of characters alongside their paths.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The original sequence.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">original_seq</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">reading_stream</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">bin_str</span><span class="p">:</span>
+            <span class="n">reading_stream</span> <span class="o">+=</span> <span class="n">num</span>
+            <span class="k">for</span> <span class="n">char</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">codes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="n">reading_stream</span><span class="p">:</span>
+                    <span class="n">original_seq</span> <span class="o">+=</span> <span class="n">char</span>
+                    <span class="n">reading_stream</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                    <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">original_seq</span></div>
+
+<div class="viewcode-block" id="HuffmanTree.codes_to_header"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.codes_to_header">[docs]</a>    <span class="k">def</span> <span class="nf">codes_to_header</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method transforms the codes of a given Huffman tree object</span>
+<span class="sd">        into a header to be saved in the compressed file (useful for</span>
+<span class="sd">        when decompressing later).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The header of the compressed file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">char</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">header</span> <span class="o">+=</span> <span class="n">char</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span>
+
+        <span class="k">return</span> <span class="n">header</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span></div>
+
+<div class="viewcode-block" id="HuffmanTree.header_to_codes"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.header_to_codes">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">header_to_codes</span><span class="p">(</span><span class="n">header</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This method takes the header of a compressed file and transforms</span>
+<span class="sd">        it into a codes dictionary that&#39;s useful when decompressing a sequence.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        header : str</span>
+<span class="sd">            The header of the compressed file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Dict[str, str]</span>
+<span class="sd">            A codes dictionary which maps from characters to thier given paths.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reconstructed_codes</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">char</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">code</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="n">reconstructed_codes</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="k">return</span> <span class="n">reconstructed_codes</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2021, Ghassan Dabane
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

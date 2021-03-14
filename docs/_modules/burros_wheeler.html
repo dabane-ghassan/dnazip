@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>burros_wheeler &mdash; dnazip 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> dnazip
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dnazip</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>burros_wheeler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for burros_wheeler</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Burros-Wheeler Algorithm Class, contains naive and advanced construction</span>
+<span class="sd">methods, static methods were written as explicit as possible and were</span>
+<span class="sd">factorized to facilitate algorithmic readability.</span>
+<span class="sd">The yielding in some functions doesn&#39;t respect Space complexity, but it was done in this</span>
+<span class="sd">manner to facilitate the data flow into the View class (the GUI).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<div class="viewcode-block" id="BurrosWheeler"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler">[docs]</a><span class="k">class</span> <span class="nc">BurrosWheeler</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class to represent the Burros-Wheeler algorithm, all methods are</span>
+<span class="sd">    static for ease of reading and outside usability.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BurrosWheeler.pprint"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.pprint">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">pprint</span><span class="p">(</span><span class="n">mat</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Pretty print, this method prints a burros wheeler matrix</span>
+<span class="sd">        beautifully (without lists and strings).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mat : List[str]</span>
+<span class="sd">            The Burros-Wheeler matrix, i.e; a list of strings.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            Prints the matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">mat</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">line</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="c1"># scatter operator to print all elements</span></div>
+                                 <span class="c1"># of a line</span>
+
+<div class="viewcode-block" id="BurrosWheeler.string_rotations"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.string_rotations">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">string_rotations</span><span class="p">(</span><span class="n">seq</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Returns all string rotations of a sequence.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        seq : str</span>
+<span class="sd">            he sequence to be rotated.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[str]</span>
+<span class="sd">            Returns a list of strings, i.e; a BW matrix like object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">seq</span> <span class="o">+=</span> <span class="s1">&#39;$&#39;</span>
+        <span class="n">double_seq</span> <span class="o">=</span> <span class="n">seq</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="n">all_rotations</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+
+            <span class="n">rot</span> <span class="o">=</span> <span class="n">double_seq</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)]</span>
+            <span class="n">all_rotations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span>
+
+            <span class="k">yield</span> <span class="p">[</span><span class="n">rot</span> <span class="k">for</span> <span class="n">rot</span> <span class="ow">in</span> <span class="n">all_rotations</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BurrosWheeler.construct_bwm"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.construct_bwm">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">construct_bwm</span><span class="p">(</span><span class="n">rotations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This method constructs the Burros-Wheeler Matrix from a list of</span>
+<span class="sd">        string rotations.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rotations : List[str]</span>
+<span class="sd">            A list of strings, i.e; a BW matrix like object.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[str]</span>
+<span class="sd">            A list of strings or a Burros-Wheeler Matrix.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">sorted_rotations</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rotations</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sorted_rotations</span></div>
+
+<div class="viewcode-block" id="BurrosWheeler.encode_bwt"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.encode_bwt">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">encode_bwt</span><span class="p">(</span><span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns the Burros-Wheeler Transform from a given Burros-Wheeler</span>
+<span class="sd">        Matrix. the Burros-Wheeler Transform corresponds to the last column</span>
+<span class="sd">        of the matrix.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        matrix : List[str]</span>
+<span class="sd">            A Burros-Wheeler Matrix.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The Burros-Wheeler Transform.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">last_column</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span>
+            <span class="n">last_char</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">last_column</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">last_char</span><span class="p">)</span>
+
+        <span class="n">transformed_seq</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">last_column</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">transformed_seq</span></div>
+
+<div class="viewcode-block" id="BurrosWheeler.reconstruct_bwm"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.reconstruct_bwm">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">reconstruct_bwm</span><span class="p">(</span><span class="n">bwt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This method reconstructs the Burros-Wheeler Matrix given the</span>
+<span class="sd">        corresponding Burros-Wheeler Transform. The naive algorithm for</span>
+<span class="sd">        constructing the matrix given the transform is going to iteratively</span>
+<span class="sd">        add the transform as a left column, then sorts lexicographically</span>
+<span class="sd">        the columns.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bwt : str</span>
+<span class="sd">            The Burros-Wheeler Transform.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[str]</span>
+<span class="sd">            A Burros-Wheeler Matrix.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bwm</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># first loop to create seeds for lines O(n)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bwt</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">bwm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bwt</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bwt</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">bwm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bwt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">bwm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+ 
+            <span class="k">yield</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">bwm</span><span class="p">]</span>
+            <span class="n">bwm</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+            <span class="k">yield</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">bwm</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BurrosWheeler.decode_bwt"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.decode_bwt">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">decode_bwt</span><span class="p">(</span><span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method returns the original sequence from a given</span>
+<span class="sd">        Burros-Wheeler Matrix, the original sequence is the line that ends</span>
+<span class="sd">        with the character &#39;$&#39;.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        matrix : List[str]</span>
+<span class="sd">            A Burros-Wheeler Matrix.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The original sequence.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">seq</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span> <span class="c1"># search for the line that ends with &#39;$&#39;</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;$&quot;</span><span class="p">:</span>
+                <span class="n">seq</span> <span class="o">+=</span> <span class="n">line</span>
+
+        <span class="k">return</span> <span class="n">seq</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># return the sequence without the &#39;$&#39; sign</span></div>
+
+<div class="viewcode-block" id="BurrosWheeler.suffix_array"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.suffix_array">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">suffix_array</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Builds a suffix-array from a given sequence of characters.</span>
+<span class="sd">        - Complexity of the algorithm O(n^2log(n))</span>
+<span class="sd">        - Sorting is O(nlogn) and Finding is O(n)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sequence : str</span>
+<span class="sd">            The given sequence of characters.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[Tuple[str, int]]</span>
+<span class="sd">            The suffix array of the sequence; a list of tuples.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">sequence</span> <span class="o">+=</span> <span class="s1">&#39;$&#39;</span>
+        <span class="n">suff_arr</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">suff_arr</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="n">i</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">suff_arr</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BurrosWheeler.bwt_advanced"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.bwt_advanced">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">bwt_advanced</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Generates a Burros-Wheeler Transfrom from a suffix array, advanced</span>
+<span class="sd">        construction of BWT. Better algorithmic complexity.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sequence : str</span>
+<span class="sd">            The sequence to ve transformed.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The Burros-Wheeler Transform.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">bwt</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">suff</span> <span class="ow">in</span> <span class="n">BurrosWheeler</span><span class="o">.</span><span class="n">suffix_array</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">suff</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># The suffix&#39;s index is the 2nd element in the tuple</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">bwt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">bwt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bwt</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2021, Ghassan Dabane
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

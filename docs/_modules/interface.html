@@ -1,0 +1,780 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>interface &mdash; dnazip 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> dnazip
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dnazip</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for interface</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*</span>
+<span class="sd">&quot;&quot;&quot;View architecture of the main application, i.e; a GUI.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">Tk</span><span class="p">,</span> <span class="n">Toplevel</span><span class="p">,</span> <span class="n">filedialog</span><span class="p">,</span> <span class="n">Menu</span><span class="p">,</span> <span class="n">messagebox</span><span class="p">,</span> <span class="n">ttk</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Entry</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">StringVar</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">Scrollbar</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">RIGHT</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span>  <span class="n">HORIZONTAL</span><span class="p">,</span> <span class="n">BOTTOM</span><span class="p">,</span> <span class="n">NONE</span><span class="p">,</span> <span class="n">END</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Generator</span>
+<span class="kn">from</span> <span class="nn">dnazip.sequence</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">dnazip.decoder</span> <span class="kn">import</span> <span class="n">HuffDecoder</span><span class="p">,</span> <span class="n">BWDecoder</span><span class="p">,</span> <span class="n">FullDecoder</span>
+<span class="kn">from</span> <span class="nn">dnazip.encoder</span> <span class="kn">import</span> <span class="n">HuffEncoder</span><span class="p">,</span> <span class="n">BWEncoder</span><span class="p">,</span> <span class="n">FullEncoder</span>
+
+<div class="viewcode-block" id="Interface"><a class="viewcode-back" href="../index.html#interface.Interface">[docs]</a><span class="k">class</span> <span class="nc">Interface</span><span class="p">(</span><span class="n">Tk</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;View class of the application using a Tkinter interface.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Class constructor</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            An interface instance.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;dnazip&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_main</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_buttons</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Interface.create_main"><a class="viewcode-back" href="../index.html#interface.Interface.create_main">[docs]</a>    <span class="k">def</span> <span class="nf">create_main</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to create the main menu interface of the GUI.&quot;&quot;&quot;</span>
+
+        <span class="n">welcome_msg</span> <span class="o">=</span> <span class="s2">&quot;Welcome to dnazip! </span><span class="se">\n</span><span class="s2"> A graphical &quot;</span> <span class="o">+</span> \
+            <span class="s2">&quot;representation of Burros-Wheeler and Huffman &quot;</span> <span class="o">+</span> \
+            <span class="s2">&quot;Coding algorithms&quot;</span>
+        <span class="n">rand</span> <span class="o">=</span> <span class="s2">&quot;You don&#39;t have a DNA sequence? we&#39;ll generate a small &quot;</span> <span class="o">+</span> \
+            <span class="s2">&quot;random one for you&quot;</span>
+        <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">welcome_msg</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Compression&quot;</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;groove&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="s1">&#39;bold&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Decompression&quot;</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;groove&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="s1">&#39;bold&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">separator_one</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Separator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+        <span class="n">separator_one</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ipadx</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span> 
+        <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">rand</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;bold&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entry</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">separator_two</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Separator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+        <span class="n">separator_two</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ipadx</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span> </div>
+
+<div class="viewcode-block" id="Interface.create_buttons"><a class="viewcode-back" href="../index.html#interface.Interface.create_buttons">[docs]</a>    <span class="k">def</span> <span class="nf">create_buttons</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method creates buttons for the interface.&quot;&quot;&quot;</span>
+        <span class="n">buttons</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;BWT&quot;</span><span class="p">:</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;BWT&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bwt_window</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+                   <span class="s2">&quot;DEBWT&quot;</span><span class="p">:</span> <span class="n">Button</span><span class="p">(</span>
+                       <span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;reverse BWT&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debwt_window</span><span class="p">,</span><span class="n">width</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+                           <span class="n">row</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+                   <span class="s2">&quot;Huffcode&quot;</span><span class="p">:</span> <span class="n">Button</span><span class="p">(</span>
+                       <span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Huffman coding&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">huffcode_window</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+                           <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+                   <span class="s2">&quot;Huffdecode&quot;</span><span class="p">:</span> <span class="n">Button</span><span class="p">(</span>
+                       <span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Huffman decoding&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">huffdecode_window</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+                           <span class="n">row</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+                   <span class="s2">&quot;fullzip&quot;</span><span class="p">:</span> <span class="n">Button</span><span class="p">(</span>
+                       <span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Full zip&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fullzip_window</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+                           <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+                   <span class="s2">&quot;fullunzip&quot;</span><span class="p">:</span> <span class="n">Button</span><span class="p">(</span>
+                       <span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Full unzip&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fullunzip_window</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+                           <span class="n">row</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+                    <span class="s2">&quot;generate&quot;</span><span class="p">:</span> <span class="n">Button</span><span class="p">(</span>
+                       <span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Generate&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_random</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+                           <span class="n">row</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+                     <span class="s2">&quot;save&quot;</span><span class="p">:</span> <span class="n">Button</span><span class="p">(</span>
+                       <span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Save&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">save_random</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+                           <span class="n">row</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">)}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span> <span class="o">=</span> <span class="n">buttons</span></div>
+
+<div class="viewcode-block" id="Interface.open_file"><a class="viewcode-back" href="../index.html#interface.Interface.open_file">[docs]</a>    <span class="k">def</span> <span class="nf">open_file</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to create a file chooser for the interface.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">filedialog</span><span class="o">.</span><span class="n">askopenfilename</span><span class="p">(</span>
+            <span class="n">initialdir</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Select File&quot;</span><span class="p">,</span><span class="n">filetypes</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">(</span><span class="s2">&quot;Text Files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.txt&quot;</span><span class="p">),(</span><span class="s2">&quot;all files&quot;</span><span class="p">,</span><span class="s2">&quot;*.*&quot;</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Selected file&quot;</span><span class="p">,</span> <span class="s2">&quot;You have selected </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Interface.save_random"><a class="viewcode-back" href="../index.html#interface.Interface.save_random">[docs]</a>    <span class="k">def</span> <span class="nf">save_random</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to save a randomly generated DNA sequence </span>
+<span class="sd">        to a file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">seq_to_save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">seq_to_save</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">filedialog</span><span class="o">.</span><span class="n">asksaveasfilename</span><span class="p">(</span>
+                <span class="n">initialdir</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Select File&quot;</span><span class="p">,</span> <span class="n">filetypes</span><span class="o">=</span><span class="p">(</span>
+                    <span class="p">(</span><span class="s2">&quot;Text Files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.txt&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;all files&quot;</span><span class="p">,</span><span class="s2">&quot;*.*&quot;</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+                <span class="n">Sequence</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">seq_to_save</span><span class="p">)</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Sequence saved&quot;</span><span class="p">,</span> <span class="s2">&quot;The sequence was saved to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span>
+                    <span class="n">path</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;No sequence entered&quot;</span><span class="p">,</span> <span class="s2">&quot;The sequence box is empty&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interface.about"><a class="viewcode-back" href="../index.html#interface.Interface.about">[docs]</a>    <span class="k">def</span> <span class="nf">about</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to generate the about menu page information.&quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;This project is developed for the &quot;Sequence Algorithms&quot; &#39;</span> <span class="o">+</span> \
+            <span class="s1">&#39;Course as a part of The M.Sc. in Bioinformatics degree at &#39;</span> <span class="o">+</span> \
+                <span class="s1">&#39;Aix-Marseille University, France. </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> \
+        <span class="s1">&#39;Source code available at: https://github.com/dabane-ghassan/dnazip&#39;</span>
+        <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;About dnazip&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interface.generate_random"><a class="viewcode-back" href="../index.html#interface.Interface.generate_random">[docs]</a>    <span class="k">def</span> <span class="nf">generate_random</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to generate random sequences of DNA of length</span>
+<span class="sd">        50 and show them inside the random text box tkinter entry.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">Sequence</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Interface.next_btn"><a class="viewcode-back" href="../index.html#interface.Interface.next_btn">[docs]</a>    <span class="k">def</span> <span class="nf">next_btn</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">controller</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to create the output of a universal next button</span>
+<span class="sd">        for all protocols of the program, it will be passed to a given label</span>
+<span class="sd">        that changes its content.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        controller : Iterator[str]</span>
+<span class="sd">            The controller of a given protocol that contains all steps to show.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Every step to be shown, one at a time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">to_print</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">to_print</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">to_print</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>  
+                <span class="k">return</span> <span class="n">to_print</span>
+
+        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;The protocole is finished&quot;</span></div>
+
+<div class="viewcode-block" id="Interface.final_btn"><a class="viewcode-back" href="../index.html#interface.Interface.final_btn">[docs]</a>    <span class="k">def</span> <span class="nf">final_btn</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">controller</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to create the output of a universal final step </span>
+<span class="sd">        button for all protocols of the program, it will be passed to a given</span>
+<span class="sd">        label that changes its content.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        controller : Iterator[str]</span>
+<span class="sd">            The controller of a given protocol that contains all steps to show.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The final step to be shown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">to_print</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">controller</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># Getting the final result of a generator</span>
+            <span class="k">return</span> <span class="n">to_print</span>
+
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;The protocole is finished, please refer to the main menu.&quot;</span></div>
+
+<div class="viewcode-block" id="Interface.step_by_step"><a class="viewcode-back" href="../index.html#interface.Interface.step_by_step">[docs]</a>    <span class="k">def</span> <span class="nf">step_by_step</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">window</span><span class="p">:</span> <span class="n">Tk</span><span class="p">,</span> <span class="n">protocol</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">names</span><span class="p">:</span> <span class="n">Generator</span><span class="p">)</span><span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method creates a universal step by step advancing interface</span>
+<span class="sd">        for a given chosen protocole.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        window : Tk</span>
+<span class="sd">            The given window.</span>
+<span class="sd">        protocol : Iterator[str]</span>
+<span class="sd">            The output protocol to be displayed.</span>
+<span class="sd">        names : Generator</span>
+<span class="sd">            The names of the steps to be displayed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">steps</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="n">current_step</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="n">steps</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s2">&quot;#ebebeb&quot;</span><span class="p">,</span>
+                     <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">current_step</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">relx</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> 
+                   <span class="n">rely</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+        <span class="n">xscrollbar</span> <span class="o">=</span> <span class="n">Scrollbar</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="n">HORIZONTAL</span><span class="p">)</span>
+        <span class="n">xscrollbar</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">BOTTOM</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># Vertical (y) Scroll Bar</span>
+        <span class="n">yscrollbar</span> <span class="o">=</span> <span class="n">Scrollbar</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+        <span class="n">yscrollbar</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">RIGHT</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">Y</span><span class="p">)</span>
+
+        <span class="c1"># Text Widget</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">wrap</span><span class="o">=</span><span class="n">NONE</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+                    <span class="n">xscrollcommand</span><span class="o">=</span><span class="n">xscrollbar</span><span class="o">.</span><span class="n">set</span><span class="p">,</span>
+                    <span class="n">yscrollcommand</span><span class="o">=</span><span class="n">yscrollbar</span><span class="o">.</span><span class="n">set</span><span class="p">)</span>
+        <span class="n">text</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">relx</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+                   <span class="n">rely</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+                   <span class="n">anchor</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Configure the scrollbars</span>
+        <span class="n">xscrollbar</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="n">text</span><span class="o">.</span><span class="n">xview</span><span class="p">)</span>
+        <span class="n">yscrollbar</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="n">text</span><span class="o">.</span><span class="n">yview</span><span class="p">)</span>
+
+        <span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Next&quot;</span><span class="p">,</span>
+               <span class="n">command</span><span class="o">=</span><span class="k">lambda</span> <span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">update_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">next_btn</span><span class="p">(</span><span class="n">protocol</span><span class="p">)),</span><span class="n">steps</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">next_btn</span><span class="p">(</span><span class="n">names</span><span class="p">))])</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+
+        <span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Final step&quot;</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span> <span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">update_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">final_btn</span><span class="p">(</span><span class="n">protocol</span><span class="p">)),</span> <span class="n">steps</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">final_btn</span><span class="p">(</span><span class="n">names</span><span class="p">))])</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interface.update_text"><a class="viewcode-back" href="../index.html#interface.Interface.update_text">[docs]</a>    <span class="k">def</span> <span class="nf">update_text</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">widget</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span> <span class="n">new_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method updates the Text tkinter widget with every step</span>
+<span class="sd">        in every protocol. it deletes its contents and then replaces it with</span>
+<span class="sd">        new_text parameter.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        widget : Text</span>
+<span class="sd">            Tkinter&#39;s Text widget.</span>
+<span class="sd">        new_text : str</span>
+<span class="sd">            The new text to be shown in the widget.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            Replaces text in a given Text widget.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>   <span class="c1">#Clear the text window so we can write.</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">END</span><span class="p">,</span><span class="n">new_text</span><span class="p">)</span> </div>
+
+<div class="viewcode-block" id="Interface.BW_output"><a class="viewcode-back" href="../index.html#interface.Interface.BW_output">[docs]</a>    <span class="k">def</span> <span class="nf">BW_output</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">controller</span><span class="p">:</span> <span class="n">BWEncoder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to collect all output for the BW encoding.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        controller : BWEncoder</span>
+<span class="sd">            The given controller.</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Iterator[str]</span>
+<span class="sd">            The content to be shown in the interface.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">rot</span> <span class="ow">in</span> <span class="n">controller</span><span class="o">.</span><span class="n">rotations</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">rot</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">bwm</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">bwt</span></div>
+
+<div class="viewcode-block" id="Interface.bwt_window"><a class="viewcode-back" href="../index.html#interface.Interface.bwt_window">[docs]</a>    <span class="k">def</span> <span class="nf">bwt_window</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method creates a Tkinter Toplevel window for the step-by-step</span>
+<span class="sd">        BWT protocol, The output file of the protocol will be shown at the </span>
+<span class="sd">        beginning.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="n">bwt_window</span> <span class="o">=</span> <span class="n">Toplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">bwt_window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Burros-Wheeler Transform&quot;</span><span class="p">)</span>
+            <span class="n">bwt_window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;1000x1000&quot;</span><span class="p">)</span>
+            <span class="n">bwt_window</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">)</span>
+            <span class="n">controller</span> <span class="o">=</span> <span class="n">BWEncoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+            <span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BW_output</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span>
+            <span class="n">prot</span><span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span>
+
+            <span class="n">rots</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Step 2: Generating all rotations of the sequence&quot;</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prot</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)]</span>
+            
+            <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">step</span> <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Step 1 : Visualizing the sequence&quot;</span><span class="p">,</span>
+                     <span class="o">*</span><span class="n">rots</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 3: Creating the Burros-Wheeler matrix by sorting all rotations&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 4: The Burros-Wheeler transform is the last column of the matrix&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Please refer to the main menu to select another sequence&quot;</span><span class="p">])</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">step_by_step</span><span class="p">(</span><span class="n">bwt_window</span><span class="p">,</span> <span class="nb">iter</span><span class="p">(</span><span class="n">prot</span><span class="p">),</span> <span class="n">names</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">program_output</span><span class="p">(</span><span class="n">bwt_window</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">bwt_output</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">no_file_error</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Interface.DeBW_output"><a class="viewcode-back" href="../index.html#interface.Interface.DeBW_output">[docs]</a>    <span class="k">def</span> <span class="nf">DeBW_output</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">controller</span><span class="p">:</span> <span class="n">BWDecoder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to collect all output for the BW decoding.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        controller : BWDecoder</span>
+<span class="sd">            The given controller.</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Iterator[str]</span>
+<span class="sd">            The content to be shown in the interface.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">mat</span> <span class="ow">in</span> <span class="n">controller</span><span class="o">.</span><span class="n">bwm</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">mat</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">original</span></div>
+
+<div class="viewcode-block" id="Interface.debwt_window"><a class="viewcode-back" href="../index.html#interface.Interface.debwt_window">[docs]</a>    <span class="k">def</span> <span class="nf">debwt_window</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method creates a Tkinter Toplevel window for the step-by-step</span>
+<span class="sd">        inverse BWT protocol, The output file of the protocol will be shown at</span>
+<span class="sd">        the beginning.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="n">debwt_window</span> <span class="o">=</span> <span class="n">Toplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">debwt_window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Reversing Burros-Wheeler Transform&quot;</span><span class="p">)</span>
+            <span class="n">debwt_window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;1000x1000&quot;</span><span class="p">)</span>
+            <span class="n">debwt_window</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">)</span>
+            <span class="n">controller</span> <span class="o">=</span> <span class="n">BWDecoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DeBW_output</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span>
+            <span class="n">prot</span><span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span>
+            
+            <span class="n">reconstructed</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Step 2: Creating the Burros-Wheeler Matrix&quot;</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prot</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)]</span>
+
+            <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">step</span> <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Step 1 : Visualizing the sequence&quot;</span><span class="p">,</span>
+                     <span class="o">*</span><span class="n">reconstructed</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 3: The original sequence is the one that has a $ sign as a last column&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Please refer to the main menu to select another sequence&quot;</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">step_by_step</span><span class="p">(</span><span class="n">debwt_window</span><span class="p">,</span> <span class="nb">iter</span><span class="p">(</span><span class="n">prot</span><span class="p">),</span> <span class="n">names</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">program_output</span><span class="p">(</span><span class="n">debwt_window</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">debwt_output</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">no_file_error</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Interface.Huff_output"><a class="viewcode-back" href="../index.html#interface.Interface.Huff_output">[docs]</a>    <span class="k">def</span> <span class="nf">Huff_output</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">controller</span><span class="p">:</span> <span class="n">HuffEncoder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to collect all output for Huffman encoding.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        controller : HuffEncoder</span>
+<span class="sd">            The given controller.</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Iterator[str]</span>
+<span class="sd">            The content to be shown in the interface.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">header</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">binary</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">unicode</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">compressed</span></div>
+
+<div class="viewcode-block" id="Interface.huffcode_window"><a class="viewcode-back" href="../index.html#interface.Interface.huffcode_window">[docs]</a>    <span class="k">def</span> <span class="nf">huffcode_window</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method creates a Tkinter Toplevel window for the step-by-step</span>
+<span class="sd">        Huffman coding protocol, The output file of the protocol will be shown</span>
+<span class="sd">        at the beginning.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="n">huff_code_window</span> <span class="o">=</span> <span class="n">Toplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">huff_code_window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Huffman coding&quot;</span><span class="p">)</span>
+            <span class="n">huff_code_window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;1000x1000&quot;</span><span class="p">)</span>
+            <span class="n">huff_code_window</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">)</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">step</span> <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Step 1 : Visualizing the sequence&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 2: Creating Huffman tree from sequence and calculating paths&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 3: Generating the binary sequence from paths and adding a padding&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 4: Coding the binary in 8-bits to unicode&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 5: Writing paths and unicode to an output file&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Please refer to the main menu to select another sequence&quot;</span><span class="p">])</span>
+            <span class="n">controller</span> <span class="o">=</span> <span class="n">HuffEncoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+            <span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Huff_output</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">step_by_step</span><span class="p">(</span><span class="n">huff_code_window</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">program_output</span><span class="p">(</span><span class="n">huff_code_window</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_output</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">no_file_error</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Interface.deHuff_output"><a class="viewcode-back" href="../index.html#interface.Interface.deHuff_output">[docs]</a>    <span class="k">def</span> <span class="nf">deHuff_output</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">controller</span><span class="p">:</span> <span class="n">HuffDecoder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to collect all output for the Huff decoding.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        controller : HuffDecoder</span>
+<span class="sd">            The given controller.</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Iterator[str]</span>
+<span class="sd">            The content to be shown in the interface.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">header</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">unicode</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">binary</span> 
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">decompressed</span></div>
+
+<div class="viewcode-block" id="Interface.huffdecode_window"><a class="viewcode-back" href="../index.html#interface.Interface.huffdecode_window">[docs]</a>    <span class="k">def</span> <span class="nf">huffdecode_window</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method creates a Tkinter Toplevel window for the step-by-step</span>
+<span class="sd">        Huffman decoding, The output file of the protocol will be shown at the </span>
+<span class="sd">        beginning.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="n">huff_decode_window</span> <span class="o">=</span> <span class="n">Toplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">huff_decode_window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Huffman decoding&quot;</span><span class="p">)</span>
+            <span class="n">huff_decode_window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;1000x1000&quot;</span><span class="p">)</span>
+            <span class="n">huff_decode_window</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">)</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">step</span> <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Step 1 : Visualizing the compressed sequence&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 2: Reading the header of the file that corresponds to Huffman codes that where created with the tree during compression&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 3: Separating the unicode sequence&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 4: Transforming the unicode sequence to binary using huffman codes in the header and stripping padding&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 5: The decompressed sequence : &quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Please refer to the main menu to select another sequence&quot;</span><span class="p">])</span>
+            <span class="n">controller</span> <span class="o">=</span> <span class="n">HuffDecoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deHuff_output</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">step_by_step</span><span class="p">(</span><span class="n">huff_decode_window</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">program_output</span><span class="p">(</span><span class="n">huff_decode_window</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">dehuffman_output</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">no_file_error</span><span class="p">()</span>   </div>
+
+<div class="viewcode-block" id="Interface.fullzip_output"><a class="viewcode-back" href="../index.html#interface.Interface.fullzip_output">[docs]</a>    <span class="k">def</span> <span class="nf">fullzip_output</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">controller</span><span class="p">:</span> <span class="n">FullEncoder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to collect all output for a full protocol</span>
+<span class="sd">        encoding (BWT + Huffman compression).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        controller : FullEncoder</span>
+<span class="sd">            The given controller.</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Iterator[str]</span>
+<span class="sd">            The content to be shown in the interface.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">bw_encoder</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">rot</span> <span class="ow">in</span> <span class="n">controller</span><span class="o">.</span><span class="n">bw_encoder</span><span class="o">.</span><span class="n">rotations</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">rot</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">bw_encoder</span><span class="o">.</span><span class="n">bwm</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">bw_encoder</span><span class="o">.</span><span class="n">bwt</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_encoder</span><span class="o">.</span><span class="n">header</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_encoder</span><span class="o">.</span><span class="n">binary</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_encoder</span><span class="o">.</span><span class="n">unicode</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_encoder</span><span class="o">.</span><span class="n">compressed</span></div>
+
+<div class="viewcode-block" id="Interface.fullzip_window"><a class="viewcode-back" href="../index.html#interface.Interface.fullzip_window">[docs]</a>    <span class="k">def</span> <span class="nf">fullzip_window</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method creates a Tkinter Toplevel window for the step-by-step</span>
+<span class="sd">        Fullzip protocol (BWT+Huffman compression), The output file of the </span>
+<span class="sd">        protocol will be shown at the beginning.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="n">fullzip_window</span> <span class="o">=</span> <span class="n">Toplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">fullzip_window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Burrow-Wheeler Transform + Huffman coding&quot;</span><span class="p">)</span>
+            <span class="n">fullzip_window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;1000x1000&quot;</span><span class="p">)</span>
+            <span class="n">fullzip_window</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">)</span>
+            <span class="n">controller</span> <span class="o">=</span> <span class="n">FullEncoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">full_zip</span><span class="p">()</span>
+            <span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fullzip_output</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span>
+            <span class="n">prot</span><span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span>
+
+            <span class="n">rots</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Step 2: Generating all rotations of the sequence&quot;</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prot</span><span class="p">)</span> <span class="o">-</span> <span class="mi">7</span><span class="p">)]</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">step</span> <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Step 1 : Visualizing the sequence&quot;</span><span class="p">,</span>
+                     <span class="o">*</span><span class="n">rots</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 3: Creating the Burros-Wheeler matrix by sorting all rotations&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 4: The Burros-Wheeler transform is the last column of the matrix&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 5: Creating Huffman tree from Burros-Wheeler transform and calculating paths&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 6: Generating the binary sequence from paths and adding a padding&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 7: Coding the binary in 8-bits to unicode&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 8: Writing paths and unicode to an output file&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Please refer to the main menu to select another sequence&quot;</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">step_by_step</span><span class="p">(</span><span class="n">fullzip_window</span><span class="p">,</span> <span class="nb">iter</span><span class="p">(</span><span class="n">prot</span><span class="p">),</span> <span class="n">names</span><span class="p">)</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">bw_encoder</span><span class="o">.</span><span class="n">bwt_output</span> <span class="o">+</span> \
+                <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_encoder</span><span class="o">.</span><span class="n">huff_output</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">program_output</span><span class="p">(</span><span class="n">fullzip_window</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">no_file_error</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Interface.fullunzip_output"><a class="viewcode-back" href="../index.html#interface.Interface.fullunzip_output">[docs]</a>    <span class="k">def</span> <span class="nf">fullunzip_output</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">controller</span><span class="p">:</span> <span class="n">FullDecoder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to collect all output for a full decompression</span>
+<span class="sd">        protocol.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        controller : FullDecoder</span>
+<span class="sd">            The given controller.</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Iterator[str]</span>
+<span class="sd">            The content to be shown in the interface.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_decoder</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_decoder</span><span class="o">.</span><span class="n">header</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_decoder</span><span class="o">.</span><span class="n">unicode</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_decoder</span><span class="o">.</span><span class="n">binary</span> 
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_decoder</span><span class="o">.</span><span class="n">decompressed</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">controller</span><span class="o">.</span><span class="n">bw_decoder</span><span class="o">.</span><span class="n">bwm</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">line</span>
+        <span class="k">yield</span> <span class="n">controller</span><span class="o">.</span><span class="n">bw_decoder</span><span class="o">.</span><span class="n">original</span></div>
+
+<div class="viewcode-block" id="Interface.fullunzip_window"><a class="viewcode-back" href="../index.html#interface.Interface.fullunzip_window">[docs]</a>    <span class="k">def</span> <span class="nf">fullunzip_window</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;This method creates a Tkinter Toplevel window for the step-by-step</span>
+<span class="sd">        Full unzipping protocol (HUffman decoding + inverse BWT), The output </span>
+<span class="sd">        file of the protocol will be shown at the beginning.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="n">fullunzip_window</span> <span class="o">=</span> <span class="n">Toplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">fullunzip_window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Huffman decoding + reverse Burros-Wheeler transform&quot;</span><span class="p">)</span>
+            <span class="n">fullunzip_window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;1000x1000&quot;</span><span class="p">)</span>
+            <span class="n">fullunzip_window</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#ebebeb&#39;</span><span class="p">)</span>
+            <span class="n">controller</span> <span class="o">=</span> <span class="n">FullDecoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">full_unzip</span><span class="p">()</span>
+            <span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fullunzip_output</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span>
+            <span class="n">prot</span><span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span>
+
+            <span class="n">reconstructed</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Step 6: Creating the Burros-Wheeler Matrix&quot;</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prot</span><span class="p">)</span> <span class="o">-</span> <span class="mi">6</span><span class="p">)]</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">step</span> <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Step 1 : Visualizing the compressed sequence&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 2: Reading the header of the file that corresponds to Huffman codes that where created with the tree during compression&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 3: Separating the unicode sequence&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 4: Transforming the unicode sequence to binary using huffman codes in the header and stripping padding&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 5: The decompressed sequence is the burros wheeler transform of the original sequence:&quot;</span><span class="p">,</span>
+                     <span class="o">*</span><span class="n">reconstructed</span><span class="p">,</span>
+                     <span class="s2">&quot;Step 7: The original sequence is the one that has a $ sign as a last column in the Burros-Wheeler Matrix&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Please refer to the main menu to select another sequence&quot;</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">step_by_step</span><span class="p">(</span><span class="n">fullunzip_window</span><span class="p">,</span> <span class="nb">iter</span><span class="p">(</span><span class="n">prot</span><span class="p">),</span> <span class="n">names</span><span class="p">)</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">huff_decoder</span><span class="o">.</span><span class="n">dehuffman_output</span> <span class="o">+</span> \
+                <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">controller</span><span class="o">.</span><span class="n">bw_decoder</span><span class="o">.</span><span class="n">debwt_output</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">program_output</span><span class="p">(</span><span class="n">fullunzip_window</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">no_file_error</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Interface.create_menu"><a class="viewcode-back" href="../index.html#interface.Interface.create_menu">[docs]</a>    <span class="k">def</span> <span class="nf">create_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Creates the menu for the interface.&quot;&quot;&quot;</span>
+        <span class="n">menubar</span> <span class="o">=</span> <span class="n">Menu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">menuFile</span> <span class="o">=</span> <span class="n">Menu</span><span class="p">(</span><span class="n">menubar</span><span class="p">,</span> <span class="n">tearoff</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">menubar</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Menu&quot;</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">menuFile</span><span class="p">)</span>
+        <span class="c1">#menubar.add_cascade(label=&quot;About&quot;, menu=menuFile)</span>
+        <span class="n">menuFile</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Choose a file&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="p">,</span>
+                             <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;Ctrl+o&quot;</span><span class="p">)</span>
+        <span class="n">menuFile</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;About&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">about</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="s2">&quot;&lt;Control-o&gt;&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">menu</span><span class="o">=</span><span class="n">menubar</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interface.no_file_error"><a class="viewcode-back" href="../index.html#interface.Interface.no_file_error">[docs]</a>    <span class="k">def</span> <span class="nf">no_file_error</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Shows an error when no file is selected.&quot;&quot;&quot;</span>
+        <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;No file selected&quot;</span><span class="p">,</span> <span class="s2">&quot;Please select a file&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interface.program_output"><a class="viewcode-back" href="../index.html#interface.Interface.program_output">[docs]</a>    <span class="k">def</span> <span class="nf">program_output</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">window</span><span class="p">:</span> <span class="n">Tk</span><span class="p">,</span>  <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Shows the output of a given protocol.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        window : Tk</span>
+<span class="sd">            The given window.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The output file path to be shown in the messagebox.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Program output&quot;</span><span class="p">,</span>
+                            <span class="n">message</span><span class="o">=</span><span class="s2">&quot;The output will be saved to </span><span class="se">\n</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span>
+                                <span class="n">path</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Interface.main"><a class="viewcode-back" href="../index.html#interface.Interface.main">[docs]</a>    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Launches the mainloop of the interface.&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[View] main&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Interface.quit"><a class="viewcode-back" href="../index.html#interface.Interface.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Quits the current interface.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2021, Ghassan Dabane
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>encoder &mdash; dnazip 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> dnazip
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dnazip</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>encoder</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for encoder</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Encoder classes, Controller architecture in a MVC layout.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dnazip.sequence</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">dnazip.burros_wheeler</span> <span class="kn">import</span> <span class="n">BurrosWheeler</span>
+<span class="kn">from</span> <span class="nn">dnazip.huffman</span> <span class="kn">import</span> <span class="n">HuffmanTree</span>
+
+<div class="viewcode-block" id="BWEncoder"><a class="viewcode-back" href="../index.html#encoder.BWEncoder">[docs]</a><span class="k">class</span> <span class="nc">BWEncoder</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;An encoder class for Burros-Wheeler transform, it is used as a </span>
+<span class="sd">    controller in a MVC architecture.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path: str</span>
+<span class="sd">        The path of the file to be transformed with Burros-Wheeler.</span>
+<span class="sd">    seq: Sequence</span>
+<span class="sd">        The sequence that was extracted from the file; a Sequence object.</span>
+<span class="sd">    bwt_output: str</span>
+<span class="sd">        The output file path for BWT.</span>
+<span class="sd">    rotations: List[str]</span>
+<span class="sd">        A matrix of rotations from the original sequence.</span>
+<span class="sd">    bwm: List[str]</span>
+<span class="sd">        The Burros-Wheeler Matrix.</span>
+<span class="sd">    bwt: str</span>
+<span class="sd">        The Burros-Wheeler transform of the sequence.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Class constructor.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path of the file to be read.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            A class instance.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seq</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bwt_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;_bwt.txt&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotations</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bwm</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bwt</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="BWEncoder.encode"><a class="viewcode-back" href="../index.html#encoder.BWEncoder.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The main encoding method of the controller.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            Fills all the properties of an object and writes out the</span>
+<span class="sd">            transformed sequence to a file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">BurrosWheeler</span><span class="o">.</span><span class="n">string_rotations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bwm</span> <span class="o">=</span> <span class="n">BurrosWheeler</span><span class="o">.</span><span class="n">construct_bwm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rotations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bwt</span> <span class="o">=</span> <span class="n">BurrosWheeler</span><span class="o">.</span><span class="n">encode_bwt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bwm</span><span class="p">)</span>
+        <span class="n">Sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bwt_output</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bwt</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="HuffEncoder"><a class="viewcode-back" href="../index.html#encoder.HuffEncoder">[docs]</a><span class="k">class</span> <span class="nc">HuffEncoder</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;An encoder class for Huffman compression, it is used as a controller</span>
+<span class="sd">    in a MVC architecture.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path: str</span>
+<span class="sd">        The path of the file to be compressed with Huffman compression.</span>
+<span class="sd">    seq: Sequence</span>
+<span class="sd">        The sequence that was extracted from the file; a Sequence object.</span>
+<span class="sd">    huff_output: str</span>
+<span class="sd">        The output file path for Huffman compression.</span>
+<span class="sd">    binary: str</span>
+<span class="sd">        The binary sequence that was translated from the original sequence </span>
+<span class="sd">        using Huffman tree and codes.</span>
+<span class="sd">    header: str</span>
+<span class="sd">        The header of the compressed file; contains Huffman codes and paths</span>
+<span class="sd">        as well as padding that were generated when compressing the sequence.</span>
+<span class="sd">    unicode: str</span>
+<span class="sd">        The compressed format of the sequence.</span>
+<span class="sd">    compressed: str</span>
+<span class="sd">        The compressed sequence to be written to a file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Class constructor.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path of the file to be read.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            A class instance.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seq</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">huff_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;_compressed.txt&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unicode</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compressed</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="HuffEncoder.encode"><a class="viewcode-back" href="../index.html#encoder.HuffEncoder.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The main encoding method of the controller.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            Fills all the properties of an object and writes out the</span>
+<span class="sd">            compressed sequence to a file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">HuffmanTree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">get_codings</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">seq_to_binstr</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unicode</span> <span class="o">=</span> <span class="n">HuffmanTree</span><span class="o">.</span><span class="n">binstr_to_unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">codes_to_header</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compressed</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">unicode</span>
+        <span class="n">Sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">huff_output</span><span class="p">)</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compressed</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="FullEncoder"><a class="viewcode-back" href="../index.html#encoder.FullEncoder">[docs]</a><span class="k">class</span> <span class="nc">FullEncoder</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;An encoder class for both the Burros-Wheeler transform and Huffman</span>
+<span class="sd">    compression, controller architecture.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path: str</span>
+<span class="sd">        The path of the file to be compressed with BWT + Huffman compression.</span>
+<span class="sd">    bw_encoder: BWEncoder</span>
+<span class="sd">        A BWEncoder object to do the Burros-Wheeler transform on a sequence.</span>
+<span class="sd">    huff_encoder: HuffEncoder</span>
+<span class="sd">        A HuffEncoder object to do the Huffman compression on the BW transform.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Class constructor.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path of the file to be read.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            A class instance.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bw_encoder</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">huff_encoder</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="FullEncoder.full_zip"><a class="viewcode-back" href="../index.html#encoder.FullEncoder.full_zip">[docs]</a>    <span class="k">def</span> <span class="nf">full_zip</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The main encoding method of the controller, it first encodes the</span>
+<span class="sd">        sequence with BWT, then passes the BWT to Huffman compression.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            Fills all the properties of an object and writes out the</span>
+<span class="sd">            compressed sequence to a file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bw_encoder</span> <span class="o">=</span> <span class="n">BWEncoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bw_encoder</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">huff_encoder</span> <span class="o">=</span> <span class="n">HuffEncoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw_encoder</span><span class="o">.</span><span class="n">bwt_output</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">huff_encoder</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2021, Ghassan Dabane
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

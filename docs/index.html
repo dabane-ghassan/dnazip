@@ -1,0 +1,1758 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to dnazip’s documentation! &mdash; dnazip 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home" alt="Documentation Home"> dnazip
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to dnazip’s documentation!</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#with-pip">With pip</a></li>
+<li><a class="reference internal" href="#from-source">From source</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#getting-started">Getting started</a><ul>
+<li><a class="reference internal" href="#gui">GUI</a></li>
+<li><a class="reference internal" href="#using-the-library">Using the library</a><ul>
+<li><a class="reference internal" href="#generating-a-random-dna-sequence">Generating a random DNA sequence</a></li>
+<li><a class="reference internal" href="#encoding-a-dna-sequence-with-burros-wheeler-huffman-coding">Encoding a DNA sequence with Burros-Wheeler + Huffman Coding</a></li>
+<li><a class="reference internal" href="#decoding-a-dna-sequence-with-huffman-decoding-reversing-burros-wheeler-transform">Decoding a DNA sequence with Huffman decoding + Reversing Burros-Wheeler transform</a></li>
+<li><a class="reference internal" href="#building-the-burros-wheeler-transform-using-the-advanced-algorithm">Building the Burros-Wheeler transform using the advanced algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-interface">Graphical User Interface</a></li>
+<li><a class="reference internal" href="#module-encoder">Encoder Classes</a></li>
+<li><a class="reference internal" href="#module-decoder">Decoder Classes</a></li>
+<li><a class="reference internal" href="#module-sequence">Sequence</a></li>
+<li><a class="reference internal" href="#module-burros_wheeler">Burros-Wheeler Algorithm</a></li>
+<li><a class="reference internal" href="#module-huffman">Huffman Coding Algorithm</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">dnazip</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Welcome to dnazip’s documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-dnazip-s-documentation">
+<h1>Welcome to dnazip’s documentation!<a class="headerlink" href="#welcome-to-dnazip-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>You can install the package either from pip or from the source code hosted on <a class="reference external" href="https://github.com/dabane-ghassan/dnazip">github</a>.</p></li>
+</ul>
+<div class="section" id="with-pip">
+<h3>With pip<a class="headerlink" href="#with-pip" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">dnazip</span><span class="o">-</span><span class="n">bioinfo</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="from-source">
+<h3>From source<a class="headerlink" href="#from-source" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">dabane</span><span class="o">-</span><span class="n">ghassan</span><span class="o">/</span><span class="n">dnazip</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">dnazip</span>
+<span class="n">sudo</span> <span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gui">
+<h3>GUI<a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>After installing the package from source or using pip, the interface can be launched simply from the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dnazip</span>
+</pre></div>
+</div>
+</li>
+<li><p>If problems occur with the installation, an interface instance can be imported and launched:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dnazip.interface</span> <span class="kn">import</span> <span class="n">Interface</span>
+<span class="n">gui</span> <span class="o">=</span> <span class="n">Interface</span><span class="p">()</span>
+<span class="n">gui</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="using-the-library">
+<h3>Using the library<a class="headerlink" href="#using-the-library" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="generating-a-random-dna-sequence">
+<h4>Generating a random DNA sequence<a class="headerlink" href="#generating-a-random-dna-sequence" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p>A random DNA sequence with an alphabet of ATCGN can be generated for any given length specified in the parameter.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dnazip.sequence</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="n">randseq</span> <span class="o">=</span> <span class="n">Sequence</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">Sequence</span><span class="p">(</span><span class="s1">&#39;/path/to/new/seq&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">randseq</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="encoding-a-dna-sequence-with-burros-wheeler-huffman-coding">
+<h4>Encoding a DNA sequence with Burros-Wheeler + Huffman Coding<a class="headerlink" href="#encoding-a-dna-sequence-with-burros-wheeler-huffman-coding" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p>To encode a DNA sequence using BWT and Huffman coding, you can use a FullEncoder object that will save two files to the same directory as the sequence, the Burros-Wheeler transform and the UTF-8 zipped format of the sequence:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dnazip.encoder</span> <span class="kn">import</span> <span class="n">FullEncoder</span>
+<span class="n">encode</span> <span class="o">=</span> <span class="n">FullEncoder</span><span class="p">(</span><span class="s1">&#39;/home/ghassan/M1/gtf.txt&#39;</span><span class="p">)</span>
+<span class="n">encode</span><span class="o">.</span><span class="n">full_zip</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p>The attributes of the object can be accessed to see intermediary results:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">encode</span><span class="o">.</span><span class="n">bw_encoder</span><span class="o">.</span><span class="n">rotations</span> <span class="c1"># a matrix of string rotations from a sequence</span>
+<span class="n">encode</span><span class="o">.</span><span class="n">bw_encoder</span><span class="o">.</span><span class="n">bwm</span> <span class="c1"># The Burros-Wheeler Matrix</span>
+<span class="n">encode</span><span class="o">.</span><span class="n">bw_encoder</span><span class="o">.</span><span class="n">bwt</span> <span class="c1"># The Burros-Wheeler Transform</span>
+
+<span class="n">encode</span><span class="o">.</span><span class="n">huff_encoder</span><span class="o">.</span><span class="n">header</span> <span class="c1"># The header of the zip file that contains Huffman codes for each character as well as the sequence binary padding</span>
+<span class="n">encode</span><span class="o">.</span><span class="n">huff_encoder</span><span class="o">.</span><span class="n">binary</span> <span class="c1"># The binary sequence of the BW transform</span>
+<span class="n">encode</span><span class="o">.</span><span class="n">huff_encoder</span><span class="o">.</span><span class="n">unicode</span> <span class="c1"># 8-bits encoded binary sequence</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>*A random sequence of size 1kB was compressed efficiently to 549 bytes.*</strong></p></li>
+</ul>
+</div>
+<div class="section" id="decoding-a-dna-sequence-with-huffman-decoding-reversing-burros-wheeler-transform">
+<h4>Decoding a DNA sequence with Huffman decoding + Reversing Burros-Wheeler transform<a class="headerlink" href="#decoding-a-dna-sequence-with-huffman-decoding-reversing-burros-wheeler-transform" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p>To decode a zipped DNA sequence using Huffman decoding and the inverse of BWT, you can use a FullDecoder object that will work in the same manner as the FullEncoder object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dnazip.decoder</span> <span class="kn">import</span> <span class="n">FullDecoder</span>
+<span class="n">decode</span> <span class="o">=</span> <span class="n">FullDecoder</span><span class="p">(</span><span class="s1">&#39;path/to/seq&#39;</span><span class="p">)</span>
+<span class="n">decode</span><span class="o">.</span><span class="n">full_unzip</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p>The attributes can also be accessed to see intermediary results:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">decode</span><span class="o">.</span><span class="n">huff_decoder</span><span class="o">.</span><span class="n">header</span> <span class="c1"># The header of the zip file that contains Huffman codes for each character as well as the sequence binary padding that where saved when the Huffman tree was created</span>
+<span class="n">decode</span><span class="o">.</span><span class="n">huff_decoder</span><span class="o">.</span><span class="n">unicode</span> <span class="c1"># 8-bits encoded sequence</span>
+<span class="n">decode</span><span class="o">.</span><span class="n">huff_decoder</span><span class="o">.</span><span class="n">binary</span> <span class="c1"># The binary sequence</span>
+
+<span class="n">decode</span><span class="o">.</span><span class="n">bw_decoder</span><span class="o">.</span><span class="n">bwm</span> <span class="c1"># The Burros-Wheeler reconstructed matrix</span>
+<span class="n">decode</span><span class="o">.</span><span class="n">bw_decoder</span><span class="o">.</span><span class="n">original</span> <span class="c1"># The original sequence</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="building-the-burros-wheeler-transform-using-the-advanced-algorithm">
+<h4>Building the Burros-Wheeler transform using the advanced algorithm<a class="headerlink" href="#building-the-burros-wheeler-transform-using-the-advanced-algorithm" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p>The BWT can be constructed using a Suffix Array (SA) based algorithm that has a better time and space complexities:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dnazip.sequence</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">dnazip.burros_wheeler</span> <span class="kn">import</span> <span class="n">BurrosWheeler</span>
+
+<span class="n">seq</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">(</span><span class="s1">&#39;/home/ghassan/M1/gtf.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">BurrosWheeler</span><span class="o">.</span><span class="n">bwt_advanced</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+<div class="section" id="module-interface">
+<span id="graphical-user-interface"></span><h1>Graphical User Interface<a class="headerlink" href="#module-interface" title="Permalink to this headline">¶</a></h1>
+<p>View architecture of the main application, i.e; a GUI.</p>
+<dl class="py class">
+<dt id="interface.Interface">
+<em class="property">class </em><code class="sig-prename descclassname">interface.</code><code class="sig-name descname">Interface</code><a class="reference internal" href="_modules/interface.html#Interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>View class of the application using a Tkinter interface.</p>
+<dl class="py method">
+<dt id="interface.Interface.BW_output">
+<code class="sig-name descname">BW_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller</span><span class="p">:</span> <span class="n">dnazip.encoder.BWEncoder</span></em><span class="sig-paren">)</span> &#x2192; Iterator<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/interface.html#Interface.BW_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.BW_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to collect all output for the BW encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>controller</strong> (<a class="reference internal" href="#encoder.BWEncoder" title="encoder.BWEncoder"><em>BWEncoder</em></a>) – The given controller.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><em>Iterator[str]</em> – The content to be shown in the interface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.DeBW_output">
+<code class="sig-name descname">DeBW_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller</span><span class="p">:</span> <span class="n">dnazip.decoder.BWDecoder</span></em><span class="sig-paren">)</span> &#x2192; Iterator<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/interface.html#Interface.DeBW_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.DeBW_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to collect all output for the BW decoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>controller</strong> (<a class="reference internal" href="#decoder.BWDecoder" title="decoder.BWDecoder"><em>BWDecoder</em></a>) – The given controller.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><em>Iterator[str]</em> – The content to be shown in the interface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.Huff_output">
+<code class="sig-name descname">Huff_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller</span><span class="p">:</span> <span class="n">dnazip.encoder.HuffEncoder</span></em><span class="sig-paren">)</span> &#x2192; Iterator<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/interface.html#Interface.Huff_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.Huff_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to collect all output for Huffman encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>controller</strong> (<a class="reference internal" href="#encoder.HuffEncoder" title="encoder.HuffEncoder"><em>HuffEncoder</em></a>) – The given controller.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><em>Iterator[str]</em> – The content to be shown in the interface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.about">
+<code class="sig-name descname">about</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.about"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.about" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to generate the about menu page information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.bwt_window">
+<code class="sig-name descname">bwt_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.bwt_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.bwt_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a Tkinter Toplevel window for the step-by-step
+BWT protocol, The output file of the protocol will be shown at the
+beginning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.create_buttons">
+<code class="sig-name descname">create_buttons</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.create_buttons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.create_buttons" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates buttons for the interface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.create_main">
+<code class="sig-name descname">create_main</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.create_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.create_main" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to create the main menu interface of the GUI.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.create_menu">
+<code class="sig-name descname">create_menu</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.create_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.create_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the menu for the interface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.deHuff_output">
+<code class="sig-name descname">deHuff_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller</span><span class="p">:</span> <span class="n">dnazip.decoder.HuffDecoder</span></em><span class="sig-paren">)</span> &#x2192; Iterator<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/interface.html#Interface.deHuff_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.deHuff_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to collect all output for the Huff decoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>controller</strong> (<a class="reference internal" href="#decoder.HuffDecoder" title="decoder.HuffDecoder"><em>HuffDecoder</em></a>) – The given controller.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><em>Iterator[str]</em> – The content to be shown in the interface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.debwt_window">
+<code class="sig-name descname">debwt_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.debwt_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.debwt_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a Tkinter Toplevel window for the step-by-step
+inverse BWT protocol, The output file of the protocol will be shown at
+the beginning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.final_btn">
+<code class="sig-name descname">final_btn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller</span><span class="p">:</span> <span class="n">Iterator<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/interface.html#Interface.final_btn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.final_btn" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to create the output of a universal final step
+button for all protocols of the program, it will be passed to a given
+label that changes its content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>controller</strong> (<em>Iterator</em><em>[</em><em>str</em><em>]</em>) – The controller of a given protocol that contains all steps to show.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The final step to be shown.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.fullunzip_output">
+<code class="sig-name descname">fullunzip_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller</span><span class="p">:</span> <span class="n">dnazip.decoder.FullDecoder</span></em><span class="sig-paren">)</span> &#x2192; Iterator<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/interface.html#Interface.fullunzip_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.fullunzip_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to collect all output for a full decompression
+protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>controller</strong> (<a class="reference internal" href="#decoder.FullDecoder" title="decoder.FullDecoder"><em>FullDecoder</em></a>) – The given controller.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><em>Iterator[str]</em> – The content to be shown in the interface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.fullunzip_window">
+<code class="sig-name descname">fullunzip_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.fullunzip_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.fullunzip_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a Tkinter Toplevel window for the step-by-step
+Full unzipping protocol (HUffman decoding + inverse BWT), The output
+file of the protocol will be shown at the beginning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.fullzip_output">
+<code class="sig-name descname">fullzip_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller</span><span class="p">:</span> <span class="n">dnazip.encoder.FullEncoder</span></em><span class="sig-paren">)</span> &#x2192; Iterator<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/interface.html#Interface.fullzip_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.fullzip_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to collect all output for a full protocol
+encoding (BWT + Huffman compression).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>controller</strong> (<a class="reference internal" href="#encoder.FullEncoder" title="encoder.FullEncoder"><em>FullEncoder</em></a>) – The given controller.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><em>Iterator[str]</em> – The content to be shown in the interface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.fullzip_window">
+<code class="sig-name descname">fullzip_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.fullzip_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.fullzip_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a Tkinter Toplevel window for the step-by-step
+Fullzip protocol (BWT+Huffman compression), The output file of the
+protocol will be shown at the beginning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.generate_random">
+<code class="sig-name descname">generate_random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.generate_random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.generate_random" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to generate random sequences of DNA of length
+50 and show them inside the random text box tkinter entry.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.huffcode_window">
+<code class="sig-name descname">huffcode_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.huffcode_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.huffcode_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a Tkinter Toplevel window for the step-by-step
+Huffman coding protocol, The output file of the protocol will be shown
+at the beginning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.huffdecode_window">
+<code class="sig-name descname">huffdecode_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.huffdecode_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.huffdecode_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a Tkinter Toplevel window for the step-by-step
+Huffman decoding, The output file of the protocol will be shown at the
+beginning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.main">
+<code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launches the mainloop of the interface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.next_btn">
+<code class="sig-name descname">next_btn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller</span><span class="p">:</span> <span class="n">Iterator<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/interface.html#Interface.next_btn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.next_btn" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to create the output of a universal next button
+for all protocols of the program, it will be passed to a given label
+that changes its content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>controller</strong> (<em>Iterator</em><em>[</em><em>str</em><em>]</em>) – The controller of a given protocol that contains all steps to show.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Every step to be shown, one at a time.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.no_file_error">
+<code class="sig-name descname">no_file_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.no_file_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.no_file_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows an error when no file is selected.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.open_file">
+<code class="sig-name descname">open_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.open_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.open_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to create a file chooser for the interface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.program_output">
+<code class="sig-name descname">program_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">window</span><span class="p">:</span> <span class="n">tkinter.Tk</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.program_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.program_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the output of a given protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window</strong> (<em>Tk</em>) – The given window.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – The output file path to be shown in the messagebox.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.quit">
+<code class="sig-name descname">quit</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.quit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.quit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quits the current interface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.save_random">
+<code class="sig-name descname">save_random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.save_random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.save_random" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to save a randomly generated DNA sequence
+to a file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.step_by_step">
+<code class="sig-name descname">step_by_step</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">window</span><span class="p">:</span> <span class="n">tkinter.Tk</span></em>, <em class="sig-param"><span class="n">protocol</span><span class="p">:</span> <span class="n">Iterator<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">names</span><span class="p">:</span> <span class="n">Generator</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.step_by_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.step_by_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a universal step by step advancing interface
+for a given chosen protocole.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window</strong> (<em>Tk</em>) – The given window.</p></li>
+<li><p><strong>protocol</strong> (<em>Iterator</em><em>[</em><em>str</em><em>]</em>) – The output protocol to be displayed.</p></li>
+<li><p><strong>names</strong> (<em>Generator</em>) – The names of the steps to be displayed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="interface.Interface.update_text">
+<code class="sig-name descname">update_text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">widget</span><span class="p">:</span> <span class="n">tkinter.Text</span></em>, <em class="sig-param"><span class="n">new_text</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/interface.html#Interface.update_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.update_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method updates the Text tkinter widget with every step
+in every protocol. it deletes its contents and then replaces it with
+new_text parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>widget</strong> (<em>Text</em>) – Tkinter’s Text widget.</p></li>
+<li><p><strong>new_text</strong> (<em>str</em>) – The new text to be shown in the widget.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Replaces text in a given Text widget.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-encoder">
+<span id="encoder-classes"></span><h1>Encoder Classes<a class="headerlink" href="#module-encoder" title="Permalink to this headline">¶</a></h1>
+<p>Encoder classes, Controller architecture in a MVC layout.</p>
+<dl class="py class">
+<dt id="encoder.BWEncoder">
+<em class="property">class </em><code class="sig-prename descclassname">encoder.</code><code class="sig-name descname">BWEncoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encoder.html#BWEncoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encoder.BWEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>An encoder class for Burros-Wheeler transform, it is used as a
+controller in a MVC architecture.</p>
+<dl class="py attribute">
+<dt id="encoder.BWEncoder.path">
+<code class="sig-name descname">path</code><a class="headerlink" href="#encoder.BWEncoder.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path of the file to be transformed with Burros-Wheeler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.BWEncoder.seq">
+<code class="sig-name descname">seq</code><a class="headerlink" href="#encoder.BWEncoder.seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sequence that was extracted from the file; a Sequence object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sequence.Sequence" title="sequence.Sequence">Sequence</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.BWEncoder.bwt_output">
+<code class="sig-name descname">bwt_output</code><a class="headerlink" href="#encoder.BWEncoder.bwt_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>The output file path for BWT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.BWEncoder.rotations">
+<code class="sig-name descname">rotations</code><a class="headerlink" href="#encoder.BWEncoder.rotations" title="Permalink to this definition">¶</a></dt>
+<dd><p>A matrix of rotations from the original sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.BWEncoder.bwm">
+<code class="sig-name descname">bwm</code><a class="headerlink" href="#encoder.BWEncoder.bwm" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Burros-Wheeler Matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.BWEncoder.bwt">
+<code class="sig-name descname">bwt</code><a class="headerlink" href="#encoder.BWEncoder.bwt" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Burros-Wheeler transform of the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="encoder.BWEncoder.encode">
+<code class="sig-name descname">encode</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/encoder.html#BWEncoder.encode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encoder.BWEncoder.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main encoding method of the controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Fills all the properties of an object and writes out the
+transformed sequence to a file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="encoder.FullEncoder">
+<em class="property">class </em><code class="sig-prename descclassname">encoder.</code><code class="sig-name descname">FullEncoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encoder.html#FullEncoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encoder.FullEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>An encoder class for both the Burros-Wheeler transform and Huffman
+compression, controller architecture.</p>
+<dl class="py attribute">
+<dt id="encoder.FullEncoder.path">
+<code class="sig-name descname">path</code><a class="headerlink" href="#encoder.FullEncoder.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path of the file to be compressed with BWT + Huffman compression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.FullEncoder.bw_encoder">
+<code class="sig-name descname">bw_encoder</code><a class="headerlink" href="#encoder.FullEncoder.bw_encoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A BWEncoder object to do the Burros-Wheeler transform on a sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encoder.BWEncoder" title="encoder.BWEncoder">BWEncoder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.FullEncoder.huff_encoder">
+<code class="sig-name descname">huff_encoder</code><a class="headerlink" href="#encoder.FullEncoder.huff_encoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A HuffEncoder object to do the Huffman compression on the BW transform.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encoder.HuffEncoder" title="encoder.HuffEncoder">HuffEncoder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="encoder.FullEncoder.full_zip">
+<code class="sig-name descname">full_zip</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/encoder.html#FullEncoder.full_zip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encoder.FullEncoder.full_zip" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main encoding method of the controller, it first encodes the
+sequence with BWT, then passes the BWT to Huffman compression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Fills all the properties of an object and writes out the
+compressed sequence to a file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="encoder.HuffEncoder">
+<em class="property">class </em><code class="sig-prename descclassname">encoder.</code><code class="sig-name descname">HuffEncoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encoder.html#HuffEncoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encoder.HuffEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>An encoder class for Huffman compression, it is used as a controller
+in a MVC architecture.</p>
+<dl class="py attribute">
+<dt id="encoder.HuffEncoder.path">
+<code class="sig-name descname">path</code><a class="headerlink" href="#encoder.HuffEncoder.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path of the file to be compressed with Huffman compression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.HuffEncoder.seq">
+<code class="sig-name descname">seq</code><a class="headerlink" href="#encoder.HuffEncoder.seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sequence that was extracted from the file; a Sequence object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sequence.Sequence" title="sequence.Sequence">Sequence</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.HuffEncoder.huff_output">
+<code class="sig-name descname">huff_output</code><a class="headerlink" href="#encoder.HuffEncoder.huff_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>The output file path for Huffman compression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.HuffEncoder.binary">
+<code class="sig-name descname">binary</code><a class="headerlink" href="#encoder.HuffEncoder.binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>The binary sequence that was translated from the original sequence
+using Huffman tree and codes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.HuffEncoder.header">
+<code class="sig-name descname">header</code><a class="headerlink" href="#encoder.HuffEncoder.header" title="Permalink to this definition">¶</a></dt>
+<dd><p>The header of the compressed file; contains Huffman codes and paths
+as well as padding that were generated when compressing the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.HuffEncoder.unicode">
+<code class="sig-name descname">unicode</code><a class="headerlink" href="#encoder.HuffEncoder.unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compressed format of the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="encoder.HuffEncoder.compressed">
+<code class="sig-name descname">compressed</code><a class="headerlink" href="#encoder.HuffEncoder.compressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compressed sequence to be written to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="encoder.HuffEncoder.encode">
+<code class="sig-name descname">encode</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/encoder.html#HuffEncoder.encode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encoder.HuffEncoder.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main encoding method of the controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Fills all the properties of an object and writes out the
+compressed sequence to a file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-decoder">
+<span id="decoder-classes"></span><h1>Decoder Classes<a class="headerlink" href="#module-decoder" title="Permalink to this headline">¶</a></h1>
+<p>Decoder classes, Controller architecture in a MVC layout.</p>
+<dl class="py class">
+<dt id="decoder.BWDecoder">
+<em class="property">class </em><code class="sig-prename descclassname">decoder.</code><code class="sig-name descname">BWDecoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/decoder.html#BWDecoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#decoder.BWDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decoder class for inversing the Burros-Wheeler transform, it is used
+as a controller in a MVC architecture.</p>
+<dl class="py attribute">
+<dt id="decoder.BWDecoder.path">
+<code class="sig-name descname">path</code><a class="headerlink" href="#decoder.BWDecoder.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path of the file to be transformed with inverse of Burros-Wheeler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.BWDecoder.seq">
+<code class="sig-name descname">seq</code><a class="headerlink" href="#decoder.BWDecoder.seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sequence that was extracted from the file; a Sequence object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sequence.Sequence" title="sequence.Sequence">Sequence</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.BWDecoder.debwt_output">
+<code class="sig-name descname">debwt_output</code><a class="headerlink" href="#decoder.BWDecoder.debwt_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>The output file path for the inverse of BWT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.BWDecoder.bwm">
+<code class="sig-name descname">bwm</code><a class="headerlink" href="#decoder.BWDecoder.bwm" title="Permalink to this definition">¶</a></dt>
+<dd><p>The reconstructed Burros-Wheeler Matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.BWDecoder.original">
+<code class="sig-name descname">original</code><a class="headerlink" href="#decoder.BWDecoder.original" title="Permalink to this definition">¶</a></dt>
+<dd><p>The original sequence from the inverse BWT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="decoder.BWDecoder.decode">
+<code class="sig-name descname">decode</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/decoder.html#BWDecoder.decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#decoder.BWDecoder.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main decoding method of the controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Fills all the properties of an object and writes out the original
+sequence to a file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="decoder.FullDecoder">
+<em class="property">class </em><code class="sig-prename descclassname">decoder.</code><code class="sig-name descname">FullDecoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/decoder.html#FullDecoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#decoder.FullDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decoder class for both Huffman decompression and the inverse of the
+Burros-Wheeler transform, controller architecture.</p>
+<dl class="py attribute">
+<dt id="decoder.FullDecoder.path">
+<code class="sig-name descname">path</code><a class="headerlink" href="#decoder.FullDecoder.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path of the file to be compressed with BWT + Huffman compression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.FullDecoder.huff_decoder">
+<code class="sig-name descname">huff_decoder</code><a class="headerlink" href="#decoder.FullDecoder.huff_decoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A HuffDecoder object to do the Huffman decompression on a compressed
+sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#decoder.HuffDecoder" title="decoder.HuffDecoder">HuffDecoder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.FullDecoder.bw_decoder">
+<code class="sig-name descname">bw_decoder</code><a class="headerlink" href="#decoder.FullDecoder.bw_decoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A BWDecoder object to do the inverse of Burros-Wheeler transform on
+the output of Huffman decompression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#decoder.BWDecoder" title="decoder.BWDecoder">BWDecoder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="decoder.FullDecoder.full_unzip">
+<code class="sig-name descname">full_unzip</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/decoder.html#FullDecoder.full_unzip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#decoder.FullDecoder.full_unzip" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main decoding method of the controller, it first decodes the
+sequence with Huffman decompression, then passes the uncompressed
+sequence to do the Inverse of Burros-Wheeler transform and obtain
+the original sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Fills all the properties of an object and writes out the
+original sequence to a file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="decoder.HuffDecoder">
+<em class="property">class </em><code class="sig-prename descclassname">decoder.</code><code class="sig-name descname">HuffDecoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/decoder.html#HuffDecoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#decoder.HuffDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decoder class for Huffman decompression, it is used as a controller
+in a MVC architecture.</p>
+<dl class="py attribute">
+<dt id="decoder.HuffDecoder.path">
+<code class="sig-name descname">path</code><a class="headerlink" href="#decoder.HuffDecoder.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path of the file to be decompressed with Huffman decompression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.HuffDecoder.seq">
+<code class="sig-name descname">seq</code><a class="headerlink" href="#decoder.HuffDecoder.seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sequence that was extracted from the file; a Sequence object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sequence.Sequence" title="sequence.Sequence">Sequence</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.HuffDecoder.dehuffman_output">
+<code class="sig-name descname">dehuffman_output</code><a class="headerlink" href="#decoder.HuffDecoder.dehuffman_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>The output file path for Huffman decompression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.HuffDecoder.binary">
+<code class="sig-name descname">binary</code><a class="headerlink" href="#decoder.HuffDecoder.binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>The binary sequence that was translated from unicode using Huffman
+codes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.HuffDecoder.header">
+<code class="sig-name descname">header</code><a class="headerlink" href="#decoder.HuffDecoder.header" title="Permalink to this definition">¶</a></dt>
+<dd><p>The header of the compressed file; contains Huffman codes and paths
+as well as padding that were generated when compressing the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.HuffDecoder.unicode">
+<code class="sig-name descname">unicode</code><a class="headerlink" href="#decoder.HuffDecoder.unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compressed format of the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decoder.HuffDecoder.decompressed">
+<code class="sig-name descname">decompressed</code><a class="headerlink" href="#decoder.HuffDecoder.decompressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The decompressed sequence; normally the Burros-Wheeler transform of an
+original sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="decoder.HuffDecoder.decode">
+<code class="sig-name descname">decode</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/decoder.html#HuffDecoder.decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#decoder.HuffDecoder.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main decoding method of the controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Fills all the properties of an object and writes out the
+decompressed sequence to a file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sequence">
+<span id="sequence"></span><h1>Sequence<a class="headerlink" href="#module-sequence" title="Permalink to this headline">¶</a></h1>
+<p>A class to read and write DNA sequences (or a list of characters) to a file.
+In a MVC structure, this represents the Model of the data.</p>
+<dl class="py class">
+<dt id="sequence.Sequence">
+<em class="property">class </em><code class="sig-prename descclassname">sequence.</code><code class="sig-name descname">Sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence.html#Sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence.Sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to represent a sequence, sequences can be read from files or
+writtes to files.</p>
+<dl class="py attribute">
+<dt id="sequence.Sequence.path">
+<code class="sig-name descname">path</code><a class="headerlink" href="#sequence.Sequence.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path of the file to be read.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sequence.Sequence.generate">
+<em class="property">static </em><code class="sig-name descname">generate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">length</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/sequence.html#Sequence.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence.Sequence.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to generate a random DNA sequence using the
+random python library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The random DNA sequence.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sequence.Sequence.read">
+<code class="sig-name descname">read</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/sequence.html#Sequence.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence.Sequence.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to read the contents of the file into a python
+string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The contents of the file, i.e. the sequence.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sequence.Sequence.read_bytes">
+<code class="sig-name descname">read_bytes</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/sequence.html#Sequence.read_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence.Sequence.read_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to read a file that has been written in bytes,
+it will be useful when reading files that has been compressed with
+Huffman coding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The contents of the file, i.e. the sequence.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sequence.Sequence.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/sequence.html#Sequence.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence.Sequence.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to write out to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>content</strong> (<em>str</em>) – The contents of the file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Writes out to a new file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sequence.Sequence.write_bytes">
+<code class="sig-name descname">write_bytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/sequence.html#Sequence.write_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence.Sequence.write_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to write out to a new file into a bytes format,
+UTF-8 encoding, useful when we want to write out the contents of the
+Huffman compression to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>content</strong> (<em>str</em>) – The contents of the file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Writes out to a new file in a bytes format.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-burros_wheeler">
+<span id="burros-wheeler-algorithm"></span><h1>Burros-Wheeler Algorithm<a class="headerlink" href="#module-burros_wheeler" title="Permalink to this headline">¶</a></h1>
+<p>Burros-Wheeler Algorithm Class, contains naive and advanced construction
+methods, static methods were written as explicit as possible and were
+factorized to facilitate algorithmic readability.
+The yielding in some functions doesn’t respect Space complexity, but it was done in this
+manner to facilitate the data flow into the View class (the GUI).</p>
+<dl class="py class">
+<dt id="burros_wheeler.BurrosWheeler">
+<em class="property">class </em><code class="sig-prename descclassname">burros_wheeler.</code><code class="sig-name descname">BurrosWheeler</code><a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to represent the Burros-Wheeler algorithm, all methods are
+static for ease of reading and outside usability.</p>
+<dl class="py method">
+<dt id="burros_wheeler.BurrosWheeler.bwt_advanced">
+<em class="property">static </em><code class="sig-name descname">bwt_advanced</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.bwt_advanced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.bwt_advanced" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a Burros-Wheeler Transfrom from a suffix array, advanced
+construction of BWT. Better algorithmic complexity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sequence</strong> (<em>str</em>) – The sequence to ve transformed.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Burros-Wheeler Transform.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="burros_wheeler.BurrosWheeler.construct_bwm">
+<em class="property">static </em><code class="sig-name descname">construct_bwm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rotations</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.construct_bwm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.construct_bwm" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method constructs the Burros-Wheeler Matrix from a list of
+string rotations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotations</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of strings, i.e; a BW matrix like object.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of strings or a Burros-Wheeler Matrix.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="burros_wheeler.BurrosWheeler.decode_bwt">
+<em class="property">static </em><code class="sig-name descname">decode_bwt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.decode_bwt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.decode_bwt" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the original sequence from a given
+Burros-Wheeler Matrix, the original sequence is the line that ends
+with the character ‘$’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A Burros-Wheeler Matrix.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The original sequence.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="burros_wheeler.BurrosWheeler.encode_bwt">
+<em class="property">static </em><code class="sig-name descname">encode_bwt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.encode_bwt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.encode_bwt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Burros-Wheeler Transform from a given Burros-Wheeler
+Matrix. the Burros-Wheeler Transform corresponds to the last column
+of the matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A Burros-Wheeler Matrix.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Burros-Wheeler Transform.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="burros_wheeler.BurrosWheeler.pprint">
+<em class="property">static </em><code class="sig-name descname">pprint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.pprint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.pprint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty print, this method prints a burros wheeler matrix
+beautifully (without lists and strings).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mat</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The Burros-Wheeler matrix, i.e; a list of strings.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Prints the matrix.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="burros_wheeler.BurrosWheeler.reconstruct_bwm">
+<em class="property">static </em><code class="sig-name descname">reconstruct_bwm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bwt</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.reconstruct_bwm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.reconstruct_bwm" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method reconstructs the Burros-Wheeler Matrix given the
+corresponding Burros-Wheeler Transform. The naive algorithm for
+constructing the matrix given the transform is going to iteratively
+add the transform as a left column, then sorts lexicographically
+the columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bwt</strong> (<em>str</em>) – The Burros-Wheeler Transform.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A Burros-Wheeler Matrix.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="burros_wheeler.BurrosWheeler.string_rotations">
+<em class="property">static </em><code class="sig-name descname">string_rotations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.string_rotations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.string_rotations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all string rotations of a sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seq</strong> (<em>str</em>) – he sequence to be rotated.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns a list of strings, i.e; a BW matrix like object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="burros_wheeler.BurrosWheeler.suffix_array">
+<em class="property">static </em><code class="sig-name descname">suffix_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>Tuple<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.suffix_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.suffix_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a suffix-array from a given sequence of characters.
+- Complexity of the algorithm O(n^2log(n))
+- Sorting is O(nlogn) and Finding is O(n)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sequence</strong> (<em>str</em>) – The given sequence of characters.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The suffix array of the sequence; a list of tuples.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[Tuple[str, int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-huffman">
+<span id="huffman-coding-algorithm"></span><h1>Huffman Coding Algorithm<a class="headerlink" href="#module-huffman" title="Permalink to this headline">¶</a></h1>
+<p>Huffman coding algorithm classes, contains node and tree separate classes.</p>
+<dl class="py class">
+<dt id="huffman.HuffmanNode">
+<em class="property">class </em><code class="sig-prename descclassname">huffman.</code><code class="sig-name descname">HuffmanNode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">char</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">freq</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">left</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">right</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/huffman.html#HuffmanNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to represent heap nodes of a huffman coding tree.</p>
+<dl class="py attribute">
+<dt id="huffman.HuffmanNode.char">
+<code class="sig-name descname">char</code><a class="headerlink" href="#huffman.HuffmanNode.char" title="Permalink to this definition">¶</a></dt>
+<dd><p>The character to be saved as a node value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="huffman.HuffmanNode.freq">
+<code class="sig-name descname">freq</code><a class="headerlink" href="#huffman.HuffmanNode.freq" title="Permalink to this definition">¶</a></dt>
+<dd><p>The frequency of the char.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="huffman.HuffmanNode.right_child">
+<code class="sig-name descname">right_child</code><a class="headerlink" href="#huffman.HuffmanNode.right_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>The right child of the heap node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#huffman.HuffmanNode" title="huffman.HuffmanNode">HuffmanNode</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="huffman.HuffmanNode.left_child">
+<code class="sig-name descname">left_child</code><a class="headerlink" href="#huffman.HuffmanNode.left_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>The left child of the heap node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#huffman.HuffmanNode" title="huffman.HuffmanNode">HuffmanNode</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="huffman.HuffmanNode.dir">
+<code class="sig-name descname">dir</code><a class="headerlink" href="#huffman.HuffmanNode.dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path of the current node in the Huffman tree, usually a string of
+0s and 1s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="id0">
+<em class="property">property </em><code class="sig-name descname">left_child</code><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd><p>The getter of the left child.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="id1">
+<em class="property">property </em><code class="sig-name descname">right_child</code><a class="headerlink" href="#id1" title="Permalink to this definition">¶</a></dt>
+<dd><p>The getter of the right child.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="huffman.HuffmanTree">
+<em class="property">class </em><code class="sig-prename descclassname">huffman.</code><code class="sig-name descname">HuffmanTree</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/huffman.html#HuffmanTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to represent a huffman tree.</p>
+<dl class="py attribute">
+<dt id="huffman.HuffmanTree.sequence">
+<code class="sig-name descname">sequence</code><a class="headerlink" href="#huffman.HuffmanTree.sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sequence to be encoded, i.e; the Burros-Wheeler transform of the
+sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="huffman.HuffmanTree.frequency">
+<code class="sig-name descname">frequency</code><a class="headerlink" href="#huffman.HuffmanTree.frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary to store frequency values for each character of the
+sequence, the character as a key and its frequency as a value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="huffman.HuffmanTree.root">
+<code class="sig-name descname">root</code><a class="headerlink" href="#huffman.HuffmanTree.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root node of the Huffman tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#huffman.HuffmanNode" title="huffman.HuffmanNode">HuffmanNode</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="huffman.HuffmanTree.codes">
+<code class="sig-name descname">codes</code><a class="headerlink" href="#huffman.HuffmanTree.codes" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Huffman codes for a given sequence, The character as a key and
+its tree path as a value(a string).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="huffman.HuffmanTree.pad">
+<code class="sig-name descname">pad</code><a class="headerlink" href="#huffman.HuffmanTree.pad" title="Permalink to this definition">¶</a></dt>
+<dd><p>The padding of the sequence, i.e; the number of zeroes that was added
+to the end of sequence until it was divisible by 8 (coding in 8 bits).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="huffman.HuffmanTree.binstr_to_seq">
+<em class="property">static </em><code class="sig-name descname">binstr_to_seq</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bin_str</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">codes</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/huffman.html#HuffmanTree.binstr_to_seq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree.binstr_to_seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a binary string to a sequence given a codes dictionary
+of paths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bin_str</strong> (<em>str</em>) – The binary string to be transformed.</p></li>
+<li><p><strong>codes</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – A dictionary of characters alongside their paths.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The original sequence.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="huffman.HuffmanTree.binstr_to_unicode">
+<em class="property">static </em><code class="sig-name descname">binstr_to_unicode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bin_str</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/huffman.html#HuffmanTree.binstr_to_unicode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree.binstr_to_unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method codes a binary sequence in 8-bits in UTF-8.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bin_str</strong> (<em>str</em>) – The binary sequence to be coded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The unicode string that corrsponds to the binary sequence.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="huffman.HuffmanTree.codes_to_header">
+<code class="sig-name descname">codes_to_header</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/huffman.html#HuffmanTree.codes_to_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree.codes_to_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method transforms the codes of a given Huffman tree object
+into a header to be saved in the compressed file (useful for
+when decompressing later).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The header of the compressed file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="huffman.HuffmanTree.create_tree">
+<code class="sig-name descname">create_tree</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#huffman.HuffmanNode" title="huffman.HuffmanNode">huffman.HuffmanNode</a><a class="reference internal" href="_modules/huffman.html#HuffmanTree.create_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree.create_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main algorithm for creating The Huffman tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The root node of the tree.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#huffman.HuffmanNode" title="huffman.HuffmanNode">HuffmanNode</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="huffman.HuffmanTree.freq_dict">
+<em class="property">static </em><code class="sig-name descname">freq_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span><a class="reference internal" href="_modules/huffman.html#HuffmanTree.freq_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree.freq_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the frequence dictionary of a given sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sequence</strong> (<em>str</em>) – The sequence of interest.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary of character frequencies.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="huffman.HuffmanTree.get_codings">
+<code class="sig-name descname">get_codings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#huffman.HuffmanNode" title="huffman.HuffmanNode">huffman.HuffmanNode</a></span></em>, <em class="sig-param"><span class="n">val</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/huffman.html#HuffmanTree.get_codings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree.get_codings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A depth-first search recursive algorithm to find the paths of each
+character in the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="#huffman.HuffmanNode" title="huffman.HuffmanNode"><em>HuffmanNode</em></a>) – The starting node, the root of the tree.</p></li>
+<li><p><strong>val</strong> (<em>str</em><em>, </em><em>optional</em>) – The path of the current recursion in a tree. The default is ‘’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Fills the codes dictionary property of the Huffman Tree.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="huffman.HuffmanTree.header_to_codes">
+<em class="property">static </em><code class="sig-name descname">header_to_codes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">header</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span><a class="reference internal" href="_modules/huffman.html#HuffmanTree.header_to_codes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree.header_to_codes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method takes the header of a compressed file and transforms
+it into a codes dictionary that’s useful when decompressing a sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>header</strong> (<em>str</em>) – The header of the compressed file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A codes dictionary which maps from characters to thier given paths.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="huffman.HuffmanTree.remove_padding">
+<em class="property">static </em><code class="sig-name descname">remove_padding</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bin_str</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">pad</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/huffman.html#HuffmanTree.remove_padding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree.remove_padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function removes the padding from a given binary sequence,
+the padding is normally a variable number of zeroes added when coding
+in 8-bits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bin_str</strong> (<em>str</em>) – The binary string to be stripped from a sequence of zeroes.</p></li>
+<li><p><strong>pad</strong> (<em>int</em>) – The padding, the number of zeroes at the end of the binary
+sequence.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The no-padded binary string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="huffman.HuffmanTree.seq_to_binstr">
+<code class="sig-name descname">seq_to_binstr</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/huffman.html#HuffmanTree.seq_to_binstr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree.seq_to_binstr" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method transforms the current sequence of the Huffman tree
+to a binary sequence using the codes (paths of every character), it
+also adds a padding to the end of the binary sequence (a variable
+number of zeroes, when sequence is divisible by 8 then add 8 zeroes
+by default). The binary sequence will be coded in 8-bits later.
+It saves the padding in the codes property.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The binary sequence.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="huffman.HuffmanTree.unicode_to_binstr">
+<em class="property">static </em><code class="sig-name descname">unicode_to_binstr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">unicode</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/huffman.html#HuffmanTree.unicode_to_binstr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#huffman.HuffmanTree.unicode_to_binstr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a unicode sequence to a binary sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>unicode</strong> (<em>str</em>) – The unicode sequence to be transformed.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The corrsponding binary string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2021, Ghassan Dabane
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
