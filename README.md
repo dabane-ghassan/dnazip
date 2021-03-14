@@ -63,16 +63,38 @@ Sequence('/path/to/new/seq').write(randseq)
 
 ```python
 from dnazip.encoder import FullEncoder
-zip = FullEncoder('path/to/seq')
-zip.full_zip()
+encode = FullEncoder('/home/ghassan/M1/gtf.txt')
+encode.full_zip()
+
+encode.bw_encoder.rotations
+encode.bw_encoder.bwm
+encode.bw_encoder.bwt
+
+encode.huff_encoder.header
+encode.huff_encoder.binary
+encode.huff_encoder.unicode
 ```
 
 #### Decoding a DNA sequence with Huffman decoding + Reversing Burros-Wheeler transform
 
 ```python
 from dnazip.decoder import FullDecoder
-unzip = FullDecoder('path/to/seq')
-unzip.full_unzip()
+decode = FullDecoder('path/to/seq')
+decode.full_unzip()
+
+decode.huff_decoder.header
+decode.huff_decoder.unicode
+decode.huff_decoder.binary
+
+decode.bw_decoder.bwm
+decode.bw_decoder.original
+
+
+from dnazip.sequence import Sequence
+from dnazip.burros_wheeler import BurrosWheeler
+
+seq = Sequence('/home/ghassan/M1/gtf.txt').read()
+BurrosWheeler.bwt_advanced(seq)
 ```
 
 ## Documentation
