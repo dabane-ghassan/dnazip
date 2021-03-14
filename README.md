@@ -50,9 +50,11 @@ gui = Interface()
 gui.main()
 ```
 
-### Do you want to use just the algorithms?
+### Using the library
 
 #### Generating a random DNA sequence
+
+- A random DNA sequence with an alphabet of ATCGN can be generated for any given length specified in the parameter.
 
 ```python
 from dnazip.sequence import Sequence
@@ -61,35 +63,46 @@ Sequence('/path/to/new/seq').write(randseq)
 ```
 #### Encoding a DNA sequence with Burros-Wheeler + Huffman Coding
 
+- To encode a DNA sequence using BWT and Huffman coding, you can use a FullEncoder object that will save two files to the same directory as the sequence, the Burros-Wheeler transform and the UTF-8 zipped format of the sequence: 
 ```python
 from dnazip.encoder import FullEncoder
 encode = FullEncoder('/home/ghassan/M1/gtf.txt')
 encode.full_zip()
-
-encode.bw_encoder.rotations
-encode.bw_encoder.bwm
-encode.bw_encoder.bwt
-
-encode.huff_encoder.header
-encode.huff_encoder.binary
-encode.huff_encoder.unicode
 ```
+- The attributes of the object can be accessed to see intermediary results:
+```python
+encode.bw_encoder.rotations # a matrix of string rotations from a sequence
+encode.bw_encoder.bwm # The Burros-Wheeler Matrix
+encode.bw_encoder.bwt # The Burros-Wheeler Transform
+
+encode.huff_encoder.header # The header of the zip file that contains Huffman codes for each character as well as the sequence binary padding
+encode.huff_encoder.binary # The binary sequence of the BW transform
+encode.huff_encoder.unicode # 8-bits encoded binary sequence
+```
+- ***A random sequence of size 1kB was compressed efficiently to 549 bytes.***
 
 #### Decoding a DNA sequence with Huffman decoding + Reversing Burros-Wheeler transform
 
+- To decode a zipped DNA sequence using Huffman decoding and the inverse of BWT, you can use a FullDecoder object that will work in the same manner as the FullEncoder object:
 ```python
 from dnazip.decoder import FullDecoder
 decode = FullDecoder('path/to/seq')
 decode.full_unzip()
+```
+- The attributes can also be accessed to see intermediary results:
+```python
+decode.huff_decoder.header # The header of the zip file that contains Huffman codes for each character as well as the sequence binary padding that where saved when the Huffman tree was created
+decode.huff_decoder.unicode # 8-bits encoded sequence
+decode.huff_decoder.binary # The binary sequence
 
-decode.huff_decoder.header
-decode.huff_decoder.unicode
-decode.huff_decoder.binary
+decode.bw_decoder.bwm # The Burros-Wheeler reconstructed matrix
+decode.bw_decoder.original # The original sequence
+```
+#### Building the Burros-Wheeler transform using the advanced algorithm
 
-decode.bw_decoder.bwm
-decode.bw_decoder.original
+- The BWT can be constructed using a Suffix Array (SA) based algorithm that has a better time and space complexities:
 
-
+```python
 from dnazip.sequence import Sequence
 from dnazip.burros_wheeler import BurrosWheeler
 
