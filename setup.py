@@ -5,12 +5,14 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='dnazip',
-    version='1.0.0',
+    version='0.1',
     description='A Python implementation of the Burros-Wheeler and Huffman coding algorithms',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='http://github.com/dabane-ghassan/dnazip',
     author='dabane-ghassan',
+    author_email = 'dabane.ghassan@gmail.com',
+    download_url = 'https://github.com/dabane-ghassan/dnazip/archive/v0.1.tar.gz',
     license='MIT',
     packages=setuptools.find_packages(include=['dnazip', 'dnazip.*']),
     classifiers=[
