@@ -31,8 +31,7 @@ release = '1.0.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx_rtd_theme',
-'sphinx.ext.githubpages', 'sphinx.ext.napoleon']
-
+'sphinx.ext.githubpages', 'sphinx.ext.napoleon','sphinx.ext.viewcode', 'sphinx.ext.autosectionlabel']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -42,6 +41,8 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+def setup(app):
+    app.add_stylesheet('theme_overrides.css')
 
 # -- Options for HTML output -------------------------------------------------
 
