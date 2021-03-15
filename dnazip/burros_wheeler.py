@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Burros-Wheeler Algorithm Class, contains naive and advanced construction
+Burrows-Wheeler Algorithm Class, contains naive and advanced construction
 methods, static methods were written as explicit as possible and were
 factorized to facilitate algorithmic readability.
 The yielding in some functions doesn't respect Space complexity, but it was done in this
@@ -10,12 +10,12 @@ from __future__ import absolute_import
 from typing import List, Tuple
 
 class BurrosWheeler:
-    """A class to represent the Burros-Wheeler algorithm, all methods are
+    """A class to represent the Burrows-Wheeler algorithm, all methods are
     static for ease of reading and outside usability.
     """
     @staticmethod
     def pprint(mat: List[str]) -> None:
-        """Pretty print, this method prints a burros wheeler matrix
+        """Pretty print, this method prints a burrows wheeler matrix
         beautifully (without lists and strings).
 
         Parameters
@@ -61,7 +61,7 @@ class BurrosWheeler:
 
     @staticmethod
     def construct_bwm(rotations: List[str]) -> List[str]:
-        """This method constructs the Burros-Wheeler Matrix from a list of
+        """This method constructs the Burrows-Wheeler Matrix from a list of
         string rotations.
 
         Parameters
@@ -72,7 +72,7 @@ class BurrosWheeler:
         Returns
         -------
         List[str]
-            A list of strings or a Burros-Wheeler Matrix.
+            A list of strings or a Burrows-Wheeler Matrix.
 
         """
 
@@ -81,19 +81,19 @@ class BurrosWheeler:
 
     @staticmethod
     def encode_bwt(matrix: List[str]) -> str:
-        """Returns the Burros-Wheeler Transform from a given Burros-Wheeler
+        """Returns the Burrows-Wheeler Transform from a given Burros-Wheeler
         Matrix. the Burros-Wheeler Transform corresponds to the last column
         of the matrix.
 
         Parameters
         ----------
         matrix : List[str]
-            A Burros-Wheeler Matrix.
+            A Burrows-Wheeler Matrix.
 
         Returns
         -------
         str
-            The Burros-Wheeler Transform.
+            The Burrows-Wheeler Transform.
 
         """
 
@@ -107,7 +107,7 @@ class BurrosWheeler:
 
     @staticmethod
     def reconstruct_bwm(bwt: str) -> List[str]:
-        """This method reconstructs the Burros-Wheeler Matrix given the
+        """This method reconstructs the Burrows-Wheeler Matrix given the
         corresponding Burros-Wheeler Transform. The naive algorithm for
         constructing the matrix given the transform is going to iteratively
         add the transform as a left column, then sorts lexicographically
@@ -116,12 +116,12 @@ class BurrosWheeler:
         Parameters
         ----------
         bwt : str
-            The Burros-Wheeler Transform.
+            The Burrows-Wheeler Transform.
 
         Returns
         -------
         List[str]
-            A Burros-Wheeler Matrix.
+            A Burrows-Wheeler Matrix.
 
         """
         bwm = []
@@ -141,13 +141,13 @@ class BurrosWheeler:
     @staticmethod
     def decode_bwt(matrix: List[str]) -> str:
         """This method returns the original sequence from a given
-        Burros-Wheeler Matrix, the original sequence is the line that ends
+        Burrows-Wheeler Matrix, the original sequence is the line that ends
         with the character '$'.
 
         Parameters
         ----------
         matrix : List[str]
-            A Burros-Wheeler Matrix.
+            A Burrows-Wheeler Matrix.
 
         Returns
         -------
@@ -190,7 +190,7 @@ class BurrosWheeler:
 
     @staticmethod
     def bwt_advanced(sequence: str) -> str:
-        """Generates a Burros-Wheeler Transfrom from a suffix array, advanced
+        """Generates a Burrows-Wheeler Transfrom from a suffix array, advanced
         construction of BWT. Better algorithmic complexity.
 
         Parameters
@@ -201,7 +201,7 @@ class BurrosWheeler:
         Returns
         -------
         str
-            The Burros-Wheeler Transform.
+            The Burrows-Wheeler Transform.
 
         """
 
