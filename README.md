@@ -68,7 +68,7 @@ Sequence('/path/to/new/seq').write(randseq)
 - To encode a DNA sequence using BWT and Huffman coding, you can use a FullEncoder object that will save two files to the same directory as the sequence, the Burrows-Wheeler transform and the UTF-8 zipped format of the sequence: 
 ```python
 from dnazip.encoder import FullEncoder
-encode = FullEncoder('/home/ghassan/M1/gtf.txt')
+encode = FullEncoder('/path/to/seq')
 encode.full_zip()
 ```
 - The attributes of the object can be accessed to see intermediary results:
@@ -108,7 +108,7 @@ decode.bw_decoder.original # The original sequence
 from dnazip.sequence import Sequence
 from dnazip.burros_wheeler import BurrosWheeler
 
-seq = Sequence('/home/ghassan/M1/gtf.txt').read()
+seq = Sequence('/path/to/seq').read()
 BurrosWheeler.bwt_advanced(seq)
 ```
 
