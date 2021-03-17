@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to dnazip’s documentation! &mdash; dnazip 1.0.0 documentation</title>
+  <title>Welcome to dnazip’s documentation! &mdash; dnazip 0.2 documentation</title>
   
 
   
@@ -107,7 +107,7 @@
 <li><a class="reference internal" href="#module-encoder">Encoder Classes</a></li>
 <li><a class="reference internal" href="#module-decoder">Decoder Classes</a></li>
 <li><a class="reference internal" href="#module-sequence">Sequence</a></li>
-<li><a class="reference internal" href="#module-burros_wheeler">Burros-Wheeler Algorithm</a></li>
+<li><a class="reference internal" href="#module-burros_wheeler">Burrows-Wheeler Algorithm</a></li>
 <li><a class="reference internal" href="#module-huffman">Huffman Coding Algorithm</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
@@ -237,7 +237,7 @@
 <ul>
 <li><p>To encode a DNA sequence using BWT and Huffman coding, you can use a FullEncoder object that will save two files to the same directory as the sequence, the Burros-Wheeler transform and the UTF-8 zipped format of the sequence:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dnazip.encoder</span> <span class="kn">import</span> <span class="n">FullEncoder</span>
-<span class="n">encode</span> <span class="o">=</span> <span class="n">FullEncoder</span><span class="p">(</span><span class="s1">&#39;/home/ghassan/M1/gtf.txt&#39;</span><span class="p">)</span>
+<span class="n">encode</span> <span class="o">=</span> <span class="n">FullEncoder</span><span class="p">(</span><span class="s1">&#39;/path/to/seq&#39;</span><span class="p">)</span>
 <span class="n">encode</span><span class="o">.</span><span class="n">full_zip</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -253,7 +253,7 @@
 </pre></div>
 </div>
 </li>
-<li><p><strong>*A random sequence of size 1kB was compressed efficiently to 549 bytes.*</strong></p></li>
+<li><p><strong>A random sequence of size 1kB was compressed efficiently to 549 bytes.</strong></p></li>
 </ul>
 </div>
 <div class="section" id="decoding-a-dna-sequence-with-huffman-decoding-reversing-burros-wheeler-transform">
@@ -285,7 +285,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dnazip.sequence</span> <span class="kn">import</span> <span class="n">Sequence</span>
 <span class="kn">from</span> <span class="nn">dnazip.burros_wheeler</span> <span class="kn">import</span> <span class="n">BurrosWheeler</span>
 
-<span class="n">seq</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">(</span><span class="s1">&#39;/home/ghassan/M1/gtf.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">seq</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">(</span><span class="s1">&#39;/path/to/seq&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="n">BurrosWheeler</span><span class="o">.</span><span class="n">bwt_advanced</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1194,8 +1194,8 @@ Huffman compression to a file.</p>
 
 </div>
 <div class="section" id="module-burros_wheeler">
-<span id="burros-wheeler-algorithm"></span><h1>Burros-Wheeler Algorithm<a class="headerlink" href="#module-burros_wheeler" title="Permalink to this headline">¶</a></h1>
-<p>Burros-Wheeler Algorithm Class, contains naive and advanced construction
+<span id="burrows-wheeler-algorithm"></span><h1>Burrows-Wheeler Algorithm<a class="headerlink" href="#module-burros_wheeler" title="Permalink to this headline">¶</a></h1>
+<p>Burrows-Wheeler Algorithm Class, contains naive and advanced construction
 methods, static methods were written as explicit as possible and were
 factorized to facilitate algorithmic readability.
 The yielding in some functions doesn’t respect Space complexity, but it was done in this
@@ -1203,19 +1203,19 @@ manner to facilitate the data flow into the View class (the GUI).</p>
 <dl class="py class">
 <dt id="burros_wheeler.BurrosWheeler">
 <em class="property">class </em><code class="sig-prename descclassname">burros_wheeler.</code><code class="sig-name descname">BurrosWheeler</code><a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler" title="Permalink to this definition">¶</a></dt>
-<dd><p>A class to represent the Burros-Wheeler algorithm, all methods are
+<dd><p>A class to represent the Burrows-Wheeler algorithm, all methods are
 static for ease of reading and outside usability.</p>
 <dl class="py method">
 <dt id="burros_wheeler.BurrosWheeler.bwt_advanced">
 <em class="property">static </em><code class="sig-name descname">bwt_advanced</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.bwt_advanced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.bwt_advanced" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a Burros-Wheeler Transfrom from a suffix array, advanced
+<dd><p>Generates a Burrows-Wheeler Transfrom from a suffix array, advanced
 construction of BWT. Better algorithmic complexity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>sequence</strong> (<em>str</em>) – The sequence to ve transformed.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The Burros-Wheeler Transform.</p>
+<dd class="field-even"><p>The Burrows-Wheeler Transform.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
@@ -1226,14 +1226,14 @@ construction of BWT. Better algorithmic complexity.</p>
 <dl class="py method">
 <dt id="burros_wheeler.BurrosWheeler.construct_bwm">
 <em class="property">static </em><code class="sig-name descname">construct_bwm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rotations</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.construct_bwm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.construct_bwm" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method constructs the Burros-Wheeler Matrix from a list of
+<dd><p>This method constructs the Burrows-Wheeler Matrix from a list of
 string rotations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>rotations</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of strings, i.e; a BW matrix like object.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A list of strings or a Burros-Wheeler Matrix.</p>
+<dd class="field-even"><p>A list of strings or a Burrows-Wheeler Matrix.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>List[str]</p>
@@ -1245,11 +1245,11 @@ string rotations.</p>
 <dt id="burros_wheeler.BurrosWheeler.decode_bwt">
 <em class="property">static </em><code class="sig-name descname">decode_bwt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.decode_bwt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.decode_bwt" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the original sequence from a given
-Burros-Wheeler Matrix, the original sequence is the line that ends
+Burrows-Wheeler Matrix, the original sequence is the line that ends
 with the character ‘$’.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>matrix</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A Burros-Wheeler Matrix.</p>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A Burrows-Wheeler Matrix.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The original sequence.</p>
@@ -1263,15 +1263,15 @@ with the character ‘$’.</p>
 <dl class="py method">
 <dt id="burros_wheeler.BurrosWheeler.encode_bwt">
 <em class="property">static </em><code class="sig-name descname">encode_bwt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.encode_bwt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.encode_bwt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the Burros-Wheeler Transform from a given Burros-Wheeler
+<dd><p>Returns the Burrows-Wheeler Transform from a given Burros-Wheeler
 Matrix. the Burros-Wheeler Transform corresponds to the last column
 of the matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>matrix</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A Burros-Wheeler Matrix.</p>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A Burrows-Wheeler Matrix.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The Burros-Wheeler Transform.</p>
+<dd class="field-even"><p>The Burrows-Wheeler Transform.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
@@ -1282,7 +1282,7 @@ of the matrix.</p>
 <dl class="py method">
 <dt id="burros_wheeler.BurrosWheeler.pprint">
 <em class="property">static </em><code class="sig-name descname">pprint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.pprint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.pprint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pretty print, this method prints a burros wheeler matrix
+<dd><p>Pretty print, this method prints a burrows wheeler matrix
 beautifully (without lists and strings).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1300,17 +1300,17 @@ beautifully (without lists and strings).</p>
 <dl class="py method">
 <dt id="burros_wheeler.BurrosWheeler.reconstruct_bwm">
 <em class="property">static </em><code class="sig-name descname">reconstruct_bwm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bwt</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/burros_wheeler.html#BurrosWheeler.reconstruct_bwm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#burros_wheeler.BurrosWheeler.reconstruct_bwm" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method reconstructs the Burros-Wheeler Matrix given the
+<dd><p>This method reconstructs the Burrows-Wheeler Matrix given the
 corresponding Burros-Wheeler Transform. The naive algorithm for
 constructing the matrix given the transform is going to iteratively
 add the transform as a left column, then sorts lexicographically
 the columns.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>bwt</strong> (<em>str</em>) – The Burros-Wheeler Transform.</p>
+<dd class="field-odd"><p><strong>bwt</strong> (<em>str</em>) – The Burrows-Wheeler Transform.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A Burros-Wheeler Matrix.</p>
+<dd class="field-even"><p>A Burrows-Wheeler Matrix.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>List[str]</p>

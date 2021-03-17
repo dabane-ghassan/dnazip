@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>burros_wheeler &mdash; dnazip 1.0.0 documentation</title>
+  <title>burros_wheeler &mdash; dnazip 0.2 documentation</title>
   
 
   
@@ -147,7 +147,7 @@
   <h1>Source code for burros_wheeler</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Burros-Wheeler Algorithm Class, contains naive and advanced construction</span>
+<span class="sd">Burrows-Wheeler Algorithm Class, contains naive and advanced construction</span>
 <span class="sd">methods, static methods were written as explicit as possible and were</span>
 <span class="sd">factorized to facilitate algorithmic readability.</span>
 <span class="sd">The yielding in some functions doesn&#39;t respect Space complexity, but it was done in this</span>
@@ -157,12 +157,12 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <div class="viewcode-block" id="BurrosWheeler"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler">[docs]</a><span class="k">class</span> <span class="nc">BurrosWheeler</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;A class to represent the Burros-Wheeler algorithm, all methods are</span>
+    <span class="sd">&quot;&quot;&quot;A class to represent the Burrows-Wheeler algorithm, all methods are</span>
 <span class="sd">    static for ease of reading and outside usability.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="BurrosWheeler.pprint"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.pprint">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">pprint</span><span class="p">(</span><span class="n">mat</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Pretty print, this method prints a burros wheeler matrix</span>
+        <span class="sd">&quot;&quot;&quot;Pretty print, this method prints a burrows wheeler matrix</span>
 <span class="sd">        beautifully (without lists and strings).</span>
 
 <span class="sd">        Parameters</span>
@@ -208,7 +208,7 @@
 
 <div class="viewcode-block" id="BurrosWheeler.construct_bwm"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.construct_bwm">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">construct_bwm</span><span class="p">(</span><span class="n">rotations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;This method constructs the Burros-Wheeler Matrix from a list of</span>
+        <span class="sd">&quot;&quot;&quot;This method constructs the Burrows-Wheeler Matrix from a list of</span>
 <span class="sd">        string rotations.</span>
 
 <span class="sd">        Parameters</span>
@@ -219,7 +219,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        List[str]</span>
-<span class="sd">            A list of strings or a Burros-Wheeler Matrix.</span>
+<span class="sd">            A list of strings or a Burrows-Wheeler Matrix.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -228,19 +228,19 @@
 
 <div class="viewcode-block" id="BurrosWheeler.encode_bwt"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.encode_bwt">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">encode_bwt</span><span class="p">(</span><span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Returns the Burros-Wheeler Transform from a given Burros-Wheeler</span>
+        <span class="sd">&quot;&quot;&quot;Returns the Burrows-Wheeler Transform from a given Burros-Wheeler</span>
 <span class="sd">        Matrix. the Burros-Wheeler Transform corresponds to the last column</span>
 <span class="sd">        of the matrix.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        matrix : List[str]</span>
-<span class="sd">            A Burros-Wheeler Matrix.</span>
+<span class="sd">            A Burrows-Wheeler Matrix.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
-<span class="sd">            The Burros-Wheeler Transform.</span>
+<span class="sd">            The Burrows-Wheeler Transform.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -254,7 +254,7 @@
 
 <div class="viewcode-block" id="BurrosWheeler.reconstruct_bwm"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.reconstruct_bwm">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">reconstruct_bwm</span><span class="p">(</span><span class="n">bwt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;This method reconstructs the Burros-Wheeler Matrix given the</span>
+        <span class="sd">&quot;&quot;&quot;This method reconstructs the Burrows-Wheeler Matrix given the</span>
 <span class="sd">        corresponding Burros-Wheeler Transform. The naive algorithm for</span>
 <span class="sd">        constructing the matrix given the transform is going to iteratively</span>
 <span class="sd">        add the transform as a left column, then sorts lexicographically</span>
@@ -263,12 +263,12 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        bwt : str</span>
-<span class="sd">            The Burros-Wheeler Transform.</span>
+<span class="sd">            The Burrows-Wheeler Transform.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        List[str]</span>
-<span class="sd">            A Burros-Wheeler Matrix.</span>
+<span class="sd">            A Burrows-Wheeler Matrix.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">bwm</span> <span class="o">=</span> <span class="p">[]</span>
@@ -288,13 +288,13 @@
 <div class="viewcode-block" id="BurrosWheeler.decode_bwt"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.decode_bwt">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">decode_bwt</span><span class="p">(</span><span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;This method returns the original sequence from a given</span>
-<span class="sd">        Burros-Wheeler Matrix, the original sequence is the line that ends</span>
+<span class="sd">        Burrows-Wheeler Matrix, the original sequence is the line that ends</span>
 <span class="sd">        with the character &#39;$&#39;.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        matrix : List[str]</span>
-<span class="sd">            A Burros-Wheeler Matrix.</span>
+<span class="sd">            A Burrows-Wheeler Matrix.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -337,7 +337,7 @@
 
 <div class="viewcode-block" id="BurrosWheeler.bwt_advanced"><a class="viewcode-back" href="../index.html#burros_wheeler.BurrosWheeler.bwt_advanced">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">bwt_advanced</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Generates a Burros-Wheeler Transfrom from a suffix array, advanced</span>
+        <span class="sd">&quot;&quot;&quot;Generates a Burrows-Wheeler Transfrom from a suffix array, advanced</span>
 <span class="sd">        construction of BWT. Better algorithmic complexity.</span>
 
 <span class="sd">        Parameters</span>
@@ -348,7 +348,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
-<span class="sd">            The Burros-Wheeler Transform.</span>
+<span class="sd">            The Burrows-Wheeler Transform.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 

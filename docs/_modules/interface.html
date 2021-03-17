@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>interface &mdash; dnazip 1.0.0 documentation</title>
+  <title>interface &mdash; dnazip 0.2 documentation</title>
   
 
   
@@ -467,7 +467,7 @@
             <span class="n">controller</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
             <span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DeBW_output</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span>
             <span class="n">prot</span><span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span>
-            
+
             <span class="n">reconstructed</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Step 2: Creating the Burros-Wheeler Matrix&quot;</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prot</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)]</span>
 
             <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">step</span> <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Step 1 : Visualizing the sequence&quot;</span><span class="p">,</span>
@@ -695,7 +695,6 @@
         <span class="n">menubar</span> <span class="o">=</span> <span class="n">Menu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">menuFile</span> <span class="o">=</span> <span class="n">Menu</span><span class="p">(</span><span class="n">menubar</span><span class="p">,</span> <span class="n">tearoff</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">menubar</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Menu&quot;</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">menuFile</span><span class="p">)</span>
-        <span class="c1">#menubar.add_cascade(label=&quot;About&quot;, menu=menuFile)</span>
         <span class="n">menuFile</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Choose a file&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="p">,</span>
                              <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;Ctrl+o&quot;</span><span class="p">)</span>
         <span class="n">menuFile</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;About&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">about</span><span class="p">)</span>

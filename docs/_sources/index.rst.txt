@@ -69,7 +69,7 @@ Encoding a DNA sequence with Burros-Wheeler + Huffman Coding
 - To encode a DNA sequence using BWT and Huffman coding, you can use a FullEncoder object that will save two files to the same directory as the sequence, the Burros-Wheeler transform and the UTF-8 zipped format of the sequence: :: 
 
 	from dnazip.encoder import FullEncoder
-	encode = FullEncoder('/home/ghassan/M1/gtf.txt')
+	encode = FullEncoder('/path/to/seq')
 	encode.full_zip()
 
 - The attributes of the object can be accessed to see intermediary results: ::
@@ -83,8 +83,7 @@ Encoding a DNA sequence with Burros-Wheeler + Huffman Coding
 	encode.huff_encoder.binary # The binary sequence of the BW transform
 	encode.huff_encoder.unicode # 8-bits encoded binary sequence
 
-- ***A random sequence of size 1kB was compressed efficiently to 549 bytes.***
-
+- **A random sequence of size 1kB was compressed efficiently to 549 bytes.**
 
 Decoding a DNA sequence with Huffman decoding + Reversing Burros-Wheeler transform
 ----------------------------------------------------------------------------------
@@ -111,7 +110,7 @@ Building the Burros-Wheeler transform using the advanced algorithm
 	from dnazip.sequence import Sequence
 	from dnazip.burros_wheeler import BurrosWheeler
 
-	seq = Sequence('/home/ghassan/M1/gtf.txt').read()
+	seq = Sequence('/path/to/seq').read()
 	BurrosWheeler.bwt_advanced(seq)
 
 Documentation
@@ -140,8 +139,8 @@ Sequence
 .. automodule:: sequence
    :members:
    
-Burros-Wheeler Algorithm 
-========================
+Burrows-Wheeler Algorithm 
+=========================
 .. automodule:: burros_wheeler
    :members:
    

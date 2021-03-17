@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>huffman &mdash; dnazip 1.0.0 documentation</title>
+  <title>huffman &mdash; dnazip 0.2 documentation</title>
   
 
   
@@ -344,24 +344,24 @@
 <span class="sd">            The root node of the tree.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">leafs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">leafs</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># creating a list for leafs of the tree</span>
         <span class="k">for</span> <span class="n">char</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">leafs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HuffmanNode</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">freq</span><span class="p">))</span>
 
-        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">leafs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">leafs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># while there is more than one element, do the algoritm</span>
 
-            <span class="n">leafs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">leafs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">freq</span><span class="p">)</span>
+            <span class="n">leafs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">leafs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">freq</span><span class="p">)</span> <span class="c1"># sort the leafs by frequency</span>
 
-            <span class="n">left</span> <span class="o">=</span> <span class="n">leafs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">right</span> <span class="o">=</span> <span class="n">leafs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">leafs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># taking the first least frequency node as the left node</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="n">leafs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># taking the second  least frequency node as the right node</span>
 
-            <span class="n">new_char</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">char</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">char</span>
-            <span class="n">new_freq</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">freq</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">freq</span>
+            <span class="n">new_char</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">char</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">char</span> <span class="c1"># the new character</span>
+            <span class="n">new_freq</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">freq</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">freq</span> <span class="c1"># the new frequency is the sum</span>
 
-            <span class="n">left</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
-            <span class="n">right</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+            <span class="n">left</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="c1"># assign 0 as a direction for the left node</span>
+            <span class="n">right</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="c1"># assign 1 as a direction for the right node </span>
 
-            <span class="n">new_node</span> <span class="o">=</span> <span class="n">HuffmanNode</span><span class="p">(</span><span class="n">new_char</span><span class="p">,</span> <span class="n">new_freq</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+            <span class="n">new_node</span> <span class="o">=</span> <span class="n">HuffmanNode</span><span class="p">(</span><span class="n">new_char</span><span class="p">,</span> <span class="n">new_freq</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span> <span class="c1"># create a new node and then append it</span>
             <span class="n">leafs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">leafs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
@@ -384,7 +384,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">curr_path</span> <span class="o">=</span> <span class="n">val</span> <span class="o">+</span> <span class="n">node</span><span class="o">.</span><span class="n">dir</span>
+        <span class="n">curr_path</span> <span class="o">=</span> <span class="n">val</span> <span class="o">+</span> <span class="n">node</span><span class="o">.</span><span class="n">dir</span> <span class="c1"># the current path in the recursion</span>
 
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left_child</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_codings</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left_child</span><span class="p">,</span> <span class="n">curr_path</span><span class="p">)</span>
@@ -439,7 +439,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">unicode</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bin_str</span><span class="p">),</span> <span class="mi">8</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bin_str</span><span class="p">),</span> <span class="mi">8</span><span class="p">):</span> <span class="c1"># cut the sequence to 8-bits</span>
             <span class="n">eight_bits</span> <span class="o">=</span> <span class="n">bin_str</span><span class="p">[</span><span class="n">bit</span><span class="p">:</span><span class="n">bit</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>
             <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">eight_bits</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
             <span class="n">unicode</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
@@ -489,7 +489,7 @@
 <span class="sd">            The no-padded binary string.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">bin_str</span><span class="p">[:</span><span class="o">-</span><span class="n">pad</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">bin_str</span><span class="p">[:</span><span class="o">-</span><span class="n">pad</span><span class="p">]</span> <span class="c1"># take all the sequence without the padding</span></div>
 
 <div class="viewcode-block" id="HuffmanTree.binstr_to_seq"><a class="viewcode-back" href="../index.html#huffman.HuffmanTree.binstr_to_seq">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">binstr_to_seq</span><span class="p">(</span><span class="n">bin_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">codes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
