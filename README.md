@@ -15,6 +15,15 @@
 - Hosted on [GitHub](https://github.com/dabane-ghassan/dnazip)
 - Documentation? [**here**](https://dabane-ghassan.github.io/dnazip/)
 
+
+## Architecture
+
+### Scripts
+![pkgs](photos/packages.png)
+
+### Architecture
+![mvc](photos/classes.png)
+
 ## Installation
 
 - You can install the package either from pip or from the source code hosted on github.
