@@ -21,7 +21,7 @@
 ### Scripts
 ![pkgs](photos/packages.png)
 
-### Architecture
+### UML
 ![mvc](photos/classes.png)
 
 ## Installation
