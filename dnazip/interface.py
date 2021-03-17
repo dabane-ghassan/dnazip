@@ -320,7 +320,7 @@ class Interface(Tk):
             controller.decode()
             protocol = self.DeBW_output(controller)
             prot= list(protocol)
-            
+
             reconstructed = ["Step 2: Creating the Burros-Wheeler Matrix" for n in range(len(prot) - 2)]
 
             names = (step for step in ["Step 1 : Visualizing the sequence",
@@ -548,7 +548,6 @@ class Interface(Tk):
         menubar = Menu(self)
         menuFile = Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Menu", menu=menuFile)
-        #menubar.add_cascade(label="About", menu=menuFile)
         menuFile.add_command(label="Choose a file", command=self.open_file,
                              accelerator="Ctrl+o")
         menuFile.add_command(label="About", command=self.about)

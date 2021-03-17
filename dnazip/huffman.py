@@ -197,24 +197,24 @@ class HuffmanTree:
             The root node of the tree.
 
         """
-        leafs = []
+        leafs = [] # creating a list for leafs of the tree
         for char, freq in self.frequency.items():
             leafs.append(HuffmanNode(char, freq))
 
-        while len(leafs) > 1:
+        while len(leafs) > 1: # while there is more than one element, do the algoritm
 
-            leafs = sorted(leafs, key=lambda x: x.freq)
+            leafs = sorted(leafs, key=lambda x: x.freq) # sort the leafs by frequency
 
-            left = leafs.pop(0)
-            right = leafs.pop(0)
+            left = leafs.pop(0) # taking the first least frequency node as the left node
+            right = leafs.pop(0) # taking the second  least frequency node as the right node
 
-            new_char = left.char + right.char
-            new_freq = left.freq + right.freq
+            new_char = left.char + right.char # the new character
+            new_freq = left.freq + right.freq # the new frequency is the sum
 
-            left.dir = "0"
-            right.dir = "1"
+            left.dir = "0" # assign 0 as a direction for the left node
+            right.dir = "1" # assign 1 as a direction for the right node 
 
-            new_node = HuffmanNode(new_char, new_freq, left, right)
+            new_node = HuffmanNode(new_char, new_freq, left, right) # create a new node and then append it
             leafs.append(new_node)
 
         return leafs[0]
@@ -237,7 +237,7 @@ class HuffmanTree:
 
         """
 
-        curr_path = val + node.dir
+        curr_path = val + node.dir # the current path in the recursion
 
         if node.left_child:
             self.get_codings(node.left_child, curr_path)
@@ -292,7 +292,7 @@ class HuffmanTree:
         """
 
         unicode = ""
-        for bit in range(0, len(bin_str), 8):
+        for bit in range(0, len(bin_str), 8): # cut the sequence to 8-bits
             eight_bits = bin_str[bit:bit+8]
             code = int(eight_bits, 2)
             unicode += chr(code)
@@ -342,7 +342,7 @@ class HuffmanTree:
             The no-padded binary string.
 
         """
-        return bin_str[:-pad]
+        return bin_str[:-pad] # take all the sequence without the padding
 
     @staticmethod
     def binstr_to_seq(bin_str: str, codes: Dict[str, str]) -> str:
